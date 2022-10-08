@@ -15,7 +15,12 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(compression())
-    this.app.use(cors())
+    this.app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        credentials: true // access-control-allow-credentials:true
+      })
+    )
     this.app.use(express.json())
   }
 }

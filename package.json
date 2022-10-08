@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "init": "npm i && npm run prepare && cd client && npm i",
     "build": "tsc",
     "start": "npm run build && cross-env NODE_ENV=production node dist/",
     "dev": "cross-env NODE_ENV=development nodemon src/",

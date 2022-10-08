@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "json,ts,js",
+  "exec": "ts-node-dev --respawn --transpile-only src/",
+  "legacyWatch": true
+}

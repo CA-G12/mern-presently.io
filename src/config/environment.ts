@@ -6,14 +6,17 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const { DATABASE_URL, PORT, NODE_ENV } = process.env
+const { DATABASE_URL, PORT, NODE_ENV, ORIGIN } = process.env
 
 const config = {
   database: {
-    uri: DATABASE_URL
+    uri: DATABASE_URL || ''
   },
   port: PORT || 3000,
-  nodeEnv: NODE_ENV || 'development'
+  nodeEnv: NODE_ENV || 'development',
+  client: {
+    origin: ORIGIN || 'http://localhost:3000'
+  }
 }
 
 export default config

@@ -3,28 +3,15 @@ import compression from 'compression'
 import cors from 'cors'
 import environment from './config/environment'
 
-class App {
-  public app: express.Application
-  public env: string
+const app = express()
 
-  constructor() {
-    this.app = express()
-    this.env = environment.nodeEnv
-    this.initializeMiddlewares()
-  }
-
-  private initializeMiddlewares() {
-    this.app.use(compression())
-    this.app.use(
-      cors({
-        origin: 'http://localhost:3000',
-        credentials: true // access-control-allow-credentials:true
-      })
-    )
-    this.app.use(express.json())
-  }
-}
-
-const { app } = new App()
+app.use(compression())
+app.use(
+  cors({
+    origin: environment.client.origin,
+    credentials: true // access-control-allow-credentials:true
+  })
+)
+app.use(express.json())
 
 export default app

@@ -7,15 +7,10 @@ import env from './config/environment'
 const port = env.port || 4000
 const server = http.createServer(app)
 
-;(async () => {
-  try {
-    await dbConnection()
+dbConnection()
+  .then(() =>
     server.listen(port, () =>
-      console.log(
-        `connected to the database & server is running at http://localhost:${port}`
-      )
+      console.log(`Server is running at http://localhost:${port}`)
     )
-  } catch (err) {
-    console.log(err)
-  }
-})()
+  )
+  .catch(console.log)

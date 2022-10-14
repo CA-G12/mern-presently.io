@@ -4,7 +4,7 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     colors: {
-      primary: '#4982F3',
+      primary: { default: '#4982F3', hover: '#5982FF' },
       black: '#2B2E30',
       grey: { default: '#333333', hover: '#33333F' },
       pink: '#FCDDEE',
@@ -16,7 +16,7 @@ module.exports = {
       },
       cyan: '#09B6E0',
       yellow: '#FFB619',
-      'light-green': '#01D2A1',
+      green: '#01D2A1',
       white: '#fff'
     },
     fontSize: {
@@ -31,7 +31,17 @@ module.exports = {
       serif: ['Poppins', 'serif']
     },
     borderRadius: {
-      default: '8px'
+      1: '8px',
+      2: '16px'
+    },
+    borderWidth: {
+      DEFAULT: '1px',
+      0: '0',
+      2: '2px',
+      3: '3px',
+      4: '8px',
+      6: '12px',
+      8: '16px'
     },
     extend: {}
   }

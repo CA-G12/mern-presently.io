@@ -2,7 +2,7 @@ import './index.css'
 import mainImage from '../../assets/LandingInfoPngs/main.png'
 import frameImage from '../../assets/LandingInfoPngs/frame.png'
 import computerImage from '../../assets/LandingInfoPngs/computer.png'
-
+import { ReactComponent as Wave } from '../../assets/waves/wave.svg'
 type CardProps = {
   type: string
 }
@@ -19,7 +19,7 @@ const LandingCard = ({ type }: CardProps) => {
         brushedHeader: 'Busniess',
         img: mainImage,
         styles:
-          'relative self-start flex justify-around pt-20 gap-16 text-blue-dark',
+          'relative self-start flex lg:flex-row flex-col justify-around lg:pt-20 pt-12 gap-16 text-blue-dark',
         descipton:
           'An enim nullam tempor sapien gravida donec enim ipsum porta congue magna at pretium purus pretium'
       }
@@ -32,7 +32,7 @@ const LandingCard = ({ type }: CardProps) => {
         brushedHeader: 'for everyone',
         img: frameImage,
         styles:
-          'relative self-start flex justify-around pt-20 gap-24 flex-row-reverse text-blue-dark pb-20 bt-20',
+          'relative self-start flex lg:flex-row lg:flex-row-reverse  flex-col justify-around lg:pt-20 pt-12 gap-24 text-blue-dark pb-20 bt-20',
         descipton:
           'Fully layered dolor sit amet, nobis id expedita dolores layered dolor sit amet laboriosam.'
       }
@@ -45,7 +45,7 @@ const LandingCard = ({ type }: CardProps) => {
         brushedHeader: 'sellers',
         img: computerImage,
         styles:
-          'relative self-start flex justify-around pt-20 gap-16 pb-20 bt-20 text-white',
+          'relative self-start lg:flex-row flex-col flex justify-around lg:pt-20 pt-12 gap-16 pb-20 bt-20 text-white',
         descipton:
           'An enim nullam tempor sapien gravida donec enim ipsum porta congue magna at pretium purus pretium'
       }
@@ -53,23 +53,28 @@ const LandingCard = ({ type }: CardProps) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative">
       {data && (
         <div className={data.styles}>
-          <div className="flex flex-col max-w-lg align-middle justify-start mt-10">
-            <p className="text-green text-regular font-bold">
+          <div className="lg:flex lg:justify-start flex flex-col justify-center align-middle lg:mt-10 mt-2 mr-4 lg:ml-0 ml-4 lg:text-left text-center">
+            <p className="text-green text-regular font-bold lg:self-start self-center">
               {data && data.subHead}
             </p>
-            <h1 className="text-xlarge"> {data && data.head}</h1>
-            <p className="text-large font-bold">
+            <h1 className="lg:text-xlarge text-small font-normal lg:self-start self-center">
+              {' '}
+              {data && data.head}
+            </h1>
+            <p className="lg:text-large text-small font-bold lg:self-start self-center">
               {data && data.boldHeader}
               <span className="border-b-6 mt-4 border-yellow border-rounded-full">
                 {data && data.brushedHeader}
               </span>
             </p>
-            <p className="mt-8">{data && data.descipton}</p>
+            <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center">
+              {data && data.descipton}
+            </p>
             {type === 'second' && (
-              <button className="border w-48 rounded-2 bg-primary-default text-white mt-4 p-3 hover:bg-primary-hover text-regular">
+              <button className="border lg:w-48 rounded-2 bg-primary-default text-white mt-4 p-3 hover:bg-primary-hover text-regular font-bold self-middle">
                 Discover me
               </button>
             )}

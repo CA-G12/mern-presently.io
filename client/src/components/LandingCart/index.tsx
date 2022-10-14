@@ -2,7 +2,7 @@ import './index.css'
 import mainImage from '../../assets/LandingInfoPngs/main.png'
 import frameImage from '../../assets/LandingInfoPngs/frame.png'
 import computerImage from '../../assets/LandingInfoPngs/computer.png'
-import { ReactComponent as Wave } from '../../assets/waves/wave.svg'
+
 type CardProps = {
   type: string
 }

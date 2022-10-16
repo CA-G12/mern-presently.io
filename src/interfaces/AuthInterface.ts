@@ -1,6 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken'
-import { Request, Response } from 'express'
-import { UserResponseInterface } from './UserInterface'
+import { Request } from 'express'
 
 export interface Token {
   token: string | JwtPayload

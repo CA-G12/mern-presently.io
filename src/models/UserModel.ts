@@ -1,5 +1,7 @@
+import UserInterface from 'interfaces/UserInterface'
 import mongoose from 'mongoose'
-import UserInterface from '../interfaces/UserInterface'
+import slide from './SlideModel'
+
 const Schema = mongoose.Schema
 const userSchema = new Schema<UserInterface>({
   name: {
@@ -15,22 +17,7 @@ const userSchema = new Schema<UserInterface>({
     type: String,
     required: true
   },
-  slides: [
-    {
-      _id: {
-        type: mongoose.Types.ObjectId,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      link: {
-        type: String,
-        required: true
-      }
-    }
-  ]
+  slides: [slide.schema]
 })
-const Uesr = mongoose.model('User', userSchema)
-export default Uesr
+const User = mongoose.model('User', userSchema)
+export default User

@@ -1,9 +1,9 @@
-import mongoose from 'mongoose'
+import SlideInterface from './SlideInterface'
 
 export default interface UserInterface {
   id: string
   name: string
   email: string
   password: string
-  slides: [{ _id: mongoose.Types.ObjectId; title: string; link: string }]
+  slides: SlideInterface[]
 }

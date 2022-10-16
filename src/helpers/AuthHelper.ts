@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import jwt, { Secret, JwtPayload, VerifyCallback } from 'jsonwebtoken'
-import bycrypt from 'bcrypt'
-import { UserInterface } from '../interfaces/UserInterface'
+import jwt from 'jsonwebtoken'
 
 import env from '../config/environment'
 

@@ -9,8 +9,3 @@ export interface Token {
 export interface verifyTokenRequest extends Request {
   body: { token: string }
 }
-
-export interface verifyTokenResponse extends Response {
-  body: { message: string; user: UserResponseInterface | null }
-  locals: Record<any, { id: string }>
-}

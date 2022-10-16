@@ -14,7 +14,6 @@ const verifyAccessToken = async (
 
   try {
     const user = await AuthHelper.verifyToken(token)
-    console.log(user)
     res.locals.id = user.id
     next()
   } catch (err) {

@@ -16,15 +16,17 @@ const Footer = () => {
             <p className="text-regular text-dark mb-4 text-blue-dark font-semibold">
               Service
             </p>
-            <ul className="text-grey text-footer leading-6 font-light">
+            <ul className="text-grey text-footer leading-6 font-light cursor-pointer hover:text-blue-dark">
               <li className="mb-2">
                 <a>Incident Responder</a>
               </li>
               <li className="mb-2">
-                <a className="text-thin-100">Secure Managed IT</a>
+                <a className="cursor-pointer">Secure Managed IT</a>
               </li>
               <li className="mb-2">
-                <a>Check website Url</a>
+                <a className="hover:text-black cursor-pointer">
+                  Check website Url
+                </a>
               </li>
               <li className="mb-2">
                 <a>Locker Security</a>
@@ -35,7 +37,7 @@ const Footer = () => {
             <p className="text-regular text-dark mb-4 text-blue-dark font-semibold">
               About Us
             </p>
-            <ul className="text-grey text-footer leading-6 font-light">
+            <ul className="text-grey text-footer leading-6 font-light cursor-pointer hover:text-blue-dark">
               <li className="mb-2">
                 <a>Payment Plans</a>
               </li>

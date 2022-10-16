@@ -1,6 +1,6 @@
-import SlideInterface from './SlideInterface'
+import { SlideInterface } from './SlideInterface'
 
-export default interface UserInterface {
+export interface UserInterface {
   id: string
   name: string
   email: string

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import SlideInterface from 'interfaces/SlideInterface'
-
+import { SlideInterface } from 'interfaces/SlideInterface'
 const Schema = mongoose.Schema
+
 const slideSchema = new Schema<SlideInterface>({
   title: {
     type: String,
@@ -9,6 +9,14 @@ const slideSchema = new Schema<SlideInterface>({
   },
   link: {
     type: String,
+    required: true
+  },
+  isPrivate: {
+    type: Boolean,
+    required: true
+  },
+  isLive: {
+    type: Boolean,
     required: true
   }
 })

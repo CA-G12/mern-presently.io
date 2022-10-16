@@ -1,5 +1,6 @@
-import './style.css'
 import logo from '../../assets/Logo/About.png'
+import './styles.css'
+
 const Navbar = () => {
   return (
     <div className="flex lg:flex-row justify-between gap-2 font-sans font-regular flex-col-reverse">

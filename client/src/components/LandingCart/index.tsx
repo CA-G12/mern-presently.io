@@ -1,4 +1,4 @@
-import './index.css'
+import './styles.css'
 import mainImage from '../../assets/LandingInfoPngs/main.png'
 import frameImage from '../../assets/LandingInfoPngs/frame.png'
 import computerImage from '../../assets/LandingInfoPngs/computer.png'

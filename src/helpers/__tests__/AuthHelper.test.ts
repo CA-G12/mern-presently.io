@@ -1,5 +1,21 @@
-test('dummy test', () => {
-  expect(1).toBe(1)
-})
+import { verifyToken, generateAccessToken, signToken } from '../AuthHelper'
 
-export {}
+describe('test auth helpers', () => {
+  it('verifyAccessToken function', async () => {
+    const result = await verifyToken(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjF0ZXN0IiwiaWF0IjoxNjY1OTE5NzgxfQ.8lkF8X1CDuK6btfTB9JZf7L7CDVOhpZUNY1PP0b15aU'
+    )
+    expect(result.id).toBe('1test')
+  })
+  it('generateAccessToken function', async () => {
+    const result = await generateAccessToken('1test')
+    const verify = await verifyToken(result)
+    expect(verify.id).toBe('1test')
+  })
+
+  it('signToken function', async () => {
+    const result = await signToken({ id: '1test' })
+    const verify = await verifyToken(result)
+    expect(verify.id).toBe('1test')
+  })
+})

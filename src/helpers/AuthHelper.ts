@@ -1,23 +1,45 @@
-import { Request, Response, NextFunction } from 'express'
-import { verify } from 'jsonwebtoken'
+import { verify, sign, JwtPayload, VerifyErrors } from 'jsonwebtoken'
 
 import env from '../config/environment'
 
-const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
-  console.log('gere')
-  const { token } = req.body
+const verifyToken = (token: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    verify(
+      token,
+      env.jwt.secretKey,
+      (
+        error: VerifyErrors | null,
+        decoded: string | JwtPayload | undefined
+      ) => {
+        if (!error) resolve(decoded)
+        reject(error)
+      }
+    )
+  })
+}
 
-  if (!token) {
-    throw new Error()
-  }
+const signToken = (payload: JwtPayload): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    sign(
+      payload,
+      env.jwt.secretKey,
+      (error: Error | null, token: string | undefined) => {
+        if (!error) {
+          resolve(token)
+        }
+        reject(error)
+      }
+    )
+  })
+}
 
+const generateAccessToken = async (id: string): Promise<any> => {
+  const payload = { id: id }
   try {
-    const decoded = verify(token, env.jwt.secretKey)
-    throw new Error()
-    next()
+    return await signToken(payload)
   } catch (err) {
-    res.status(401).json({ msg: 'Unauthorized' })
+    throw new Error()
   }
 }
 
-export { verifyAccessToken }
+export { verifyToken, generateAccessToken, signToken }

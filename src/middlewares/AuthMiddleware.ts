@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
-import { verifyToken } from '../helpers/AuthHelper'
+import AuthHelper from '../helpers/AuthHelper'
 
-const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
+const verifyAccessToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { token } = req.body
 
   if (!token) {
@@ -9,7 +13,9 @@ const verifyAccessToken = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    verifyToken(token)
+    const user = await AuthHelper.verifyToken(token)
+    console.log(user)
+    res.locals.id = user.id
     next()
   } catch (err) {
     res.status(401).json({ msg: 'Unauthorized' })

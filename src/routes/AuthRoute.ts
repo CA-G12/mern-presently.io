@@ -1,8 +1,8 @@
 import express from 'express'
-import { verifyTokenController } from '../controllers/AuthController'
+import AuthController from '../controllers/AuthController'
 
 const router = express.Router()
 
-router.post('/token', verifyTokenController)
+router.post('/token', AuthController.verifyToken)
 
 export default router

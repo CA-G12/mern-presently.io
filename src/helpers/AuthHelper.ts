@@ -42,4 +42,4 @@ const generateAccessToken = async (id: string): Promise<any> => {
   }
 }
 
-export { verifyToken, generateAccessToken, signToken }
+export default { verifyToken, generateAccessToken, signToken }

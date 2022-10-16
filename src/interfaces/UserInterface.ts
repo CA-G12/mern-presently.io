@@ -7,3 +7,9 @@ export interface UserInterface {
   password: string
   slides: SlideInterface[]
 }
+
+export interface UserResponseInterface {
+  id: string
+  name: string
+  slides: SlideInterface[]
+}

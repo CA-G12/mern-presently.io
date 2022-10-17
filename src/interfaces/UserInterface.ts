@@ -7,3 +7,15 @@ export interface UserInterface {
   password: string
   slides: SlideInterface[]
 }
+
+export interface UserResponseInterface {
+  id: string
+  name: string
+  email: string
+  slides: SlideInterface[]
+}
+
+export interface GetUserOptions {
+  id?: number
+  email?: string
+}

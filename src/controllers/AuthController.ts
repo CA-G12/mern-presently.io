@@ -1,14 +1,15 @@
-import AuthHelper from '../helpers/AuthHelper'
 import { Response } from 'express'
-import { verifyTokenRequest } from '../interfaces/AuthInterface'
+import AuthService from '../services/AuthService'
+import { VerifyTokenRequest } from '../interfaces/AuthInterface'
 
-const verifyToken = async (req: verifyTokenRequest, res: Response) => {
-  const { token } = req.body
+const verifyToken = async (req: VerifyTokenRequest, res: Response) => {
   try {
-    const user = await AuthHelper.verifyToken(token)
-    res.status(200).send({ message: 'success', user: user })
+    const { token } = req.cookies
+    const user = await AuthService.verifyToken(token)
+
+    res.status(200).send({ message: 'success', user })
   } catch (error) {
-    res.status(401).send({ message: 'unauthorized' })
+    res.status(401).send({ error: 'unauthorized' })
   }
 }
 

@@ -1,23 +1,20 @@
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import AuthHelper from '../helpers/AuthHelper'
+import { VerifyTokenRequest } from '../interfaces/AuthInterface'
 
 const verifyAccessToken = async (
-  req: Request,
+  req: VerifyTokenRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const { token } = req.body
-
-  if (!token) {
-    throw new Error()
-  }
-
   try {
+    const { token } = req.cookies
     const user = await AuthHelper.verifyToken(token)
-    res.locals.id = user.id
+
+    res.locals.user = user
     next()
   } catch (err) {
-    res.status(401).json({ msg: 'Unauthorized' })
+    res.status(401).json({ error: 'unauthorized' })
   }
 }
 

@@ -5,6 +5,7 @@ export interface Token {
   token: string | JwtPayload
 }
 
-export interface verifyTokenRequest extends Request {
+export interface VerifyTokenRequest extends Request {
+  cookies: { token: string }
   body: { token: string }
 }

@@ -7,7 +7,7 @@ export default function Landing() {
   return (
     <Fragment>
       <header className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex flex-col justify-center p-4 background-grid">
-        <Navbar />
+        <Navbar isSinged={false} />
         <LandingCard className="self-center" type="first" />
         <Wave
           className="absolute py-0 pl-0 pr-0 min-w-max left-0"

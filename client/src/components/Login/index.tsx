@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { authenticate } from '../../api/auth'
 
 type FormData = {
-  email: RegExp
-  password: RegExp
+  email: string
+  password: string
 }
 export default function App() {
+  const [responseError, setresponseError] = useState(null)
   const {
     register,
     handleSubmit,
@@ -12,7 +15,15 @@ export default function App() {
   } = useForm<FormData>()
 
   const onSubmit = handleSubmit(data => {
-    console.log('submit')
+    authenticate(data).then(
+      response => {
+        setresponseError(null)
+        //navigate to the main page
+      },
+      error => {
+        setresponseError(error.response.data.message)
+      }
+    )
   })
 
   return (
@@ -55,11 +66,6 @@ export default function App() {
                 className=" input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light border-opacity-50 placeholder-grey-light placeholder-opacity-0 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Password"
                 {...register('password', {
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    message: 'Not a valid passsword.'
-                  },
                   required: 'Password is required'
                 })}
               />
@@ -75,11 +81,14 @@ export default function App() {
             Forget password?
           </p>
           <div className="w-full bg-primary-default text-center py-2 text-white rounded-1">
-            <button type="submit">Sign in</button>
+            <button type="submit">Sign In</button>
           </div>
+          {responseError && (
+            <p className="text-danger my-3 self-start">{responseError}</p>
+          )}
           <p className="cursor-pointer my-3">
-            Don&apos;t have an account?
-            <span className="text-blue-bright underline ml-1">Sign up</span>
+            Don&apos;t have an account ?
+            <span className="text-blue-bright underline ml-1"> Sign up</span>
           </p>
         </form>
       </div>

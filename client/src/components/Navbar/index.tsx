@@ -11,15 +11,15 @@ const Navbar = ({ isSinged }: Props) => {
         <img src={logo} />
       </div>
       <div className="flex lg:justify-center justify-between align-middle lg:text-regular text-xsmall gap-4">
-        <a className="lg:mr-20 text-grey-default hover:text-grey-hover font-medium hover:text-blue-dark cursor-pointer">
+        <a className="lg:mr-20 text-grey-default  font-medium hover:text-blue-dark cursor-pointer">
           Upload
         </a>
         {isSinged ? (
-          <a className="lg:mr-10 text-grey-default hover:text-grey-hover font-medium hover:text-blue-dark cursor-pointer">
+          <a className="lg:mr-10 text-grey-default font-medium hover:text-blue-dark cursor-pointer">
             Logout
           </a>
         ) : (
-          <a className="lg:mr-10 text-grey-default hover:text-grey-hover font-medium hover:text-blue-dark cursor-pointer">
+          <a className="lg:mr-10 text-grey-default font-medium hover:text-blue-dark cursor-pointer">
             Sign in
           </a>
         )}

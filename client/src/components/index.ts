@@ -1,6 +1,6 @@
 export { default as HorizontalLineWithText } from './HorizontalLineWithText'
 export { default as Navbar } from './Navbar'
-export { default as LandingCard } from './LandingCart'
+export { default as LandingCard } from './LandingCard'
 export { default as Footer } from './Footer'
 export { default as PresentationCard } from './PresentationCard'
 export { default as AddPresentation } from './AddPresentation'

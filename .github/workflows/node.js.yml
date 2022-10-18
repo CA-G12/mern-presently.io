@@ -34,4 +34,4 @@ jobs:
     - run: npm test
       env:
         NODE_ENV: test
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        SECRET_KEY: '123456'

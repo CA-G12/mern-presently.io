@@ -1,6 +1,34 @@
-import { Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import AuthService from '../services/AuthService'
 import { VerifyTokenRequest } from '../interfaces/AuthInterface'
+import { validator } from '../validation/validator'
+import { authSchema } from '../validation/authValidtaion'
+import GenericError from '../helpers/GenericError'
+
+const login = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password } = req.body
+
+    const validate = await validator({
+      schema: authSchema,
+      data: { email, password }
+    })
+    if (!validate.isValid) {
+      throw new GenericError('Validation Error')
+    }
+
+    const { user, token } = await AuthService.login({
+      email,
+      password
+    })
+    res.status(200).cookie('token', token).json({ message: 'success', user })
+  } catch (error: unknown) {
+    const exception = error as Error
+
+    if (exception.name !== 'GenericError') return next(exception)
+    res.status(400).json({ message: exception.message })
+  }
+}
 
 const verifyToken = async (req: VerifyTokenRequest, res: Response) => {
   try {
@@ -13,4 +41,4 @@ const verifyToken = async (req: VerifyTokenRequest, res: Response) => {
   }
 }
 
-export default { verifyToken }
+export default { login, verifyToken }

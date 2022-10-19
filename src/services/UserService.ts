@@ -1,22 +1,20 @@
-import { hashPassword } from '../helpers/HashPassword'
-import { UserInterface } from 'interfaces/UserInterface'
-import { createUser, getUser } from '../repositories/UserRepository'
-import CustomError from '../helpers/ErrorClass'
+import AuthHelper from '../helpers/AuthHelper'
+import { UserInterface } from '../interfaces/UserInterface'
+import UserRepository from '../repositories/UserRepository'
+import GenericError from '../helpers/GenericError'
 
-export const establishUser = async ({
-  name,
-  email,
-  password
-}: UserInterface) => {
-  const emailExist = await getUser({ email })
+const createUser = async ({ name, email, password }: UserInterface) => {
+  const userByEmail = await UserRepository.getUser({ email })
+  if (userByEmail) throw new GenericError('email is in use')
 
-  if (emailExist) throw new CustomError('email is in use')
-
-  const hashedpassword: string = await hashPassword(password)
+  const hashedpassword = await AuthHelper.hashPassword(password)
 
   await createUser({
     name,
     email,
-    password: hashedpassword
+    password: hashedpassword,
+    slides: []
   })
 }
+
+export default { createUser }

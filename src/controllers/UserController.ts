@@ -1,25 +1,26 @@
-import { establishUser } from '../services/UserService'
+import { Response } from 'express'
+import UserService from '../services/UserService'
 import { signupvalidationschema } from '../validation/userValidation'
 import { validate } from '../validation/validator'
 import { UserRequest } from 'interfaces/UserInterface'
-import { Response } from 'express'
 
 const createUser = async (req: UserRequest, res: Response) => {
   const { name, email, password } = req.body
-  const result = await validate({
+  const validationResult = await validate({
     schema: signupvalidationschema,
     data: { name, email, password }
   })
-
-  if (!result.isValid) return { statusCode: 400, body: { error: result.error } }
+  if (!validationResult.isValid)
+    return { statusCode: 400, body: { error: validationResult.error } }
 
   try {
-    await establishUser({ name, email, password })
+    await UserService.createUser({ name, email, password })
     res.status(201).json({ message: 'signup sucessfully' })
   } catch (error: unknown) {
     const exception = error as Error
-    if (exception.name != 'handeld') throw error
-    else return { statusCode: 400, body: { error: result.error } }
+    if (exception.name !== 'GenericError') throw exception
+    else return { statusCode: 400, body: { error: exception.message } }
   }
 }
-export default createUser
+
+export default { createUser }

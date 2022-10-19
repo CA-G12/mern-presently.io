@@ -1,3 +1,4 @@
+import { Request } from 'express'
 import { SlideInterface } from './SlideInterface'
 
 export interface UserInterface {
@@ -12,7 +13,7 @@ export interface UserOptions {
   email?: string
   name?: string
 }
-export interface UserRequest {
+export interface UserRequest extends Request {
   body: UserInterface
 }
 

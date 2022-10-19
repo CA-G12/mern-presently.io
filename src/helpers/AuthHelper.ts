@@ -1,4 +1,5 @@
 import { verify, sign, VerifyErrors } from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import environment from '../config/environment'
 
 const { secretKey } = environment.jwt
@@ -29,4 +30,6 @@ const generateAccessToken = async (id: string): Promise<string> =>
     })
   })
 
-export default { verifyToken, generateAccessToken }
+const hashPassword = (password: string) => bcrypt.hash(password, 10)
+
+export default { verifyToken, generateAccessToken, hashPassword }

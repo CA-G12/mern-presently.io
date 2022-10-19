@@ -1,11 +1,11 @@
 import Landing from './pages/Landing/Landing'
-import SignUp from './pages/signup'
+import { Signup } from './components'
 
 function App() {
   return (
     <div>
       <Landing />
-      <SignUp />
+      <Signup />
     </div>
   )
 }

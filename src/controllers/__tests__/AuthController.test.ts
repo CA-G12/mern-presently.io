@@ -1,6 +1,5 @@
 import request from 'supertest'
 import AuthHelper from '../../helpers/AuthHelper'
-
 import app from '../../app'
 import dbConnection from '../../db/connection'
 

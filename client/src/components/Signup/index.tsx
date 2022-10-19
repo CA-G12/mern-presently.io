@@ -1,14 +1,38 @@
+import { useState } from 'react'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { handleSignup } from '../../api/Signup'
+import { AxiosError } from 'axios'
+import { authApi } from '../../api'
 import { UserInterface } from '../../interfaces/UserInterface'
+
 const SignUp = () => {
+  const [isSubmitting, setSubmitting] = useState(false)
+  const [signupError, setSignupError] = useState('')
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
-  const onSubmit = ((data: UserInterface) =>
-    handleSignup(data)) as SubmitHandler<FieldValues>
+
+  const onSubmit = (async (data: UserInterface) => {
+    try {
+      setSubmitting(true)
+      await authApi.handleSignup(data)
+      setSubmitting(false)
+      // TODO: what comes after signup?
+    } catch (error) {
+      const exception = error as AxiosError
+      if (exception.request) {
+        setSignupError('Something went wrong')
+      } else {
+        if (exception.response?.status === 400) {
+          setSignupError('email is already exist ')
+        } else {
+          setSignupError('server error ')
+        }
+      }
+    }
+  }) as SubmitHandler<FieldValues>
 
   return (
     <body className="min-h-screen flex items-center justify-center ">
@@ -69,6 +93,7 @@ const SignUp = () => {
         </span>
         <button
           className="w-4/5 h-12 bg-blue-500 text-white text-base font-normal max-w-[400px] rounded-[10px] border-none outline-none "
+          disabled={!isSubmitting ? true : false}
           type="submit"
         >
           Sign Up
@@ -116,6 +141,7 @@ const SignUp = () => {
             Login
           </a>
         </span>
+        <p className="text-gray-900 font-normal text-sm">{signupError}</p>
       </form>
     </body>
   )

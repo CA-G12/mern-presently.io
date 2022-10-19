@@ -1,5 +1,5 @@
 import axios from './axios'
-import { Credentials } from '../../../shared/interfaces/CredentialInterface'
+import { Credentials } from '../interfaces/CredentialInterface'
 
 export const authenticate = ({ email, password }: Credentials) => {
   return axios({

@@ -1,7 +1,7 @@
 import AuthHelper from '../helpers/AuthHelper'
 import UserRepository from '../repositories/UserRepository'
 import { UserInterface } from '../interfaces/UserInterface'
-import { Credentials } from '../../shared/interfaces/CredentialInterface'
+import { Credentials } from '../interfaces/CredentialInterface'
 import GenericError from '../helpers/GenericError'
 
 const login = async ({ email, password }: Credentials) => {
@@ -11,6 +11,7 @@ const login = async ({ email, password }: Credentials) => {
   if (!user) {
     throw new GenericError('Please double check your email or password')
   }
+
   const isCorrectPassword = await AuthHelper.checkPassword(
     password,
     user.password

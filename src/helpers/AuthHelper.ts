@@ -7,6 +7,7 @@ const { secretKey } = environment.jwt
 const checkPassword = (password: string, hashedPassword: string) => {
   return bcrypt.compare(password, hashedPassword)
 }
+
 const verifyToken = (token: string): Promise<{ id: number }> =>
   new Promise((resolve, reject) => {
     verify(token, secretKey, (error: VerifyErrors | null, decoded: unknown) => {

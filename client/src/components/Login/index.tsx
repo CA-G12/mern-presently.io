@@ -6,8 +6,8 @@ type FormData = {
   email: string
   password: string
 }
-export default function App() {
-  const [responseError, setresponseError] = useState(null)
+export default function Login() {
+  const [loginError, setloginError] = useState(null)
   const {
     register,
     handleSubmit,
@@ -17,11 +17,11 @@ export default function App() {
   const onSubmit = handleSubmit(data => {
     authenticate(data).then(
       response => {
-        setresponseError(null)
-        //navigate to the main page
+        setloginError(null)
+        // TODO: navigate to the main page
       },
       error => {
-        setresponseError(error.response.data.message)
+        setloginError(error.response.data.message)
       }
     )
   })
@@ -83,8 +83,8 @@ export default function App() {
           <div className="w-full bg-primary-default text-center py-2 text-white rounded-1">
             <button type="submit">Sign In</button>
           </div>
-          {responseError && (
-            <p className="text-danger my-3 self-start">{responseError}</p>
+          {loginError && (
+            <p className="text-danger my-3 self-start">{loginError}</p>
           )}
           <p className="cursor-pointer my-3">
             Don&apos;t have an account ?

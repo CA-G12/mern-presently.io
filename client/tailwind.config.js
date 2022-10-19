@@ -6,7 +6,13 @@ module.exports = {
     colors: {
       primary: { default: '#4982F3', hover: '#5982FF' },
       black: '#2B2E30',
-      grey: { default: '#333333', hover: '#33333F', light: '#CDCDCD' },
+      grey: {
+        default: '#333333',
+        hover: '#33333F',
+        border: '#9E9E9E',
+        background: '#f3f3f3',
+        light: '#CDCDCD'
+      },
       pink: '#FCDDEE',
       blue: {
         dark: '#042552',

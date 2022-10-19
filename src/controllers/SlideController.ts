@@ -1,14 +1,14 @@
 import { Response } from 'express'
-import { AddPresentationRequest } from '../interfaces/SlideInterface'
+import { CreatePresentationRequest } from '../interfaces/SlideInterface'
 import SlideService from '../services/SlideService'
 
 const createPresentation = async (
-  req: AddPresentationRequest,
+  req: CreatePresentationRequest,
   res: Response
 ) => {
   try {
     const { link, title, isPrivate, isLive } = req.body
-    const presentation = await SlideService.addPresentation({
+    const presentation = await SlideService.createPresentation({
       link,
       title,
       isPrivate,

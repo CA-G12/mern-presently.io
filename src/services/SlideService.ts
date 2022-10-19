@@ -1,12 +1,12 @@
 import SlideRepository from '../repositories/SlideRepository'
-import { AddPresentationOptions } from '../interfaces/SlideInterface'
+import { CreatePresentationOptions } from '../interfaces/SlideInterface'
 
-const addPresentation = async ({
+const createPresentation = async ({
   title,
   link,
   isLive,
   isPrivate
-}: AddPresentationOptions) =>
-  await SlideRepository.addPresentation({ title, link, isLive, isPrivate })
+}: CreatePresentationOptions) =>
+  await SlideRepository.createPresentation({ title, link, isLive, isPrivate })
 
-export default { addPresentation }
+export default { createPresentation }

@@ -22,7 +22,7 @@ describe('Add a new presentation', () => {
         return done()
       })
   })
-  test('Add a valid presentation', done => {
+  test('Add invalid presentation', done => {
     request(app)
       .post('/api/v1/slides')
       .send({ link: 'https://google.com/' })

@@ -8,13 +8,13 @@ export interface SlideInterface {
   isLive: boolean
 }
 
-export interface AddPresentationOptions {
+export interface CreatePresentationOptions {
   title: string
   link: string
   isLive?: boolean
   isPrivate?: boolean
 }
 
-export interface AddPresentationRequest extends Request {
+export interface CreatePresentationRequest extends Request {
   body: { title: string; link: string; isPrivate?: boolean; isLive?: boolean }
 }

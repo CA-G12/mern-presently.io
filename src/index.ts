@@ -1,10 +1,9 @@
 import http from 'http'
 import app from './app'
-
 import dbConnection from './db/connection'
-import env from './config/environment'
+import environment from './config/environment'
 
-const port = env.port || 4000
+const { port } = environment
 const server = http.createServer(app)
 
 dbConnection()

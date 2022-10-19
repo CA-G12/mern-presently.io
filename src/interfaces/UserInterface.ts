@@ -15,3 +15,15 @@ export interface UserOptions {
 export interface UserRequest {
   body: UserInterface
 }
+
+export interface UserResponseInterface {
+  id: string
+  name: string
+  email: string
+  slides: SlideInterface[]
+}
+
+export interface GetUserOptions {
+  id?: number
+  email?: string
+}

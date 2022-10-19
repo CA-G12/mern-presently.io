@@ -3,11 +3,11 @@ import mainImage from '../../assets/LandingInfoPngs/main.png'
 import frameImage from '../../assets/LandingInfoPngs/frame.png'
 import computerImage from '../../assets/LandingInfoPngs/computer.png'
 
-type CardProps = {
+type ILandingCardProps = {
   type: string
 }
 
-const LandingCard = ({ type }: CardProps) => {
+const LandingCard = ({ type }: ILandingCardProps) => {
   let data = null
 
   switch (type) {

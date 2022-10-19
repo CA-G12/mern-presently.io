@@ -1,10 +1,10 @@
 import logo from '../../assets/Logo/About.png'
 import './styles.css'
 
-interface Props {
+interface INavbarProps {
   isSinged: boolean
 }
-const Navbar = ({ isSinged }: Props) => {
+const Navbar = ({ isSinged }: INavbarProps) => {
   return (
     <div className="flex lg:flex-row justify-between gap-2 font-sans font-regular flex-col-reverse">
       <div className="self-center flex lg:mt-0 mt-2">

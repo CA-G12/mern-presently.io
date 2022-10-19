@@ -2,12 +2,12 @@ import { ReactComponent as PresentationIcon } from '../../assets/PresentationIco
 import { ReactComponent as LivePresentation } from '../../assets/PresentationIcons/livePresentation.svg'
 import { ReactComponent as DeletePresentation } from '../../assets/PresentationIcons/deletePresentation.svg'
 
-interface Props {
+interface IPresentationCardOProps {
   newId: string
   type: string
 }
 
-const PresentationCard = ({ newId, type }: Props) => {
+const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
   return (
     <div className="relative flex flex-col justify-between bg-grey-background w-72 rounded-1">
       <div className="absolute mt-4 right-4">

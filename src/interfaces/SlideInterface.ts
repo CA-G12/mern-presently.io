@@ -16,5 +16,5 @@ export interface CreatePresentationOptions {
 }
 
 export interface CreatePresentationRequest extends Request {
-  body: { title: string; link: string; isPrivate?: boolean; isLive?: boolean }
+  body: Omit<SlideInterface, 'id'>
 }

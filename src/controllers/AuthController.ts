@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import AuthService from '../services/AuthService'
-import { VerifyTokenRequest } from '../interfaces/AuthInterface'
+import { VerifyTokenRequest, LoginRequest } from '../interfaces/AuthInterface'
 import { validator } from '../validation/validator'
 import { authSchema } from '../validation/authValidtaion'
 import GenericError from '../helpers/GenericError'
 
-const login = async (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body
 

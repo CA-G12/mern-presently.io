@@ -8,13 +8,17 @@ const updatePresentaion = ({
   isPrivate,
   title
 }: SlideInterface) =>
-  Slide.findByIdAndUpdate(id, {
-    $set: {
-      title,
-      link,
-      isLive,
-      isPrivate
-    }
-  })
+  Slide.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        title,
+        link,
+        isLive,
+        isPrivate
+      }
+    },
+    { new: true }
+  )
 
 export default { updatePresentaion }

@@ -10,19 +10,23 @@ module.exports = {
         default: '#333333',
         hover: '#33333F',
         border: '#9E9E9E',
-        background: '#f3f3f3'
+        background: '#f3f3f3',
+        light: '#CDCDCD'
       },
       pink: '#FCDDEE',
       blue: {
         dark: '#042552',
+        bright: '#4CBFFF',
         light: '#E5EDFC',
+        lightest: '#EBF2FF',
         default: '#0D59EF',
         hover: '#0D10FF'
       },
       cyan: '#09B6E0',
       yellow: '#FFB619',
       green: '#01D2A1',
-      white: '#fff'
+      white: '#fff',
+      danger: '#F5321F'
     },
     fontSize: {
       xsmall: '12px',

@@ -20,11 +20,9 @@ const createUser = async (req: UserRequest, res: Response) => {
     res.status(201).json({ message: 'signup sucessfully' })
   } catch (error: unknown) {
     const exception = error as Error
-    console.log(exception.name)
+
     if (exception.name !== 'GenericError') throw exception
     return res.status(400).send({ error: exception.message })
-
-    console.log('WAHT')
   }
 }
 

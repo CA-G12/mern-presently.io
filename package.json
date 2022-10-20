@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "npm i && npm run prepare && cd client && npm i",
-    "build:client": "cd client && npm run build",
+    "build:client": "npm run build",
     "build": "tsc",
     "start": "cross-env NODE_ENV=production node dist/",
     "dev": "cross-env NODE_ENV=development nodemon src/",

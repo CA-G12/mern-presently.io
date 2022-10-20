@@ -19,6 +19,13 @@ app.use([
   })
 ])
 
+if (environment.nodeEnv === 'production') {
+  app.use(express.static(join(__dirname, '..', 'client', 'build')))
+  app.use('*', (req, res) => {
+    res.sendFile(join(__dirname, '..', 'client', 'build', 'index.html'))
+  })
+}
+
 app.use('/api/v1', router)
 
 if (environment.nodeEnv === 'production') {

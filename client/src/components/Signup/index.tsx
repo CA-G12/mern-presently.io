@@ -50,6 +50,9 @@ const SignUp = () => {
             required: true
           })}
         />
+        <p className="text-danger mx-1 text-footer">
+          {`${errors.password?.message}`}
+        </p>
         <input
           type="text"
           className="rounded-[10px]  w-[85%] max-w-[440px] h-[44px] border-[##2b2e30] border outline"
@@ -93,7 +96,6 @@ const SignUp = () => {
         </span>
         <button
           className="w-4/5 h-12 bg-blue-500 text-white text-base font-normal max-w-[400px] rounded-[10px] border-none outline-none "
-          disabled={!isSubmitting ? true : false}
           type="submit"
         >
           Sign Up

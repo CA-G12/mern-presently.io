@@ -20,7 +20,7 @@ describe('Verify token controller tests', () => {
         'token=.eyJpZCI6IjF0ZXN0IiwiaWF0IjoxNjY1OTE5NzgxfQ.8lkF8X1CDuK6btfTB9JZf7L7CDVOhpZUNY1PP0b15aU'
       )
       .end((err, res) => {
-        if (err) return done()
+        if (err) return done(err)
         expect(res.status).toBe(401)
         return done()
       })
@@ -32,7 +32,7 @@ describe('Verify token controller tests', () => {
         .post('/api/v1/auth/token')
         .set('Cookie', `token=${jwt}`)
         .end((err, res) => {
-          if (err) return done()
+          if (err) return done(err)
           expect(res.status).toBe(200)
           return done()
         })

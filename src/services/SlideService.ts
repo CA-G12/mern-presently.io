@@ -1,6 +1,6 @@
 import { SlideInterface } from '../interfaces/SlideInterface'
-import SlidesRepository from '../repositories/PresentationRepository'
-// TODO: import GenericError from '../helpers/GenericError'
+import SlidesRepository from '../repositories/SlideRepository'
+import GenericError from '../helpers/GenericError'
 
 const updatePresentaion = async ({
   id,
@@ -18,8 +18,9 @@ const updatePresentaion = async ({
   })
 
   if (!updatededPresentaion) {
-    // TODO: throw new GenericError('Failed to edit this presentation')
+    throw new GenericError('Slide not found')
   }
+
   return updatededPresentaion
 }
 

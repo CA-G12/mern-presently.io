@@ -25,7 +25,7 @@ describe('Updating presentation tests', () => {
         if (err) return done()
         expect(res.status).toBe(200)
         expect(res.body.message).toBe('Edited Successfuly')
-        expect(res.body.updatededPresentaion).toEqual({
+        expect(res.body.slide).toEqual({
           __v: 0,
           _id: '63503d4745241d6bca02ef9c',
           title: 'this is the newest title2',
@@ -48,7 +48,7 @@ describe('Updating presentation tests', () => {
       })
       .end((err, res) => {
         if (err) return done()
-        expect(res.status).toBe(400)
+        expect(res.status).toBe(404)
         return done()
       })
   })

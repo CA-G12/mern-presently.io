@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import AuthRoute from './AuthRoute'
-import PresentationRoute from './PresentationRoute'
+import PresentationRoute from './SlideRoute'
 
 const router = express.Router()
 

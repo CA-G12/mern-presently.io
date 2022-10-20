@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express'
-import SlidesService from '../services/PresentationService'
+import SlidesService from '../services/SlideService'
 import { UpdatePresentaionRequest } from '../interfaces/SlideInterface'
 
 const updatePresentation = async (
@@ -21,12 +21,12 @@ const updatePresentation = async (
 
     res
       .status(200)
-      .json({ message: 'Edited Successfuly', updatededPresentaion })
+      .json({ message: 'Edited Successfuly', slide: updatededPresentaion })
   } catch (error: unknown) {
     const exception = error as Error
 
-    if (exception.name !== 'Generic Error') return next(error)
-    res.status(400).json({ message: exception.message })
+    if (exception.name !== 'GenericError') return next(error)
+    res.status(404).json({ message: exception.message })
   }
 }
 

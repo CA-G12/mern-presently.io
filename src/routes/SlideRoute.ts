@@ -1,5 +1,5 @@
 import express from 'express'
-import { updatePresentation } from '../controllers/PresentationController'
+import { updatePresentation } from '../controllers/SlideController'
 
 const router = express.Router()
 

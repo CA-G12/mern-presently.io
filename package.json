@@ -7,7 +7,7 @@
     "init": "npm i && npm run prepare && cd client && npm i",
     "build:client": "npm run build",
     "build": "tsc",
-    "start": "npm run build && cross-env NODE_ENV=production node dist/",
+    "start": "cross-env NODE_ENV=production node dist/",
     "dev": "cross-env NODE_ENV=development nodemon src/",
     "test": "cross-env NODE_ENV=test DATABASE_URL=mongodb://localhost:27017/test jest --no-cache --detectOpenHandles --runInBand",
     "tsc-lint": "tsc --noEmit && cd client && npm run tsc-lint",

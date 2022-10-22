@@ -1,7 +1,7 @@
 import { SlideInterface } from './SlideInterface'
 
 export interface UserInterface {
-  id?: string
+  id: string
   name: string
   email: string
   password: string
@@ -13,5 +13,5 @@ export interface UserOptions {
   name?: string
 }
 export interface UserRequest {
-  body: UserInterface
+  body: Omit<UserInterface, 'id'>
 }

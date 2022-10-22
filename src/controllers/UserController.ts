@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express'
 import UserService from '../services/UserService'
-import { signupvalidationschema } from '../validation/userValidation'
+import { signupValidationSchema } from '../validation/userValidation'
 import { validator } from '../validation/validator'
 import { UserRequest } from '../interfaces/UserInterface'
 import GenericError from '../helpers/GenericError'
@@ -14,7 +14,7 @@ const createUser = async (
     const { name, email, password } = req.body
 
     const validationResult = await validator({
-      schema: signupvalidationschema,
+      schema: signupValidationSchema,
       data: { name, email, password }
     })
     if (!validationResult.isValid)

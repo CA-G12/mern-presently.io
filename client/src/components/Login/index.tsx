@@ -16,11 +16,11 @@ export default function Login() {
 
   const onSubmit = handleSubmit(data => {
     authenticate(data).then(
-      response => {
+      () => {
         setloginError(null)
         // TODO: navigate to the main page
       },
-      error => {
+      (error: any) => {
         setloginError(error.response.data.message)
       }
     )

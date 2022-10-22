@@ -2,14 +2,14 @@ import { SlideInterface } from '../interfaces/SlideInterface'
 import SlidesRepository from '../repositories/SlideRepository'
 import GenericError from '../helpers/GenericError'
 
-const updatePresentaion = async ({
+const updatePresentation = async ({
   id,
   title,
   link,
   isPrivate,
   isLive
 }: SlideInterface) => {
-  const updatededPresentaion = await SlidesRepository.updatePresentaion({
+  const updatedPresentation = await SlidesRepository.updatePresentation({
     id,
     title,
     link,
@@ -17,11 +17,11 @@ const updatePresentaion = async ({
     isLive
   })
 
-  if (!updatededPresentaion) {
+  if (!updatedPresentation) {
     throw new GenericError('Slide not found')
   }
 
-  return updatededPresentaion
+  return updatedPresentation
 }
 
-export default { updatePresentaion }
+export default { updatePresentation }

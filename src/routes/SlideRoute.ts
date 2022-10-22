@@ -1,8 +1,8 @@
 import express from 'express'
-import { updatePresentation } from '../controllers/SlideController'
+import SlideController from '../controllers/SlideController'
 
 const router = express.Router()
 
-router.put('/:id', updatePresentation)
+router.put('/:id', SlideController.updatePresentation)
 
 export default router

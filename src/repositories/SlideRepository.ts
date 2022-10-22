@@ -1,7 +1,7 @@
 import Slide from '../models/SlideModel'
 import { SlideInterface } from '../interfaces/SlideInterface'
 
-const updatePresentaion = ({
+const updatePresentation = ({
   id,
   link,
   isLive,
@@ -21,4 +21,4 @@ const updatePresentaion = ({
     { new: true }
   )
 
-export default { updatePresentaion }
+export default { updatePresentation }

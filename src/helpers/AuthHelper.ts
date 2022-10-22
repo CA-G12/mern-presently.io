@@ -1,8 +1,13 @@
 import { verify, sign, VerifyErrors } from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt'
 import environment from '../config/environment'
 
 const { secretKey } = environment.jwt
+
+const checkPassword = (password: string, hashedPassword: string) => {
+  return bcrypt.compare(password, hashedPassword)
+}
 
 const verifyToken = (token: string): Promise<{ id: number }> =>
   new Promise((resolve, reject) => {
@@ -32,4 +37,4 @@ const generateAccessToken = async (id: string): Promise<string> =>
 
 const hashPassword = (password: string) => bcrypt.hash(password, 10)
 
-export default { verifyToken, generateAccessToken, hashPassword }
+export default { verifyToken, generateAccessToken, checkPassword, hashPassword }

@@ -39,3 +39,45 @@ describe('Verify token controller tests', () => {
     })
   })
 })
+
+describe('Authentication tests', () => {
+  test('Validation error: password is not valid', done => {
+    request(app)
+      .post('/api/v1/auth/authenticate')
+      .send({
+        email: 'zayan@gmail.com',
+        password: '123456'
+      })
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(400)
+        return done()
+      })
+  })
+  test('Invlaid credentials: wrong password', done => {
+    request(app)
+      .post('/api/v1/auth/authenticate')
+      .send({
+        email: 'zayan@gmail.com',
+        password: 'Zayan@1'
+      })
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(400)
+        return done()
+      })
+  })
+  test('Valid credentials', done => {
+    request(app)
+      .post('/api/v1/auth/authenticate')
+      .send({
+        email: 'zayan@gmail.com',
+        password: 'Zayan@123'
+      })
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(200)
+        return done()
+      })
+  })
+})

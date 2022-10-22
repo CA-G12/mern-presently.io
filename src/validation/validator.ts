@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import yup from 'yup'
 
-export const validate = async ({
+export const validator = async ({
   schema,
   data
 }: {

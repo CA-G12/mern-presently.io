@@ -1,15 +1,19 @@
-import { Response } from 'express'
+import { NextFunction, Response } from 'express'
 import UserService from '../services/UserService'
 import { signupvalidationschema } from '../validation/userValidation'
-import { validate } from '../validation/validator'
-import { UserRequest } from 'interfaces/UserInterface'
+import { validator } from '../validation/validator'
+import { UserRequest } from '../interfaces/UserInterface'
 import GenericError from '../helpers/GenericError'
 
-const createUser = async (req: UserRequest, res: Response) => {
+const createUser = async (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { name, email, password } = req.body
 
-    const validationResult = await validate({
+    const validationResult = await validator({
       schema: signupvalidationschema,
       data: { name, email, password }
     })
@@ -17,11 +21,11 @@ const createUser = async (req: UserRequest, res: Response) => {
       throw new GenericError(validationResult.error)
 
     await UserService.createUser({ name, email, password })
-    res.status(201).json({ message: 'signup sucessfully' })
+    res.status(201).json({ message: 'sucess' })
   } catch (error: unknown) {
     const exception = error as Error
 
-    if (exception.name !== 'GenericError') throw exception
+    if (exception.name !== 'GenericError') return next(exception)
     return res.status(400).send({ error: exception.message })
   }
 }

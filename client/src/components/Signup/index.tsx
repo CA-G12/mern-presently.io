@@ -14,7 +14,7 @@ const SignUp = () => {
     formState: { errors }
   } = useForm()
 
-  const onSubmit = (async (data: UserInterface) => {
+  const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
     try {
       setSubmitting(true)
       await authApi.handleSignup(data)
@@ -79,12 +79,17 @@ const SignUp = () => {
               message: 'Please input your password'
             },
             maxLength: {
-              value: 26,
+              value: 128,
               message: 'the maximum length is 26'
             },
             minLength: {
-              value: 6,
+              value: 8,
               message: 'the minimum length is 6'
+            },
+            pattern: {
+              value:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message: 'invalid password'
             }
           })}
         />

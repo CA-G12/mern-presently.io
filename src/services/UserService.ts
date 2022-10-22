@@ -3,7 +3,11 @@ import { UserInterface } from '../interfaces/UserInterface'
 import UserRepository from '../repositories/UserRepository'
 import GenericError from '../helpers/GenericError'
 
-const createUser = async ({ name, email, password }: UserInterface) => {
+const createUser = async ({
+  name,
+  email,
+  password
+}: Omit<UserInterface, 'id'>) => {
   const userByEmail = await UserRepository.getUser({ email })
   if (userByEmail) throw new GenericError('email is in use')
 

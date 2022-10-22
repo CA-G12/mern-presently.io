@@ -24,7 +24,7 @@ describe('Updating presentation tests', () => {
       .end((err, res) => {
         if (err) return done()
         expect(res.status).toBe(200)
-        expect(res.body.message).toBe('Edited Successfuly')
+        expect(res.body.message).toBe('success')
         expect(res.body.slide).toEqual({
           __v: 0,
           _id: '63503d4745241d6bca02ef9c',
@@ -48,12 +48,12 @@ describe('Updating presentation tests', () => {
       })
       .end((err, res) => {
         if (err) return done()
-        expect(res.status).toBe(404)
+        expect(res.status).toBe(400)
         return done()
       })
   })
 
-  test('Updating a presentation with invlaid argument type: is Live must be boolean', done => {
+  test('Updating a presentation with invalid argument type: is Live must be boolean', done => {
     request(app)
       .put('/api/v1/slides/63504041bbc0c96a25b05765')
       .send({
@@ -64,7 +64,7 @@ describe('Updating presentation tests', () => {
       })
       .end((err, res) => {
         if (err) return done()
-        expect(res.status).toBe(500)
+        expect(res.status).toBe(400)
         return done()
       })
   })

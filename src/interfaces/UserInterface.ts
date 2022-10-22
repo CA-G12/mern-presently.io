@@ -8,11 +8,7 @@ export interface UserInterface {
   password: string
   slides?: SlideInterface[]
 }
-export interface UserOptions {
-  id?: number
-  email?: string
-  name?: string
-}
+
 export interface UserRequest extends Request {
   body: Omit<UserInterface, 'id'>
 }

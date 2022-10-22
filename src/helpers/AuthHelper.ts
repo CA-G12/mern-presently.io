@@ -1,6 +1,5 @@
 import { verify, sign, VerifyErrors } from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import bcrypt from 'bcrypt'
 import environment from '../config/environment'
 
 const { secretKey } = environment.jwt

@@ -15,7 +15,7 @@ const updatePresentation = async (
 
   const validate = await validator({
     schema: slideSchema,
-    data: { id, title, link, isPrivate, isLive }
+    data: { title, link, isPrivate, isLive }
   })
   console.log(validate.isValid)
   if (!validate.isValid) {

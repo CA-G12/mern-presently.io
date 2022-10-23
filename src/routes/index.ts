@@ -1,9 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express'
 import AuthRoute from './AuthRoute'
+import UserRoute from './UserRoute'
 
 const router = express.Router()
 
 router.use('/auth', AuthRoute)
+router.use('/users', UserRoute)
 
 router.use(
   (_error: Error, req: Request, res: Response, _next: NextFunction) => {

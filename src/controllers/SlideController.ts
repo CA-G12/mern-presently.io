@@ -51,6 +51,7 @@ const createSlide = async (
     const exception = error as Error
 
     if (exception.name !== 'GenericError') return next(exception)
+
     res.status(400).json({ message: exception.message })
   }
 }

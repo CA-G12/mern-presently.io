@@ -1,7 +1,9 @@
-import express, { NextFunction, Request, Response } from 'express'
 import AuthRoute from './AuthRoute'
 import SlideRoute from './SlideRoute'
 import UserRoute from './UserRoute'
+import express from 'express'
+import { Request, Response, NextFunction } from 'express'
+
 const router = express.Router()
 
 router.use('/auth', AuthRoute)
@@ -12,5 +14,4 @@ router.use(
     res.status(500).send({ error: 'Internal Server Error' })
   }
 )
-
 export default router

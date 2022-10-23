@@ -3,7 +3,7 @@ import { Navbar, LandingCard, Footer } from '../../components'
 import './style.css'
 import { ReactComponent as Wave } from '../../assets/waves/wave.svg'
 
-export default function Landing() {
+const Landing = () => {
   return (
     <Fragment>
       <header className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex flex-col justify-center p-4 background-grid">
@@ -30,3 +30,5 @@ export default function Landing() {
     </Fragment>
   )
 }
+
+export default Landing

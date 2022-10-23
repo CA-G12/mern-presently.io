@@ -1,7 +1,7 @@
 import './styles.css'
 import { Navbar, PresentationCard, AddPresentation } from '../../components'
 
-function Presentations() {
+const Presentations = () => {
   return (
     <div>
       <div className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex flex-col justify-center p-4">

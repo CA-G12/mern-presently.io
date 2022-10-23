@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { AxiosError } from 'axios'
 import { authenticate } from '../../api/auth'
 
 type FormData = {
@@ -7,23 +8,30 @@ type FormData = {
   password: string
 }
 export default function Login() {
-  const [loginError, setloginError] = useState(null)
+  const [loginError, setLoginError] = useState('')
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>()
 
-  const onSubmit = handleSubmit(data => {
-    authenticate(data).then(
-      response => {
-        setloginError(null)
-        // TODO: navigate to the main page
-      },
-      error => {
-        setloginError(error.response.data.message)
+  const onSubmit = handleSubmit(async data => {
+    try {
+      await authenticate(data)
+      // TODO: navigate to the main page
+    } catch (error) {
+      const exception = error as AxiosError
+
+      if (exception.request) {
+        setLoginError('Something went wrong.')
+      } else {
+        if (exception.response?.status === 400) {
+          setLoginError('Please double check your password and email.')
+        } else {
+          setLoginError('Something went wrong.')
+        }
       }
-    )
+    }
   })
 
   return (

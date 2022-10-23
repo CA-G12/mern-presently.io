@@ -1,6 +1,5 @@
 import { NextFunction, Response } from 'express'
 import { SlideRequestInterface } from '../interfaces/UserInterface'
-import SlideService from '../services/SlideService'
 import { CreateSlideRequest } from '../interfaces/SlideInterface'
 import SlideService from '../services/SlideService'
 import { slideSchema } from '../validation/slideValidation'

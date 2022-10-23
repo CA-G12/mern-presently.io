@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as yup from 'yup'
+import yup from 'yup'
 
 export const validator = async ({
   schema,

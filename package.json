@@ -1,5 +1,5 @@
 {
-  "name": "ca-projects-starter",
+  "name": "presently",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "npm run build && cross-env NODE_ENV=production node dist/",
     "dev": "cross-env NODE_ENV=development nodemon src/",
-    "test": "cross-env NODE_ENV=test DATABASE_URL=mongodb://localhost:27017/test jest --no-cache --detectOpenHandles --runInBand",
+    "test": "cross-env NODE_ENV=test DATABASE_URL=mongodb://localhost:27017/test jest --no-cache --runInBand",
     "tsc-lint": "tsc --noEmit && cd client && npm run tsc-lint",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/ && cd client && npm run lint",
     "prepare": "husky install"
@@ -47,9 +47,9 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
+    "yup": "^0.32.11",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
-    "supertest": "^6.3.0",
-    "yup": "^0.32.11"
+    "supertest": "^6.3.0"
   }
 }

@@ -20,5 +20,6 @@ const slideSchema = new Schema<SlideInterface>({
     required: true
   }
 })
+
 const Slide = mongoose.model('Slide', slideSchema)
 export default Slide

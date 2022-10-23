@@ -3,6 +3,6 @@ import SlideController from '../controllers/SlideController'
 
 const router = express.Router()
 
-router.post('/', SlideController.createPresentation)
+router.post('/', SlideController.createSlide)
 
 export default router

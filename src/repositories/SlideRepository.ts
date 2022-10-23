@@ -1,7 +1,6 @@
 import Slide from '../models/SlideModel'
-import { CreatePresentationOptions } from '../interfaces/SlideInterface'
+import { CreateSlideOptions } from '../interfaces/SlideInterface'
 
-const createPresentation = (presentation: CreatePresentationOptions) =>
-  Slide.create({ ...presentation })
+const createSlide = (slide: CreateSlideOptions) => Slide.create({ ...slide })
 
-export default { createPresentation }
+export default { createSlide }

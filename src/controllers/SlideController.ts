@@ -1,12 +1,12 @@
 import { NextFunction, Response } from 'express'
-import { CreatePresentationRequest } from '../interfaces/SlideInterface'
+import { CreateSlideRequest } from '../interfaces/SlideInterface'
 import SlideService from '../services/SlideService'
 import { slideSchema } from '../validation/slideValidation'
 import { validator } from '../validation/validator'
 import GenericError from '../helpers/GenericError'
 
-const createPresentation = async (
-  req: CreatePresentationRequest,
+const createSlide = async (
+  req: CreateSlideRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -22,14 +22,14 @@ const createPresentation = async (
       throw new GenericError(validate.error)
     }
 
-    const presentation = await SlideService.createPresentation({
+    const slide = await SlideService.createSlide({
       link,
       title,
       isPrivate,
       isLive
     })
 
-    res.status(200).send({ message: 'success', presentation })
+    res.status(200).send({ message: 'success', slide })
   } catch (error: unknown) {
     const exception = error as Error
 
@@ -38,4 +38,4 @@ const createPresentation = async (
   }
 }
 
-export default { createPresentation }
+export default { createSlide }

@@ -1,5 +1,5 @@
 import Slide from '../models/SlideModel'
-import { CreateSlideOptions } from 'interfaces/SlideInterface'
+import { CreateSlideOptions } from '../interfaces/SlideInterface'
 
 const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
 const findSlide = (id: string) => Slide.findById(id)

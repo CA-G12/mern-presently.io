@@ -5,6 +5,7 @@ import SlideService from '../services/SlideService'
 import { slideSchema } from '../validation/slideValidation'
 import { validator } from '../validation/validator'
 import GenericError from '../helpers/GenericError'
+
 const deleteSlide = async (
   req: SlideRequestInterface,
   res: Response,

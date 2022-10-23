@@ -1,3 +1,4 @@
 import Slide from '../models/SlideModel'
 const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
-export default { deleteSlide }
+const findSlide = (id: string) => Slide.findById(id)
+export default { deleteSlide, findSlide }

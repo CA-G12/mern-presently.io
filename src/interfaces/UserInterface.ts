@@ -24,3 +24,8 @@ export interface GetUserOptions {
   id?: number
   email?: string
 }
+export interface SlideRequestInterface extends Request {
+  params: {
+    id: string
+  }
+}

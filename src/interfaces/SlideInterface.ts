@@ -18,3 +18,7 @@ export interface CreateSlideOptions {
 export interface CreateSlideRequest extends Request {
   body: Omit<SlideInterface, 'id'>
 }
+
+export interface DeleteSlideReqeust extends Request {
+  params: { id: string }
+}

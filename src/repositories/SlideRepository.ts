@@ -1,13 +1,7 @@
 import Slide from '../models/SlideModel'
 import { SlideInterface } from '../interfaces/SlideInterface'
 
-const updatePresentation = ({
-  id,
-  link,
-  isLive,
-  isPrivate,
-  title
-}: SlideInterface) =>
+const updateSlide = ({ id, link, isLive, isPrivate, title }: SlideInterface) =>
   Slide.findByIdAndUpdate(
     id,
     {
@@ -21,4 +15,4 @@ const updatePresentation = ({
     { new: true }
   )
 
-export default { updatePresentation }
+export default { updateSlide }

@@ -8,7 +8,7 @@ export interface SlideInterface {
   isLive: boolean
 }
 
-export interface UpdatePresentationRequest extends Request {
+export interface UpdateSlideRequest extends Request {
   body: SlideInterface
   params: { id: string }
 }

@@ -1,12 +1,12 @@
 import { NextFunction, Response } from 'express'
 import SlideService from '../services/SlideService'
-import { UpdatePresentationRequest } from '../interfaces/SlideInterface'
+import { UpdateSlideRequest } from '../interfaces/SlideInterface'
 import { slideSchema } from '../validation/slideValidation'
 import { validator } from '../validation/validator'
 import GenericError from '../helpers/GenericError'
 
-const updatePresentation = async (
-  req: UpdatePresentationRequest,
+const updateSlide = async (
+  req: UpdateSlideRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -23,7 +23,7 @@ const updatePresentation = async (
   }
 
   try {
-    const updatedPresentation = await SlideService.updatePresentation({
+    const updatedSlide = await SlideService.updateSlide({
       id,
       title,
       link,
@@ -31,7 +31,7 @@ const updatePresentation = async (
       isLive
     })
 
-    res.status(200).json({ message: 'success', slide: updatedPresentation })
+    res.status(200).json({ message: 'success', slide: updatedSlide })
   } catch (error: unknown) {
     const exception = error as Error
 
@@ -40,4 +40,4 @@ const updatePresentation = async (
   }
 }
 
-export default { updatePresentation }
+export default { updateSlide }

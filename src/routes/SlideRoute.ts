@@ -3,6 +3,6 @@ import SlideController from '../controllers/SlideController'
 
 const router = express.Router()
 
-router.put('/:id', SlideController.updatePresentation)
+router.put('/:id', SlideController.updateSlide)
 
 export default router

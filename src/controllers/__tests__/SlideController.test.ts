@@ -14,10 +14,10 @@ afterAll(() => {
 describe('Updating presentation tests', () => {
   test('Updating a presentation with a valid id', done => {
     request(app)
-      .put('/api/v1/slides/63503d4745241d6bca02ef9c')
+      .put('/api/v1/slides/6354e09c8db6d713dc246b95')
       .send({
-        title: 'this is the newest title2',
-        link: 'https://hackmd/user/newlink.hackmd',
+        title: 'Test change title',
+        link: 'https://eslint.org/',
         isLive: false,
         isPrivate: true
       })
@@ -25,14 +25,7 @@ describe('Updating presentation tests', () => {
         if (err) return done()
         expect(res.status).toBe(200)
         expect(res.body.message).toBe('success')
-        expect(res.body.slide).toEqual({
-          __v: 0,
-          _id: '63503d4745241d6bca02ef9c',
-          title: 'this is the newest title2',
-          link: 'https://hackmd/user/newlink.hackmd',
-          isLive: false,
-          isPrivate: true
-        })
+        expect(res.body.slide.title).toBe('Test change title')
         return done()
       })
   })

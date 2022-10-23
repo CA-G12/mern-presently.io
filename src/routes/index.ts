@@ -9,7 +9,6 @@ router.use('/slides', SlideRoute)
 
 router.use(
   (_error: Error, req: Request, res: Response, _next: NextFunction) => {
-    console.log(_error)
     res.status(500).send({ error: 'Internal Server Error' })
   }
 )

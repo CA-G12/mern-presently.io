@@ -13,16 +13,15 @@ const updateSlide = async (
   const { id } = req.params
   const { title, link, isPrivate, isLive } = req.body
 
-  const validate = await validator({
-    schema: slideSchema,
-    data: { title, link, isPrivate, isLive }
-  })
-  console.log(validate.isValid)
-  if (!validate.isValid) {
-    throw new GenericError(validate.error)
-  }
-
   try {
+    const validate = await validator({
+      schema: slideSchema,
+      data: { title, link, isPrivate, isLive }
+    })
+    if (!validate.isValid) {
+      throw new GenericError(validate.error)
+    }
+
     const updatedSlide = await SlideService.updateSlide({
       id,
       title,

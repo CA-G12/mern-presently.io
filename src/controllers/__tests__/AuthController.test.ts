@@ -72,8 +72,8 @@ describe('Authentication tests', () => {
     request(app)
       .post('/api/v1/auth/authenticate')
       .send({
-        email: 'zayan@gmail.com',
-        password: 'Zayan@123'
+        email: 'ahmed@gmail.com',
+        password: 'Asd@123456'
       })
       .end((err, res) => {
         if (err) return done()

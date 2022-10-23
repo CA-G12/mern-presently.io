@@ -14,7 +14,7 @@ const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
       data: { email, password }
     })
     if (!validate.isValid) {
-      throw new GenericError('Validation Error')
+      throw new GenericError(validate.error)
     }
 
     const { user, token } = await AuthService.login({

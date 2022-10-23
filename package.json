@@ -50,7 +50,6 @@
     "yup": "^0.32.11",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
-    "supertest": "^6.3.0",
-    "yup": "^0.32.11"
+    "supertest": "^6.3.0"
   }
 }

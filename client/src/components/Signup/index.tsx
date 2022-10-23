@@ -23,12 +23,12 @@ const SignUp = () => {
     } catch (error) {
       const exception = error as AxiosError
       if (exception.request) {
-        setSignupError('Something went wrong')
+        setSignupError('Something went wrong.')
       } else {
         if (exception.response?.status === 400) {
-          setSignupError('email is already exist ')
+          setSignupError('An account with this email already exists.')
         } else {
-          setSignupError('server error ')
+          setSignupError('Something went wrong.')
         }
       }
     }
@@ -102,6 +102,7 @@ const SignUp = () => {
         <button
           className="w-4/5 h-12 bg-blue-500 text-white text-base font-normal max-w-[400px] rounded-[10px] border-none outline-none "
           type="submit"
+          disabled={isSubmitting}
         >
           Sign Up
         </button>

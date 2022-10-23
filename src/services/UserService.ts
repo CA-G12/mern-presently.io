@@ -9,14 +9,14 @@ const createUser = async ({
   password
 }: Omit<UserInterface, 'id'>) => {
   const userByEmail = await UserRepository.getUser({ email })
-  if (userByEmail) throw new GenericError('email is in use')
+  if (userByEmail) throw new GenericError('email is already in use')
 
-  const hashedpassword = await AuthHelper.hashPassword(password)
+  const hashedPassword = await AuthHelper.hashPassword(password)
 
   await createUser({
     name,
     email,
-    password: hashedpassword,
+    password: hashedPassword,
     slides: []
   })
 }

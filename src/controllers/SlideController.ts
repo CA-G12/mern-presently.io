@@ -4,6 +4,7 @@ import SlideService from '../services/SlideService'
 import { slideSchema } from '../validation/slideValidation'
 import { validator } from '../validation/validator'
 import GenericError from '../helpers/GenericError'
+import { DeleteSlideReqeust } from '../interfaces/SlideInterface'
 
 const createSlide = async (
   req: CreateSlideRequest,
@@ -38,4 +39,18 @@ const createSlide = async (
   }
 }
 
-export default { createSlide }
+const deletePresentation = async (
+  req: DeleteSlideReqeust,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params
+    await SlideService.deletePresentation(id)
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export default { createSlide, deletePresentation }

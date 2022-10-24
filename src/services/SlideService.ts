@@ -9,4 +9,7 @@ const createSlide = async ({
 }: CreateSlideOptions) =>
   await SlideRepository.createSlide({ title, link, isLive, isPrivate })
 
-export default { createSlide }
+const deletePresentation = async (id: string) =>
+  await SlideRepository.deleteSlide(id)
+
+export default { deletePresentation, createSlide }

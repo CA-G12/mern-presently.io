@@ -6,6 +6,7 @@ const config = {
   database: environment.database.uri,
   dropDatabase: true
 }
+
 const seeder = new Seeder(config)
 
 const collections = [

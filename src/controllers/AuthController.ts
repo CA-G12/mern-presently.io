@@ -2,7 +2,7 @@ import { Response, NextFunction } from 'express'
 import AuthService from '../services/AuthService'
 import { VerifyTokenRequest, LoginRequest } from '../interfaces/AuthInterface'
 import { validator } from '../validation/validator'
-import { authSchema } from '../validation/authValidtaion'
+import { authSchema } from '../validation/authValidation'
 import GenericError from '../helpers/GenericError'
 
 const login = async (req: LoginRequest, res: Response, next: NextFunction) => {

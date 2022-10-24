@@ -1,5 +1,5 @@
 import { SlideInterface } from '../interfaces/SlideInterface'
-import SlidesRepository from '../repositories/SlideRepository'
+import SlideRepository from '../repositories/SlideRepository'
 import GenericError from '../helpers/GenericError'
 
 const updateSlide = async ({
@@ -9,7 +9,7 @@ const updateSlide = async ({
   isPrivate,
   isLive
 }: SlideInterface) => {
-  const updatedSlide = await SlidesRepository.updateSlide({
+  const updatedSlide = await SlideRepository.updateSlide({
     id,
     title,
     link,
@@ -24,4 +24,10 @@ const updateSlide = async ({
   return updatedSlide
 }
 
-export default { updateSlide }
+const checkSlideOwner = async (userId: string, slideId: string) => {
+  const checkSlideOwner = await SlideRepository.checkSlideOwner(userId, slideId)
+
+  return checkSlideOwner
+}
+
+export default { updateSlide, checkSlideOwner }

@@ -10,10 +10,16 @@ const updateSlide = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params
   const { title, link, isPrivate, isLive } = req.body
+  const { id: slideId } = req.params
+  const { id: userId } = res.locals.user
 
   try {
+    const isAuthorized = await SlideService.checkSlideOwner(userId, slideId)
+    if (!isAuthorized) {
+      res.status(400).json({ message: 'unauthorized' })
+    }
+
     const validate = await validator({
       schema: slideSchema,
       data: { title, link, isPrivate, isLive }
@@ -23,7 +29,7 @@ const updateSlide = async (
     }
 
     const updatedSlide = await SlideService.updateSlide({
-      id,
+      id: slideId,
       title,
       link,
       isPrivate,

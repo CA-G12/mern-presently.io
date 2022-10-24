@@ -9,6 +9,6 @@ export interface SlideInterface {
 }
 
 export interface UpdateSlideRequest extends Request {
-  body: SlideInterface
+  body: Omit<SlideInterface, 'id'>
   params: { id: string }
 }

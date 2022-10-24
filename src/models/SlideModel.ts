@@ -13,10 +13,12 @@ const slideSchema = new Schema<SlideInterface>({
   },
   isPrivate: {
     type: Boolean,
+    default: true,
     required: true
   },
   isLive: {
     type: Boolean,
+    default: false,
     required: true
   }
 })

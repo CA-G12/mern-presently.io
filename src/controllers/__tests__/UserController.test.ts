@@ -1,12 +1,26 @@
+import request from 'supertest'
+import app from '../../app'
 import dbConnection from '../../db/connection'
+import seed from '../../db/seeders/SeedDB'
 
 beforeAll(() => {
-  return dbConnection()
+  dbConnection()
+  seed()
 })
 
-test('dummy test', () => {
-  expect(1).toBe(1)
-})
 afterAll(() => {
   return dbConnection().then(db => db.connection.close())
+})
+
+describe('create new user', () => {
+  test('Create new user fail due to invalid input', done => {
+    request(app)
+      .post('/api/v1/users/signup')
+      .send({ name: 'test', email: 'test', password: 'test' })
+      .end((err, res) => {
+        if (err) return done(err)
+        expect(res.status).toBe(400)
+        return done()
+      })
+  })
 })

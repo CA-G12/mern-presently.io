@@ -47,9 +47,10 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
-    "yup": "^0.32.11",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
-    "supertest": "^6.3.0"
+    "socket.io": "^4.5.3",
+    "supertest": "^6.3.0",
+    "yup": "^0.32.11"
   }
 }

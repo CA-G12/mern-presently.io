@@ -3,7 +3,7 @@ import AuthHelper from '../../helpers/AuthHelper'
 
 import app from '../../app'
 import dbConnection from '../../db/connection'
-import seed from '../../db/seeding'
+import seed from '../../db/seeders/SeedDB'
 
 beforeAll(() => {
   dbConnection()
@@ -75,7 +75,7 @@ describe('Authentication tests', () => {
       .post('/api/v1/auth/authenticate')
       .send({
         email: 'ahmed@gmail.com',
-        password: 'Asd@1234'
+        password: 'Asd@123456'
       })
       .end((err, res) => {
         if (err) return done()

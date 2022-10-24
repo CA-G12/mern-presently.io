@@ -8,10 +8,10 @@ const checkPassword = (password: string, hashedPassword: string) => {
   return bcrypt.compare(password, hashedPassword)
 }
 
-const verifyToken = (token: string): Promise<{ id: number }> =>
+const verifyToken = (token: string): Promise<{ id: string }> =>
   new Promise((resolve, reject) => {
     verify(token, secretKey, (error: VerifyErrors | null, decoded: unknown) => {
-      const decodedJWT = decoded as { id: number }
+      const decodedJWT = decoded as { id: string }
 
       if (error) {
         reject(error)

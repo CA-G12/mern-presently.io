@@ -26,7 +26,7 @@ const updateSlide = async ({
 
 const checkSlideOwner = async (userId: string, slideId: string) => {
   const checkSlideOwner = await SlideRepository.checkSlideOwner(userId, slideId)
-
+  console.log(' in service', checkSlideOwner)
   return checkSlideOwner
 }
 

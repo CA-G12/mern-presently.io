@@ -4,7 +4,6 @@ import Presentations from './pages/Presentation'
 import io from 'socket.io-client'
 import { useEffect } from 'react'
 import Login from './components/Login/index'
-import { Socket } from 'socket.io'
 
 const socket = io('http://localhost:4000')
 

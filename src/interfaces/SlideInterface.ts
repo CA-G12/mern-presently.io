@@ -13,9 +13,6 @@ export interface UpdateSlideRequest extends Request {
   params: { id: string }
 }
 
-export interface onSlideOperations extends SlideInterface {
-  userId: string
-}
 export interface CreateSlideOptions {
   title: string
   link: string

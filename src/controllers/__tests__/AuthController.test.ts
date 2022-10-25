@@ -5,8 +5,9 @@ import dbConnection from '../../db/connection'
 import seed from '../../db/seeders/SeedDB'
 
 beforeAll(() => {
-  dbConnection()
-  seed()
+  return dbConnection()
+    .then(() => seed())
+    .then(res => console.log(res))
 })
 
 afterAll(() => {
@@ -47,7 +48,7 @@ describe('Authentication tests', () => {
     request(app)
       .post('/api/v1/auth/authenticate')
       .send({
-        email: 'zayan@gmail.com',
+        email: 'ahmed@gmail.com',
         password: '123456'
       })
       .end((err, res) => {

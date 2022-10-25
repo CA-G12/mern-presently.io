@@ -117,11 +117,15 @@ const seed = () => {
   return seeder
     .import(collections)
     .then(() => {
-      console.log('Database Seeded Successfully!')
+      return 'Database Seeded Successfully!'
     })
     .catch(err => {
-      console.log('Failed to seed the database!', err)
+      return `Failed to seed the database! ${err}`
     })
+}
+
+if (environment.nodeEnv === 'development' || 'production') {
+  seed().then(message => console.log(message))
 }
 
 export default seed

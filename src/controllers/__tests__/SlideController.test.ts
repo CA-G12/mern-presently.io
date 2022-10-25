@@ -5,8 +5,9 @@ import dbConnection from '../../db/connection'
 import seed from '../../db/seeders/SeedDB'
 
 beforeAll(() => {
-  dbConnection()
-  seed()
+  return dbConnection()
+    .then(() => seed())
+    .then(res => console.log(res))
 })
 
 afterAll(() => {

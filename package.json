@@ -11,7 +11,9 @@
     "test": "cross-env NODE_ENV=test DATABASE_URL=mongodb://localhost:27017/test jest --no-cache --runInBand",
     "tsc-lint": "tsc --noEmit && cd client && npm run tsc-lint",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/ && cd client && npm run lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "seedDB:dev": "cross-env NODE_ENV=development ts-node src/db/seeders/SeedDB.ts",
+    "seedDB:prod": "cross-env NODE_ENV=production ts-node src/db/seeders/SeedDB.ts"
   },
   "keywords": [],
   "author": "",

@@ -124,7 +124,7 @@ const seed = () => {
     })
 }
 
-if (environment.nodeEnv === 'development' || 'production') {
+if (environment.nodeEnv === 'development') {
   seed().then(message => console.log(message))
 }
 

@@ -12,7 +12,7 @@
     "tsc-lint": "tsc --noEmit && cd client && npm run tsc-lint",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/ && cd client && npm run lint",
     "prepare": "husky install",
-    "seedDB:dev": "cross-env NODE_ENV=development ts-node-dev src/db/seeders/SeedDB.ts"
+    "seed-db": "ts-node src/scripts/seedDB.ts"
   },
   "keywords": [],
   "author": "",

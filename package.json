@@ -6,12 +6,13 @@
   "scripts": {
     "init": "npm i && npm run prepare && cd client && npm i",
     "build": "tsc",
-    "start": "npm run build && cross-env NODE_ENV=production node dist/",
+    "start": "cross-env NODE_ENV=production node dist/",
     "dev": "cross-env NODE_ENV=development nodemon src/",
     "test": "cross-env NODE_ENV=test DATABASE_URL=mongodb://localhost:27017/test jest --no-cache --runInBand",
     "tsc-lint": "tsc --noEmit && cd client && npm run tsc-lint",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/ && cd client && npm run lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "seed-db": "ts-node src/scripts/seedDB.ts"
   },
   "keywords": [],
   "author": "",
@@ -48,6 +49,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
+    "mongo-seeding": "^3.7.2",
     "mongoose": "^6.6.5",
     "socket.io": "^4.5.3",
     "supertest": "^6.3.0",

@@ -1,9 +1,12 @@
 import request from 'supertest'
 import app from '../../app'
 import dbConnection from '../../db/connection'
+import seed from '../../db/seeders/SeedDB'
 
 beforeAll(() => {
   return dbConnection()
+    .then(() => seed())
+    .then(res => console.log(res))
 })
 
 afterAll(() => {

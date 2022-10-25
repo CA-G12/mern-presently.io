@@ -1,15 +1,5 @@
-import { Server } from 'socket.io'
-import { DefaultEventsMap } from 'socket.io/dist/typed-events'
-
-const disconnect =
-  (
-    io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
-    socket: any
-  ) =>
-  async () => {
-    socket.on('message', () => {
-      console.log('user disconnected')
-    })
-  }
+const disconnect = (socket: any) => async () => {
+  console.log(`${socket.id} has disconnected`)
+}
 
 export default disconnect

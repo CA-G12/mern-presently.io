@@ -3,7 +3,7 @@ import compression from 'compression'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import router from './routes'
-import cors from '../src/config/cors'
+import corsConfigs from '../src/config/cors'
 
 const app = express()
 
@@ -12,7 +12,7 @@ app.use([
   cookieParser(),
   express.json(),
   express.urlencoded({ extended: false }),
-  cors({ ...cors })
+  cors({ ...corsConfigs })
 ])
 
 app.use('/api/v1', router)

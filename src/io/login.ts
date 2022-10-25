@@ -2,9 +2,9 @@ import { Server } from 'socket.io'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
 
 const login =
-  (socket: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) =>
-  async (socket: { id: any }) => {
-    console.log('fff')
+  (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) =>
+  async () => {
+    io.emit('newLoggedUser', 'user has logged in')
   }
 
 export default login

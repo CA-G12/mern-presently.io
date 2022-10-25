@@ -8,30 +8,34 @@ import mongoose from 'mongoose'
 
 const createSlide = (slide: CreateSlideOptions) => Slide.create({ ...slide })
 
-const updateSlide = ({ id, link, isLive, isPrivate, title }: SlideInterface) =>
-  Slide.findByIdAndUpdate(
-    id,
+const updateSlide = ({
+  id,
+  link,
+  isLive,
+  isPrivate,
+  title
+}: SlideInterface) => {
+  return User.findOneAndUpdate(
+    { 'slides._id': new mongoose.Types.ObjectId(id) },
     {
-      $set: {
-        title,
-        link,
-        isLive,
-        isPrivate
+      $addToSet: {
+        'groups.$[elem]': { title, link, isLive, isPrivate }
       }
     },
-    { new: true }
+    { returnNewDocument: true }
   )
+}
 
-const isSlideOwner = (userId: string, slideId: string) => {
-  console.log(userId, slideId)
-  console.log('slideId', slideId)
-  User.findOne({
-    'slides._id': new mongoose.Types.ObjectId(slideId)
-  }).then(u => console.log('here', u))
+const checkSlide = (slideId: string) => {
+  try {
+    const result = User.findOne({
+      'slides._id': new mongoose.Types.ObjectId(slideId)
+    })
 
-  return ''
+    return result
+  } catch (error) {}
 }
 
 const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
 
-export default { deleteSlide, createSlide, updateSlide, isSlideOwner }
+export default { deleteSlide, createSlide, updateSlide, checkSlide }

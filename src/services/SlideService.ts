@@ -2,7 +2,7 @@ import SlideRepository from '../repositories/SlideRepository'
 import GenericError from '../helpers/GenericError'
 import {
   CreateSlideOptions,
-  onSlideOperations
+  SlideInterface
 } from '../interfaces/SlideInterface'
 
 const createSlide = async ({
@@ -13,20 +13,21 @@ const createSlide = async ({
 }: CreateSlideOptions) =>
   await SlideRepository.createSlide({ title, link, isLive, isPrivate })
 
+const checkSlide = async (slideId: string) => {
+  const isSlide = await SlideRepository.checkSlide(slideId)
+
+  if (isSlide) {
+    return isSlide
+  } else throw new GenericError('Slide not found')
+}
+
 const updateSlide = async ({
-  userId,
   id,
   title,
   link,
   isPrivate,
   isLive
-}: onSlideOperations) => {
-  const isAuthorized = await checkSlideOwner(userId, id)
-  console.log('isAuthorized', isAuthorized)
-  if (!isAuthorized) {
-    throw new GenericError('Unauthorized')
-  }
-
+}: SlideInterface) => {
   const updatedSlide = await SlideRepository.updateSlide({
     id,
     title,
@@ -36,21 +37,13 @@ const updateSlide = async ({
   })
 
   if (!updatedSlide) {
-    throw new GenericError('Slide not found')
+    throw new GenericError('Update Failed')
   }
 
   return updatedSlide
 }
 
-const checkSlideOwner = async (userId: string, slideId: string) => {
-  const checkSlideOwner = await SlideRepository.isSlideOwner(userId, slideId)
-  console.log(' in checkSlideOwner service', checkSlideOwner)
-
-  if (checkSlideOwner.length > 0) return true
-  return false
-}
-
 const deletePresentation = async (id: string) =>
   await SlideRepository.deleteSlide(id)
 
-export default { deletePresentation, createSlide, updateSlide, checkSlideOwner }
+export default { deletePresentation, createSlide, updateSlide, checkSlide }

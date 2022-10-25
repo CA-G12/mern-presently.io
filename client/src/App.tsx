@@ -1,24 +1,25 @@
+import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
+import ws from 'socket.io-client'
+
 import Landing from './pages/Landing/Landing'
 import Presentations from './pages/Presentation'
-import io from 'socket.io-client'
-import { useEffect } from 'react'
 import Login from './components/Login/index'
 
-const socket = io('http://localhost:4000')
+const socket = ws('http://localhost:4000', {
+  autoConnect: false
+})
 
 const App = () => {
   useEffect(() => {
     socket.open()
 
-    //Login
     socket.emit('login', 'UserId has logged in')
 
     socket.on('loggedOutUser', msg => {
       console.log(msg)
     })
 
-    //Logout
     socket.emit('logout', 'user has logged out')
 
     socket.on('newLoggedUser', msg => {

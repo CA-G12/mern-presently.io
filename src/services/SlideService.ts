@@ -1,6 +1,17 @@
-import { onSlideOperations } from '../interfaces/SlideInterface'
 import SlideRepository from '../repositories/SlideRepository'
 import GenericError from '../helpers/GenericError'
+import {
+  CreateSlideOptions,
+  onSlideOperations
+} from '../interfaces/SlideInterface'
+
+const createSlide = async ({
+  title,
+  link,
+  isLive,
+  isPrivate
+}: CreateSlideOptions) =>
+  await SlideRepository.createSlide({ title, link, isLive, isPrivate })
 
 const updateSlide = async ({
   userId,
@@ -39,4 +50,7 @@ const checkSlideOwner = async (userId: string, slideId: string) => {
   return false
 }
 
-export default { updateSlide, checkSlideOwner }
+const deletePresentation = async (id: string) =>
+  await SlideRepository.deleteSlide(id)
+
+export default { deletePresentation, createSlide, updateSlide, checkSlideOwner }

@@ -1,7 +1,12 @@
 import Slide from '../models/SlideModel'
-import { SlideInterface } from '../interfaces/SlideInterface'
+import {
+  CreateSlideOptions,
+  SlideInterface
+} from '../interfaces/SlideInterface'
 import User from '../models/UserModel'
 import mongoose from 'mongoose'
+
+const createSlide = (slide: CreateSlideOptions) => Slide.create({ ...slide })
 
 const updateSlide = ({ id, link, isLive, isPrivate, title }: SlideInterface) =>
   Slide.findByIdAndUpdate(
@@ -27,4 +32,6 @@ const isSlideOwner = (userId: string, slideId: string) => {
   return ''
 }
 
-export default { updateSlide, isSlideOwner }
+const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
+
+export default { deleteSlide, createSlide, updateSlide, isSlideOwner }

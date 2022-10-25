@@ -16,3 +16,17 @@ export interface UpdateSlideRequest extends Request {
 export interface onSlideOperations extends SlideInterface {
   userId: string
 }
+export interface CreateSlideOptions {
+  title: string
+  link: string
+  isLive?: boolean
+  isPrivate?: boolean
+}
+
+export interface CreateSlideRequest extends Request {
+  body: Omit<SlideInterface, 'id'>
+}
+
+export interface DeleteSlideReqeust extends Request {
+  params: { id: string }
+}

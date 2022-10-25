@@ -34,4 +34,6 @@ const generateAccessToken = async (id: string): Promise<string> =>
     })
   })
 
-export default { verifyToken, generateAccessToken, checkPassword }
+const hashPassword = (password: string) => bcrypt.hash(password, 10)
+
+export default { verifyToken, generateAccessToken, checkPassword, hashPassword }

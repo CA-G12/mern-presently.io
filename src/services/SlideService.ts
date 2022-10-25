@@ -28,7 +28,7 @@ const updateSlide = async ({
   isPrivate,
   isLive
 }: SlideInterface) => {
-  const updatedSlide = await SlideRepository.updateSlide({
+  const updatedUserDocument = await SlideRepository.updateSlide({
     id,
     title,
     link,
@@ -36,11 +36,11 @@ const updateSlide = async ({
     isLive
   })
 
-  if (!updatedSlide) {
+  if (!updatedUserDocument) {
     throw new GenericError('Update Failed')
   }
 
-  return updatedSlide
+  return updatedUserDocument
 }
 
 const deletePresentation = async (id: string) =>

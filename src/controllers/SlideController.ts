@@ -30,7 +30,7 @@ const updateSlide = async (
       throw new GenericError(validate.error)
     }
 
-    const updatedSlide = await SlideService.updateSlide({
+    const updatedUserDocument = await SlideService.updateSlide({
       id: slideId,
       title,
       link,
@@ -38,7 +38,7 @@ const updateSlide = async (
       isLive
     })
 
-    res.status(200).json({ message: 'success', slide: updatedSlide })
+    res.status(200).json({ message: 'success', updatedUserDocument })
   } catch (error: unknown) {
     const exception = error as Error
 

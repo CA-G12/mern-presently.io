@@ -18,11 +18,11 @@ const updateSlide = ({
   return User.findOneAndUpdate(
     { 'slides._id': new mongoose.Types.ObjectId(id) },
     {
-      $addToSet: {
-        'groups.$[elem]': { title, link, isLive, isPrivate }
+      $set: {
+        'slides.$[elem]': { _id: id, title, isLive, isPrivate, link }
       }
     },
-    { returnNewDocument: true }
+    { arrayFilters: [{ 'elem._id': id }], new: true }
   )
 }
 
@@ -33,7 +33,9 @@ const checkSlide = (slideId: string) => {
     })
 
     return result
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)

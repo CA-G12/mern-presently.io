@@ -1,11 +1,14 @@
 import { NextFunction, Response } from 'express'
+
 import SlideService from '../services/SlideService'
 import GenericError from '../helpers/GenericError'
 import { validator } from '../validation/validator'
 import { slideSchema } from '../validation/slideValidation'
-import { CreateSlideRequest } from '../interfaces/SlideInterface'
-import { UpdateSlideRequest } from '../interfaces/SlideInterface'
-import { DeleteSlideRequest } from '../interfaces/SlideInterface'
+import {
+  CreateSlideRequest,
+  UpdateSlideRequest,
+  DeleteSlideRequest
+} from '../interfaces/SlideInterface'
 
 const updateSlide = async (
   req: UpdateSlideRequest,
@@ -17,8 +20,8 @@ const updateSlide = async (
   const { id: userId } = res.locals.user
 
   try {
-    const user = await SlideService.checkSlide(slideId)
-    if (user._id.toString() !== userId) {
+    const slideOwner = await SlideService.checkSlide(slideId)
+    if (slideOwner._id.toString() !== userId) {
       return res.status(401).json({ message: 'unauthorized' })
     }
 
@@ -46,6 +49,7 @@ const updateSlide = async (
     res.status(400).json({ message: exception.message })
   }
 }
+
 const createSlide = async (
   req: CreateSlideRequest,
   res: Response,

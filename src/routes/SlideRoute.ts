@@ -5,7 +5,7 @@ import { verifyAccessToken } from '../middlewares/AuthMiddleware'
 const router = express.Router()
 
 router.put('/:id', verifyAccessToken, SlideController.updateSlide)
-router.post('/', SlideController.createSlide)
-router.delete('/:id', SlideController.deletePresentation)
+router.post('/', verifyAccessToken, SlideController.createSlide)
+router.delete('/:id', verifyAccessToken, SlideController.deletePresentation)
 
 export default router

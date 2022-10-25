@@ -12,3 +12,7 @@ export interface UpdateSlideRequest extends Request {
   body: Omit<SlideInterface, 'id'>
   params: { id: string }
 }
+
+export interface onSlideOperations extends SlideInterface {
+  userId: string
+}

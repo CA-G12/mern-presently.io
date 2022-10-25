@@ -17,12 +17,14 @@ const updateSlide = ({ id, link, isLive, isPrivate, title }: SlideInterface) =>
     { new: true }
   )
 
-const checkSlideOwner = (userId: string, slideId: string) => {
+const isSlideOwner = (userId: string, slideId: string) => {
   console.log(userId, slideId)
   console.log('slideId', slideId)
   User.findOne({
-    'slides._id': '123ea40720dcfa02e0ae42db'
+    'slides._id': new mongoose.Types.ObjectId(slideId)
   }).then(u => console.log('here', u))
+
+  return ''
 }
 
-export default { updateSlide, checkSlideOwner }
+export default { updateSlide, isSlideOwner }

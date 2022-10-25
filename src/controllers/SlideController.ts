@@ -15,12 +15,6 @@ const updateSlide = async (
   const { id: userId } = res.locals.user
 
   try {
-    const isAuthorized = await SlideService.checkSlideOwner(userId, slideId)
-    console.log('isAuthorized', isAuthorized)
-    // if (!isAuthorized) {
-    //   res.status(401).json({ message: 'unauthorized' })
-    // }
-
     const validate = await validator({
       schema: slideSchema,
       data: { title, link, isPrivate, isLive }
@@ -30,6 +24,7 @@ const updateSlide = async (
     }
 
     const updatedSlide = await SlideService.updateSlide({
+      userId,
       id: slideId,
       title,
       link,

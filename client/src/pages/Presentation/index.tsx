@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import './styles.css'
 import { Navbar, PresentationCard, AddPresentation } from '../../components'
 import Test from '../../components/test'

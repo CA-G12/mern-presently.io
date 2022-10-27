@@ -4,7 +4,6 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import environment from './config/environment'
 import router from './routes'
-import multer from 'multer'
 
 const app = express()
 

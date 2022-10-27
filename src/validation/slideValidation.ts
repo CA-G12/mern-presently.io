@@ -11,3 +11,9 @@ export const slideSchema = yup.object().shape({
   isLive: yup.boolean(),
   isPrivate: yup.boolean()
 })
+
+export const shortenLinkSchema = yup.object().shape({
+  shortenLink: yup
+    .string()
+    .matches(/rebrand.ly\/[A-Za-z0-9]/i, 'invalid shortened link')
+})

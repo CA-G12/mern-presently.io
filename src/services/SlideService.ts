@@ -3,7 +3,7 @@ import FormData from 'form-data'
 import SlideRepository from '../repositories/SlideRepository'
 import { CreateSlideOptions, FileInterface } from '../interfaces/SlideInterface'
 import SlideHelpers from '../helpers/SlideHelpers'
-import GenericError from 'helpers/GenericError'
+import GenericError from '../helpers/GenericError'
 
 const createSlide = async ({
   title,
@@ -18,7 +18,7 @@ const deletePresentation = async (id: string) =>
 
 const uploadSlide = async (
   file: Express.Multer.File | FileInterface | undefined
-): Promise<{ secure_url: string }> => {
+): Promise<string> => {
   if (!file) {
     throw new GenericError('file not provided')
   }
@@ -37,13 +37,13 @@ const uploadSlide = async (
   return SlideHelpers.uploadFile()
 }
 
-const addSlide = async (id: string, link: string) => {
+const addSlideToUser = async (id: string, link: string) => {
   const linkSegment = link.split('/')[1]
 
   const slide = await SlideRepository.createSlide({
     link: linkSegment
   })
 
-  return SlideRepository.addSlide(slide, id)
+  return SlideRepository.addSlideToUser(slide, id)
 }
-export default { deletePresentation, createSlide, uploadSlide, addSlide }
+export default { deletePresentation, createSlide, uploadSlide, addSlideToUser }

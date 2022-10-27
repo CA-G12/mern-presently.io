@@ -2,10 +2,10 @@ import { NextFunction, Response } from 'express'
 
 import { CreateSlideRequest } from '../interfaces/SlideInterface'
 import SlideService from '../services/SlideService'
-import { slideSchema } from '../validation/slideValidation'
+import { slideSchema, shortenLinkSchema } from '../validation/slideValidation'
 import { validator } from '../validation/validator'
 import GenericError from '../helpers/GenericError'
-import { DeleteSlideReqeust } from '../interfaces/SlideInterface'
+import { DeleteSlideRequest } from '../interfaces/SlideInterface'
 import { FileUploadRequest } from '../interfaces/SlideInterface'
 import SlideHelpers from '../helpers/SlideHelpers'
 
@@ -18,13 +18,20 @@ const uploadSlide = async (
     const file = req.file
     const { id } = res.locals.user
 
-    const uploadLink = await SlideService.uploadSlide(file)
+    const secureLink = await SlideService.uploadSlide(file)
 
-    const { secure_url: secureLink } = uploadLink
+    const shortenLink = await SlideHelpers.shortenLink(secureLink)
 
-    const shortUrl = await SlideHelpers.shortenLink(secureLink)
+    const validateShortLink = await validator({
+      schema: shortenLinkSchema,
+      data: { shortenLink }
+    })
 
-    await SlideService.addSlide(id, shortUrl)
+    if (!validateShortLink.isValid) {
+      throw new GenericError(validateShortLink.error)
+    }
+
+    await SlideService.addSlideToUser(id, shortenLink)
 
     res.status(200).send({ message: 'success' })
   } catch (error: unknown) {
@@ -69,7 +76,7 @@ const createSlide = async (
 }
 
 const deletePresentation = async (
-  req: DeleteSlideReqeust,
+  req: DeleteSlideRequest,
   res: Response,
   next: NextFunction
 ) => {

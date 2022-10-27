@@ -8,7 +8,7 @@ import rebrandlyConfig from '../config/rebrandly'
 
 cloudinary.v2.config(cloudinaryConfig)
 
-const uploadFile = async (): Promise<any> =>
+const uploadFile = async (): Promise<string> =>
   new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(
       join(__dirname, '..', '..', 'assets', 'latestSlides.md'),
@@ -17,13 +17,16 @@ const uploadFile = async (): Promise<any> =>
         if (error) {
           reject(error)
         } else {
-          resolve(uploadFile)
+          const uploadedFile = uploadFile as { secure_url: string }
+
+          const { secure_url } = uploadedFile
+          resolve(secure_url)
         }
       }
     )
   })
 
-const shortenLink = async (link: string): Promise<string> => {
+const shortenLink = async (link: string | null): Promise<string> => {
   const headers = rebrandlyConfig
   const endpoint = 'https://api.rebrandly.com/v1/links'
   const linkRequest = {

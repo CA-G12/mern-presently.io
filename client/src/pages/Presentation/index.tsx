@@ -1,11 +1,9 @@
 import './styles.css'
 import { Navbar, PresentationCard, AddPresentation } from '../../components'
-import Test from '../../components/test'
 
 const Presentations = () => {
   return (
     <div>
-      <Test />
       <div className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex flex-col justify-center p-4">
         <Navbar isSinged={true} />
       </div>

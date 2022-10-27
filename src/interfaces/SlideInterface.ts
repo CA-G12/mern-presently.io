@@ -9,7 +9,7 @@ export interface SlideInterface {
 }
 
 export interface CreateSlideOptions {
-  title: string
+  title?: string
   link: string
   isLive?: boolean
   isPrivate?: boolean
@@ -21,4 +21,20 @@ export interface CreateSlideRequest extends Request {
 
 export interface DeleteSlideReqeust extends Request {
   params: { id: string }
+}
+
+export interface FileInterface {
+  fieldname: string
+  originalname: string
+  encoding: string
+  mimetype: string
+  destination: string
+  filename: string
+  path: string
+  size: number
+}
+
+export interface FileUploadRequest extends Request {
+  File?: Express.Multer.File | FileInterface | null
+  body: { token: string }
 }

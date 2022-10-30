@@ -8,7 +8,7 @@ export interface SlideInterface {
   isLive: boolean
 }
 
-export interface UpdateSlideRequest extends Request {
+export interface OperationOnSlideRequest extends Request {
   body: Omit<SlideInterface, 'id'>
   params: { id: string }
 }
@@ -20,10 +20,10 @@ export interface CreateSlideOptions {
   isPrivate?: boolean
 }
 
-export interface CreateSlideRequest extends Request {
-  body: Omit<SlideInterface, 'id'>
-}
+export type CreateSlideRequest = Omit<OperationOnSlideRequest, 'params'>
 
-export interface DeleteSlideRequest extends Request {
-  params: { id: string }
-}
+export type DeleteSlideRequest = Omit<OperationOnSlideRequest, 'body'>
+
+export type UpdateSlideRequest = OperationOnSlideRequest
+
+export type GetSlideRequest = Omit<OperationOnSlideRequest, 'body'>

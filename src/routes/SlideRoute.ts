@@ -4,6 +4,7 @@ import { verifyAccessToken } from '../middlewares/AuthMiddleware'
 
 const router = express.Router()
 
+router.get('/:id', SlideController.getSlide)
 router.put('/:id', verifyAccessToken, SlideController.updateSlide)
 router.post('/', verifyAccessToken, SlideController.createSlide)
 router.delete('/:id', verifyAccessToken, SlideController.deletePresentation)

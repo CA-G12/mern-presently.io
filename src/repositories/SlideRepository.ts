@@ -27,4 +27,6 @@ const checkSlide = (slideId: string) =>
 
 const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
 
-export default { deleteSlide, createSlide, updateSlide, checkSlide }
+const findSlide = (id: string) => User.findOne({ 'slides._id': id })
+
+export default { deleteSlide, createSlide, updateSlide, checkSlide, findSlide }

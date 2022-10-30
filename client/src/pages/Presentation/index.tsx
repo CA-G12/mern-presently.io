@@ -1,29 +1,42 @@
 import './styles.css'
-import { Navbar, PresentationCard, AddPresentation } from '../../components'
+import { useEffect, useState } from 'react'
 
-const Presentations = () => {
+import './styles.css'
+import axios from '../../api/axios'
+import Slider from '../../components/Slider'
+import { ReactComponent as Bell } from '../../assets/SlidesIcons/bell.svg'
+import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
+
+const Presentation = () => {
+  const [slides, setSlides] = useState([])
+
+  // TODO: test, remove it later
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: '/test'
+    }).then(data => setSlides(data.data.split('<hr>')))
+  })
+
   return (
-    <div>
-      <div className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex flex-col justify-center p-4">
-        <Navbar isSinged={true} />
+    <div className="h-screen flex flex-col">
+      {/* ------------------------Header------------------------*/}
+      <div className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex align-middle justify-between p-4">
+        <button>
+          <Bell strokeWidth={2} />
+        </button>
+        <button>
+          <Share strokeWidth={2} />
+        </button>
       </div>
-      <div className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 mb-0 min-w-fit flex flex-col justify-center">
-        <div className="self-middle flex lg:justify-start justify-center">
-          <p className="text-small font-semiBold mt-10 mb-10 aline-center">
-            All Presentations
-          </p>
-        </div>
-
-        <div className="flex gap-7 gap-y-4 flex-wrap p-2 pl-0 pr-0 lg:justify-start lg:items-start justify-center items-center">
-          <PresentationCard newId="1" type="uploaded" />
-          <PresentationCard newId="2" type="uploaded" />
-          <PresentationCard newId="3" type="uploaded" />
-          <PresentationCard newId="4" type="uploading" />
-          <AddPresentation />
+      {/* ------------------------Slides------------------------ */}
+      <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
+        <div>
+          <Slider slides={slides[length - 1] ? slides : slides.slice(0, -1)} />
         </div>
       </div>
     </div>
   )
 }
 
-export default Presentations
+export default Presentation

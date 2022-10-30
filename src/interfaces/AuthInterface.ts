@@ -11,5 +11,4 @@ export interface Token {
 
 export interface VerifyTokenRequest extends Request {
   cookies: { token: string }
-  body: { token: string }
 }

@@ -53,6 +53,7 @@
     "markdown-it": "^13.0.1",
     "mongo-seeding": "^3.7.2",
     "mongoose": "^6.6.5",
+    "socket.io": "^4.5.3",
     "supertest": "^6.3.0",
     "yup": "^0.32.11"
   }

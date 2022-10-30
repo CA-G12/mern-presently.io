@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import fs from 'fs'
 import MarkdownIt from 'markdown-it'
 
-import environment from './config/environment'
+import corsConfigs from './config/cors'
 import router from './routes'
 
 const app = express()
@@ -15,10 +15,7 @@ app.use([
   cookieParser(),
   express.json(),
   express.urlencoded({ extended: false }),
-  cors({
-    origin: environment.client.origin,
-    credentials: true // access-control-allow-credentials:true
-  })
+  cors(corsConfigs)
 ])
 
 // TODO: test, remove it later. lines: 24-41

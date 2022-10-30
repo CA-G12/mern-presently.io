@@ -18,7 +18,7 @@ app.use([
   cors(corsConfigs)
 ])
 
-// TODO: test, remove it later. lines: 24-41
+// TODO: test, remove it later. lines: 21-38
 const md = new MarkdownIt({
   html: false,
   xhtmlOut: false,

@@ -27,7 +27,7 @@ describe('Updating presentation tests', () => {
       })
       .end((err, res) => {
         if (err) return done()
-        expect(res.status).toBe(401)
+        expect(res.status).toBe(403)
         return done()
       })
   })

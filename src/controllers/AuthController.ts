@@ -37,7 +37,7 @@ const verifyToken = async (req: VerifyTokenRequest, res: Response) => {
 
     res.status(200).send({ message: 'success', user })
   } catch (error) {
-    res.status(401).send({ error: 'unauthorized' })
+    res.status(403).send({ error: 'unauthorized' })
   }
 }
 

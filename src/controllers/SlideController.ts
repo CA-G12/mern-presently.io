@@ -22,7 +22,7 @@ const updateSlide = async (
   try {
     const slideOwner = await SlideService.checkSlide(slideId)
     if (slideOwner._id.toString() !== userId) {
-      return res.status(401).json({ message: 'unauthorized' })
+      return res.status(403).json({ message: 'unauthorized' })
     }
 
     const validate = await validator({

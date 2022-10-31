@@ -53,6 +53,9 @@ module.exports = {
       6: '12px',
       8: '16px'
     },
+    maxHeight: {
+      65: '65vh'
+    },
     extend: {}
   }
 }

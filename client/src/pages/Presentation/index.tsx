@@ -10,6 +10,7 @@ import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
 
 const Presentation = () => {
   const [slides, setSlides] = useState([])
+  const [openComments, setOpenComments] = useState(false)
 
   // TODO: test, remove it later
   useEffect(() => {
@@ -24,10 +25,13 @@ const Presentation = () => {
       {/* ------------------------Header------------------------*/}
       <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 w-screen flex justify-between items-start">
         <div>
-          <button className="focus:outline-none hover:scale-125">
+          <button
+            className="focus:outline-none hover:scale-125"
+            onClick={() => setOpenComments(!openComments)}
+          >
             <Bell strokeWidth={2} />
           </button>
-          <Comments />
+          {openComments && <Comments />}
         </div>
         <button className="focus:outline-none hover:scale-125">
           <Share strokeWidth={2} />

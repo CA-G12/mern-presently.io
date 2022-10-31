@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom'
 
 import './styles.css'
 import { useKeyPress } from '../../hooks/useKeyPress'
-import { ReactComponent as LeftArrow } from '../../assets/SlidesIcons/leftArrow.svg'
-import { ReactComponent as RightArrow } from '../../assets/SlidesIcons/rightArrow.svg'
-import { ReactComponent as Home } from '../../assets/SlidesIcons/home.svg'
 
 interface ISliderProps {
   slides: string[]

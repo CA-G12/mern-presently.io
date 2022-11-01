@@ -15,6 +15,7 @@ const collections = [
     name: 'users',
     documents: [
       {
+        _id: new mongoose.Types.ObjectId('6357f708ed0c57054008e300'),
         name: 'Ahmed',
         email: 'ahmed@gmail.com',
         password:
@@ -37,6 +38,7 @@ const collections = [
         ]
       },
       {
+        _id: new mongoose.Types.ObjectId('8977f708ed0c57054008e400'),
         name: 'Fadi',
         email: 'fadi@gmail.com',
         password:
@@ -52,6 +54,7 @@ const collections = [
         ]
       },
       {
+        _id: new mongoose.Types.ObjectId('2587f708ed0c57054008e500'),
         name: 'Zayan',
         email: 'zayanh@gmail.com',
         password:

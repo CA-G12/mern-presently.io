@@ -1,6 +1,7 @@
 import express from 'express'
-import SlideController from '../controllers/SlideController'
 import multer from 'multer'
+
+import SlideController from '../controllers/SlideController'
 import { verifyAccessToken } from '../middlewares/AuthMiddleware'
 
 const router = express.Router()
@@ -23,5 +24,7 @@ router.post(
 )
 
 router.delete('/:id', SlideController.deletePresentation)
+router.put('/:id', verifyAccessToken, SlideController.updateSlide)
+router.delete('/:id', verifyAccessToken, SlideController.deletePresentation)
 
 export default router

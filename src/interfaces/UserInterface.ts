@@ -21,6 +21,6 @@ export interface UserResponseInterface {
 }
 
 export interface GetUserOptions {
-  id?: number
+  id?: string
   email?: string
 }

@@ -14,7 +14,7 @@ const verifyAccessToken = async (
     res.locals.user = user
     next()
   } catch (err) {
-    res.status(401).json({ error: 'unauthorized' })
+    res.status(403).json({ error: 'unauthorized' })
   }
 }
 

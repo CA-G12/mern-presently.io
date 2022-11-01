@@ -22,7 +22,7 @@ describe('Verify token controller tests', () => {
       )
       .end((err, res) => {
         if (err) return done(err)
-        expect(res.status).toBe(401)
+        expect(res.status).toBe(403)
         return done()
       })
   })

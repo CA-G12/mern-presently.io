@@ -2,7 +2,7 @@ import { Response, NextFunction } from 'express'
 import AuthService from '../services/AuthService'
 import { VerifyTokenRequest, LoginRequest } from '../interfaces/AuthInterface'
 import { validator } from '../validation/validator'
-import { authSchema } from '../validation/authValidtaion'
+import { authSchema } from '../validation/authValidation'
 import GenericError from '../helpers/GenericError'
 
 const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
@@ -14,7 +14,7 @@ const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
       data: { email, password }
     })
     if (!validate.isValid) {
-      throw new GenericError('Validation Error')
+      throw new GenericError(validate.error)
     }
 
     const { user, token } = await AuthService.login({
@@ -37,7 +37,7 @@ const verifyToken = async (req: VerifyTokenRequest, res: Response) => {
 
     res.status(200).send({ message: 'success', user })
   } catch (error) {
-    res.status(401).send({ error: 'unauthorized' })
+    res.status(403).send({ error: 'unauthorized' })
   }
 }
 

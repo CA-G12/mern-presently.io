@@ -8,6 +8,11 @@ export interface SlideInterface {
   isLive: boolean
 }
 
+export interface UpdateSlideRequest extends Request {
+  body: Omit<SlideInterface, 'id'>
+  params: { id: string }
+}
+
 export interface CreateSlideOptions {
   title?: string
   link: string
@@ -39,4 +44,8 @@ export interface CreateSlideRequest extends Request {
     isLive: boolean
     token: string
   }
+}
+  
+export interface DeleteSlideRequest extends Request {
+  params: { id: string }
 }

@@ -11,7 +11,7 @@ const createSlide = async ({
   isLive,
   isPrivate
 }: CreateSlideOptions) =>
-  await SlideRepository.createSlide({ title, link, isLive, isPrivate })
+  await SlideRepository.createSlide({ title: title, link, isLive, isPrivate })
 
 const deletePresentation = async (id: string) =>
   await SlideRepository.deleteSlide(id)

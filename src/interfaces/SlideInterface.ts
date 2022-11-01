@@ -15,10 +15,6 @@ export interface CreateSlideOptions {
   isPrivate?: boolean
 }
 
-export interface CreateSlideRequest extends Request {
-  body: Omit<SlideInterface, 'id'>
-}
-
 export interface DeleteSlideRequest extends Request {
   params: { id: string }
 }
@@ -34,7 +30,7 @@ export interface FileInterface {
   size: number
 }
 
-export interface FileUploadRequest extends Request {
-  File?: Express.Multer.File | FileInterface | null
-  body: { token: string }
+export interface CreateSlideRequest extends Request {
+  File?: Express.Multer.File | FileInterface 
+  body:{title: string; link: string; isPrivate: boolean; isLive: boolean; token: string;}
 }

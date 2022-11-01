@@ -2,45 +2,11 @@ import { NextFunction, Response } from 'express'
 
 import { CreateSlideRequest } from '../interfaces/SlideInterface'
 import SlideService from '../services/SlideService'
-import { slideSchema, shortenLinkSchema } from '../validation/slideValidation'
+import { slideSchema } from '../validation/slideValidation'
 import { validator } from '../validation/validator'
 import GenericError from '../helpers/GenericError'
 import { DeleteSlideRequest } from '../interfaces/SlideInterface'
-import { FileUploadRequest } from '../interfaces/SlideInterface'
 import SlideHelpers from '../helpers/SlideHelpers'
-
-const uploadSlide = async (
-  req: FileUploadRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const file = req.file
-    const { id } = res.locals.user
-
-    const secureLink = await SlideService.uploadSlide(file)
-
-    const shortenLink = await SlideHelpers.shortenLink(secureLink)
-
-    const validateShortLink = await validator({
-      schema: shortenLinkSchema,
-      data: { shortenLink }
-    })
-
-    if (!validateShortLink.isValid) {
-      throw new GenericError(validateShortLink.error)
-    }
-
-    await SlideService.addSlideToUser(id, shortenLink)
-
-    res.status(200).send({ message: 'success' })
-  } catch (error: unknown) {
-    const exception = error as Error
-
-    if (exception.name !== 'GenericError') return next(exception)
-    res.status(400).json({ message: exception.message })
-  }
-}
 
 const createSlide = async (
   req: CreateSlideRequest,
@@ -48,19 +14,34 @@ const createSlide = async (
   next: NextFunction
 ) => {
   try {
-    const { title, link, isPrivate, isLive } = req.body
+    const { title, isPrivate, isLive } = req.body
+    const file = req.file
+
+    if (!file) {
+      throw new GenericError('Please Provide a File')
+    }
+
+    if (file.mimetype !== 'text/markdown') {
+      throw new GenericError('Please Provide a Valid File Type')
+    }
+
+    const cloudinaryLink = await SlideService.uploadSlide(file)
+
+    const link = await SlideHelpers.shortenLink(cloudinaryLink)
 
     const validate = await validator({
       schema: slideSchema,
-      data: { title, link, isPrivate, isLive }
+      data: { link, title, isPrivate, isLive }
     })
 
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }
 
+    const linkSegment = link.split('/')[1]
+
     const slide = await SlideService.createSlide({
-      link,
+      link: linkSegment,
       title,
       isPrivate,
       isLive
@@ -89,4 +70,4 @@ const deletePresentation = async (
   }
 }
 
-export default { createSlide, deletePresentation, uploadSlide }
+export default { createSlide, deletePresentation }

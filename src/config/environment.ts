@@ -35,7 +35,7 @@ const config = {
     apiKey: CLOUDINARY_API_KEY,
     apiSecret: CLOUDINARY_API_SECRET
   },
-  readonly: {
+  rebrandly: {
     apiKey: REBRANDLY_API_KEY
   }
 }

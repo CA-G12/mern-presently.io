@@ -15,14 +15,13 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
-
-router.post('/', SlideController.createSlide)
-router.delete('/:id', SlideController.deletePresentation)
 router.post(
-  '/upload',
+  '/',
   verifyAccessToken,
-  upload.single('file'),
-  SlideController.uploadSlide
+  upload.single('File'),
+  SlideController.createSlide
 )
+
+router.delete('/:id', SlideController.deletePresentation)
 
 export default router

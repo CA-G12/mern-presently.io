@@ -1,7 +1,8 @@
+import { useState } from 'react'
+
 import { ReactComponent as PresentationIcon } from '../../assets/PresentationIcons/presentationIcon.svg'
 import { ReactComponent as LivePresentation } from '../../assets/PresentationIcons/livePresentation.svg'
 import { ReactComponent as DeletePresentation } from '../../assets/PresentationIcons/deletePresentation.svg'
-import { useState } from 'react'
 
 interface IPresentationCardOProps {
   newId: string

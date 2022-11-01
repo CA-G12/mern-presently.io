@@ -12,7 +12,12 @@ const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
     <div className="relative flex flex-col justify-between bg-grey-background w-72 rounded-1">
       <div className="absolute mt-4 right-4">
         <a className="hover:bg-blue-default cursor-pointer">
-          <DeletePresentation />
+          <DeletePresentation
+            strokeWidth={2}
+            height={20}
+            width={20}
+            className="hover:text-danger"
+          />
         </a>
       </div>
       <div className="flex mt-4 ml-4 mb-8">

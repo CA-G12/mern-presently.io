@@ -1,19 +1,51 @@
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { ReactComponent as PresentationIcon } from '../../assets/PresentationIcons/presentationIcon.svg'
 import { ReactComponent as LivePresentation } from '../../assets/PresentationIcons/livePresentation.svg'
 import { ReactComponent as DeletePresentation } from '../../assets/PresentationIcons/deletePresentation.svg'
+import { presentationApi } from '../../api'
 
 interface IPresentationCardOProps {
   newId: string
   type: string
 }
 
+const handleAlert = (status: string, message: string) => {
+  if (status === 'success') {
+    toast.success(message, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 3000
+    })
+  }
+
+  if (status === 'error') {
+    toast.error(message, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 3000
+    })
+  }
+}
+
 const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
+  const handleDeletingSlide = async () => {
+    try {
+      //TODO: test till we get the id for each card
+      //  await presentationApi.deleteSlide('456ea40720dcfa02e0ae42db')
+      await presentationApi.deleteSlide(newId)
+      handleAlert('success', 'Deleted Successfully')
+    } catch {
+      handleAlert('error', 'Something went wrong')
+    }
+  }
+
   return (
     <div className="relative flex flex-col justify-between bg-grey-background w-72 rounded-1">
-      <div className="absolute mt-4 right-4">
-        <a className="hover:bg-blue-default cursor-pointer">
+      <ToastContainer />
+      <div className="absolute mt-3 right-4">
+        <button className="hover:scale-125" onClick={handleDeletingSlide}>
           <DeletePresentation />
-        </a>
+        </button>
       </div>
       <div className="flex mt-4 ml-4 mb-8">
         <PresentationIcon className="mr-4" />

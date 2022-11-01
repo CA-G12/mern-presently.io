@@ -82,18 +82,26 @@ const createSlide = async (
   }
 }
 
-const deletePresentation = async (
+const deleteSlide = async (
   req: DeleteSlideRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const { id } = req.params
-    await SlideService.deletePresentation(id)
+
+    const result = await SlideService.deleteSlide(id)
+    if (!result.matchedCount) {
+      throw new GenericError('Slide not found')
+    }
+
     res.sendStatus(204)
-  } catch (error) {
-    next(error)
+  } catch (error: unknown) {
+    const exception = error as Error
+
+    if (exception.name !== 'GenericError') return next(exception)
+    res.status(400).json({ message: exception.message })
   }
 }
 
-export default { createSlide, deletePresentation, updateSlide }
+export default { createSlide, deleteSlide, updateSlide }

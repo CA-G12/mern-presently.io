@@ -43,7 +43,6 @@ const updateSlide = async ({
   return updatedUserDocument
 }
 
-const deletePresentation = async (id: string) =>
-  await SlideRepository.deleteSlide(id)
+const deleteSlide = async (id: string) => await SlideRepository.deleteSlide(id)
 
-export default { deletePresentation, createSlide, updateSlide, checkSlide }
+export default { deleteSlide, createSlide, updateSlide, checkSlide }

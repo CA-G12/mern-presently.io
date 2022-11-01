@@ -6,6 +6,6 @@ const router = express.Router()
 
 router.put('/:id', verifyAccessToken, SlideController.updateSlide)
 router.post('/', verifyAccessToken, SlideController.createSlide)
-router.delete('/:id', verifyAccessToken, SlideController.deletePresentation)
+router.delete('/:id', verifyAccessToken, SlideController.deleteSlide)
 
 export default router

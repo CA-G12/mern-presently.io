@@ -31,6 +31,12 @@ export interface FileInterface {
 }
 
 export interface CreateSlideRequest extends Request {
-  File?: Express.Multer.File | FileInterface 
-  body:{title: string; link: string; isPrivate: boolean; isLive: boolean; token: string;}
+  File?: Express.Multer.File | FileInterface
+  body: {
+    title: string
+    link: string
+    isPrivate: boolean
+    isLive: boolean
+    token: string
+  }
 }

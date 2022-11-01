@@ -34,4 +34,10 @@ const addSlideToUser = (slide: CreateSlideOptions, id: string) =>
     { new: true }
   )
 
-export default { deleteSlide, createSlide, updateSlide, checkSlide, addSlideToUser }
+export default {
+  deleteSlide,
+  createSlide,
+  updateSlide,
+  checkSlide,
+  addSlideToUser
+}

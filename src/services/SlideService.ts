@@ -79,4 +79,11 @@ const addSlideToUser = async (id: string, link: string) => {
 
   return SlideRepository.addSlideToUser(slide, id)
 }
-export default { deletePresentation, createSlide, updateSlide, checkSlide, uploadSlide, addSlideToUser}
+export default {
+  deletePresentation,
+  createSlide,
+  updateSlide,
+  checkSlide,
+  uploadSlide,
+  addSlideToUser
+}

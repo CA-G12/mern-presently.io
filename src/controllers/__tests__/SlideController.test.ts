@@ -1,5 +1,3 @@
-import { join } from 'path'
-
 import request from 'supertest'
 
 import app from '../../app'

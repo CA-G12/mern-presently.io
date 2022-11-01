@@ -45,7 +45,7 @@ export interface CreateSlideRequest extends Request {
     token: string
   }
 }
-  
+
 export interface DeleteSlideRequest extends Request {
   params: { id: string }
 }

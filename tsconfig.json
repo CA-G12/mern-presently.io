@@ -20,7 +20,6 @@
         "module": "commonjs",
         "pretty": true,
         "sourceMap": true,
-        "declaration": false,
         "outDir": "dist",
         "allowJs": true,
         "noEmit": false,

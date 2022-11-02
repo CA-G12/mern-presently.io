@@ -167,3 +167,27 @@ describe('Add a new presentation', () => {
     })
   })
 })
+
+describe('Getting slide by id', () => {
+  test('Get info for valid slide id', done => {
+    request(app)
+      .get('/api/v1/slides/456ea40720dcfa02e0ae42db')
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(200)
+        expect(res.body.slide.title).toBe('OAUTH')
+        return done()
+      })
+  })
+
+  test('Get info for invalid slide id', done => {
+    request(app)
+      .get('/api/v1/slides/456ea40720dcfa02e0ae40db')
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(400)
+        expect(res.body.message).toBe('Slide not found')
+        return done()
+      })
+  })
+})

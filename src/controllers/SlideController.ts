@@ -7,9 +7,32 @@ import { validator } from '../validation/validator'
 import { slideSchema } from '../validation/slideValidation'
 import {
   CreateSlideRequest,
-  UpdateSlideRequest,
-  DeleteSlideRequest
+  GetSlideRequest,
+  DeleteSlideRequest,
+  UpdateSlideRequest
 } from '../interfaces/SlideInterface'
+
+const getSlide = async (
+  req: GetSlideRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params
+
+  try {
+    const slide = await SlideService.getSlide(id)
+    if (!slide) {
+      throw new GenericError('Slide not found')
+    }
+
+    res.status(200).json({ message: 'success', slide: slide[0] })
+  } catch (error: unknown) {
+    const exception = error as Error
+
+    if (exception.name !== 'GenericError') return next(exception)
+    res.status(400).json({ message: exception.message })
+  }
+}
 
 const updateSlide = async (
   req: UpdateSlideRequest,
@@ -112,4 +135,4 @@ const deletePresentation = async (
   }
 }
 
-export default { createSlide, deletePresentation, updateSlide }
+export default { createSlide, deletePresentation, updateSlide, getSlide }

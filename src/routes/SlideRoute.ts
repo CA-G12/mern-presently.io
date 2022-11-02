@@ -23,6 +23,7 @@ router.post(
   SlideController.createSlide
 )
 
+router.get('/:id', SlideController.getSlide)
 router.delete('/:id', SlideController.deletePresentation)
 router.put('/:id', verifyAccessToken, SlideController.updateSlide)
 router.delete('/:id', verifyAccessToken, SlideController.deletePresentation)

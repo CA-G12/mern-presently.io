@@ -24,6 +24,16 @@ const checkSlide = async (slideId: string) => {
   } else throw new GenericError('Slide not found')
 }
 
+const getSlide = async (id: string) => {
+  const userDocument = await SlideRepository.findSlide(id)
+
+  const slide: SlideInterface[] | undefined = userDocument?.slides?.filter(
+    e => e.id === id
+  )
+
+  return slide
+}
+
 const updateSlide = async ({
   id,
   title,
@@ -84,6 +94,7 @@ export default {
   createSlide,
   updateSlide,
   checkSlide,
+  getSlide, 
   uploadSlide,
   addSlideToUser
 }

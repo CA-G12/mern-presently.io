@@ -49,3 +49,7 @@ export interface CreateSlideRequest extends Request {
 export interface DeleteSlideRequest extends Request {
   params: { id: string }
 }
+
+export interface GetSlideRequest extends Request {
+  params: { id: string }
+}

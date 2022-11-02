@@ -27,6 +27,8 @@ const checkSlide = (slideId: string) =>
 
 const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
 
+const findSlide = (id: string) => User.findOne({ 'slides._id': id })
+
 const addSlideToUser = (slide: CreateSlideOptions, id: string) =>
   User.findOneAndUpdate(
     { _id: id },
@@ -39,5 +41,6 @@ export default {
   createSlide,
   updateSlide,
   checkSlide,
+  findSlide,
   addSlideToUser
 }

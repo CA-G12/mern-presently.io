@@ -68,13 +68,5 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     </Context.Provider>
   )
 }
-// export const logout = () => {
-//   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-//   dispatch({ type: 'LOGOUT' })
-// }
-// export const login = (user: UserInterface) => {
-//   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-//   dispatch({ type: 'LOGIN', payload: { user } })
-// }
 
 export default ContextProvider

@@ -6,9 +6,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ children }: PrivateRouteProps): JSX.Element => {
-  const { auth } = UseAuth()
+  const { loggedIn } = UseAuth()
 
-  return auth.loggedIn ? children : <Navigate to="/" />
+  return loggedIn ? children : <Navigate to="/" />
 }
 
 export default PrivateRoute

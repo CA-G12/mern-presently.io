@@ -12,3 +12,9 @@ export const authenticate = ({ email, password }: Credentials) => {
     data: { email, password }
   })
 }
+
+export const authenticateWithToken = async (): Promise<UserInterface> => {
+  const res = await axios.post('/auth/token')
+
+  return res.data
+}

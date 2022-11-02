@@ -1,13 +1,14 @@
 import { Navigate } from 'react-router-dom'
 import UseAuth from '../hooks/useAuth'
-interface PublicRouteProps {
+
+interface BlankLayoutProps {
   children: JSX.Element
 }
 
-const PublicRoute = ({ children }: PublicRouteProps): JSX.Element => {
-  const { auth } = UseAuth()
+const BlankLayout = ({ children }: BlankLayoutProps): JSX.Element => {
+  const { loggedIn } = UseAuth()
 
-  return auth.loggedIn ? <Navigate to="/user" /> : children
+  return loggedIn ? <Navigate to="/user" /> : children
 }
 
-export default PublicRoute
+export default BlankLayout

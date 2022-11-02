@@ -30,7 +30,6 @@ const md = new MarkdownIt({
 })
 
 const data = fs.readFileSync('./src/test.md', { encoding: 'utf8', flag: 'r' })
-console.log(data)
 
 const result = md.render(data)
 app.get('/api/v1/test', (req, res) => {

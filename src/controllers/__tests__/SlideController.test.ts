@@ -1,14 +1,13 @@
-import request from 'supertest'
+import { join } from 'path'
 
+import request from 'supertest'
 import app from '../../app'
 import dbConnection from '../../db/connection'
 import seed from '../../db/seeders/SeedDB'
 import AuthHelper from '../../helpers/AuthHelper'
 
 beforeAll(() => {
-  return dbConnection()
-    .then(() => seed())
-    .then(res => console.log(res))
+  return dbConnection().then(() => seed())
 })
 
 afterAll(() => {
@@ -39,7 +38,6 @@ describe('Updating presentation tests', () => {
         .set('Cookie', [`token=${jwt}`])
         .send({
           title: 'Linked list',
-          link: 'https://www.geeksforgeeks.org/data-structures/linked-list/',
           isLive: false,
           isPrivate: false
         })
@@ -61,7 +59,6 @@ describe('Updating presentation tests', () => {
         .set('Cookie', [`token=${jwt}`])
         .send({
           title: 'Linked list',
-          link: 'https://hackmd/abd/linkedlist.hackmd',
           isLive: false,
           isPrivate: false
         })
@@ -81,7 +78,6 @@ describe('Updating presentation tests', () => {
         .set('Cookie', [`token=${jwt}`])
         .send({
           title: 'Title changed',
-          link: 'https://hackmd/abd/datastructure.hackmd',
           isLive: 'string',
           isPrivate: true
         })
@@ -98,12 +94,32 @@ describe('Add a new presentation', () => {
   test('Add a valid presentation', done => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
-        .post('/api/v1/slides')
+        .post('/api/v1/slides/')
         .set('Cookie', [`token=${jwt}`])
-        .send({ title: 'new test presentation', link: 'https://google.com/' })
+        .attach(
+          'File',
+          join(__dirname, '..', '..', '..', 'assets', 'latestSlides.md')
+        )
         .end((err, res) => {
           if (err) return done()
           expect(res.status).toBe(200)
+          return done()
+        })
+    })
+  })
+
+  test('Upload a new presentation without attaching a file', done => {
+    AuthHelper.generateAccessToken('8977f708ed0c57054008e400').then(token => {
+      request(app)
+        .post('/api/v1/slides/')
+        .set('Cookie', [`token=${token}`])
+        .attach(
+          'file',
+          join(__dirname, '..', '..', '..', 'assets', 'TestMDFile.md')
+        )
+        .end((error, res) => {
+          if (error) return done()
+          expect(res.status).toBe(400)
           return done()
         })
     })
@@ -149,5 +165,29 @@ describe('Add a new presentation', () => {
           return done()
         })
     })
+  })
+})
+
+describe('Getting slide by id', () => {
+  test('Get info for valid slide id', done => {
+    request(app)
+      .get('/api/v1/slides/456ea40720dcfa02e0ae42db')
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(200)
+        expect(res.body.slide.title).toBe('OAUTH')
+        return done()
+      })
+  })
+
+  test('Get info for invalid slide id', done => {
+    request(app)
+      .get('/api/v1/slides/456ea40720dcfa02e0ae40db')
+      .end((err, res) => {
+        if (err) return done()
+        expect(res.status).toBe(400)
+        expect(res.body.message).toBe('Slide not found')
+        return done()
+      })
   })
 })

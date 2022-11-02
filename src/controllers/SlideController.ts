@@ -2,13 +2,37 @@ import { NextFunction, Response } from 'express'
 
 import SlideService from '../services/SlideService'
 import GenericError from '../helpers/GenericError'
+import SlideHelpers from '../helpers/SlideHelpers'
 import { validator } from '../validation/validator'
 import { slideSchema } from '../validation/slideValidation'
 import {
   CreateSlideRequest,
-  UpdateSlideRequest,
-  DeleteSlideRequest
+  GetSlideRequest,
+  DeleteSlideRequest,
+  UpdateSlideRequest
 } from '../interfaces/SlideInterface'
+
+const getSlide = async (
+  req: GetSlideRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params
+
+  try {
+    const slide = await SlideService.getSlide(id)
+    if (!slide) {
+      throw new GenericError('Slide not found')
+    }
+
+    res.status(200).json({ message: 'success', slide: slide[0] })
+  } catch (error: unknown) {
+    const exception = error as Error
+
+    if (exception.name !== 'GenericError') return next(exception)
+    res.status(400).json({ message: exception.message })
+  }
+}
 
 const updateSlide = async (
   req: UpdateSlideRequest,
@@ -56,18 +80,33 @@ const createSlide = async (
   next: NextFunction
 ) => {
   try {
-    const { title, link, isPrivate, isLive } = req.body
+    const { title, isPrivate, isLive } = req.body
+    const file = req.file
+
+    if (!file) {
+      throw new GenericError('Please Provide a File')
+    }
+
+    if (file.mimetype !== 'text/markdown') {
+      throw new GenericError('Please Provide a Valid File Type')
+    }
+
+    const cloudinaryLink = await SlideService.uploadSlide(file)
+
+    const link = await SlideHelpers.shortenLink(cloudinaryLink)
 
     const validate = await validator({
       schema: slideSchema,
-      data: { title, link, isPrivate, isLive }
+      data: { link, title, isPrivate, isLive }
     })
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }
 
+    const linkSegment = link.split('/')[1]
+
     const slide = await SlideService.createSlide({
-      link,
+      link: linkSegment,
       title,
       isPrivate,
       isLive
@@ -104,4 +143,4 @@ const deleteSlide = async (
   }
 }
 
-export default { createSlide, deleteSlide, updateSlide }
+export default { createSlide, deleteSlide, updateSlide, getSlide }

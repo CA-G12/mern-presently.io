@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const slideSchema = new Schema<SlideInterface>({
   title: {
     type: String,
+    default: 'Untitled',
     required: true
   },
   link: {

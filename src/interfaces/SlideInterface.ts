@@ -14,16 +14,42 @@ export interface UpdateSlideRequest extends Request {
 }
 
 export interface CreateSlideOptions {
-  title: string
+  title?: string
   link: string
   isLive?: boolean
   isPrivate?: boolean
 }
 
+export interface DeleteSlideRequest extends Request {
+  params: { id: string }
+}
+
+export interface FileInterface {
+  fieldname: string
+  originalname: string
+  encoding: string
+  mimetype: string
+  destination: string
+  filename: string
+  path: string
+  size: number
+}
+
 export interface CreateSlideRequest extends Request {
-  body: Omit<SlideInterface, 'id'>
+  File?: Express.Multer.File | FileInterface
+  body: {
+    title: string
+    link: string
+    isPrivate: boolean
+    isLive: boolean
+    token: string
+  }
 }
 
 export interface DeleteSlideRequest extends Request {
+  params: { id: string }
+}
+
+export interface GetSlideRequest extends Request {
   params: { id: string }
 }

@@ -39,4 +39,20 @@ const deleteSlide = (id: string) =>
     }
   )
 
-export default { deleteSlide, createSlide, updateSlide, checkSlide }
+const findSlide = (id: string) => User.findOne({ 'slides._id': id })
+
+const addSlideToUser = (slide: CreateSlideOptions, id: string) =>
+  User.findOneAndUpdate(
+    { _id: id },
+    { $push: { slides: slide } },
+    { new: true }
+  )
+
+export default {
+  deleteSlide,
+  createSlide,
+  updateSlide,
+  checkSlide,
+  findSlide,
+  addSlideToUser
+}

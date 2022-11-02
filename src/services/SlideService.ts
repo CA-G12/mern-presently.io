@@ -1,8 +1,12 @@
+import FormData from 'form-data'
+
 import SlideRepository from '../repositories/SlideRepository'
+import SlideHelpers from '../helpers/SlideHelpers'
 import GenericError from '../helpers/GenericError'
 import {
   CreateSlideOptions,
-  SlideInterface
+  SlideInterface,
+  FileInterface
 } from '../interfaces/SlideInterface'
 
 const createSlide = async ({
@@ -11,14 +15,23 @@ const createSlide = async ({
   isLive,
   isPrivate
 }: CreateSlideOptions) =>
-  await SlideRepository.createSlide({ title, link, isLive, isPrivate })
+  await SlideRepository.createSlide({ title: title, link, isLive, isPrivate })
 
 const checkSlide = async (slideId: string) => {
   const isSlide = await SlideRepository.checkSlide(slideId)
-
   if (isSlide) {
     return isSlide
   } else throw new GenericError('Slide not found')
+}
+
+const getSlide = async (id: string) => {
+  const userDocument = await SlideRepository.findSlide(id)
+
+  const slide: SlideInterface[] | undefined = userDocument?.slides?.filter(
+    e => e.id === id
+  )
+
+  return slide
 }
 
 const updateSlide = async ({
@@ -45,4 +58,42 @@ const updateSlide = async ({
 
 const deleteSlide = async (id: string) => await SlideRepository.deleteSlide(id)
 
-export default { deleteSlide, createSlide, updateSlide, checkSlide }
+const uploadSlide = async (
+  file: Express.Multer.File | FileInterface | undefined
+): Promise<string> => {
+  if (!file) {
+    throw new GenericError('file not provided')
+  }
+  const { size, originalname } = file
+
+  const form = new FormData()
+  form.append('fieldname', 'file')
+  form.append('originalname', originalname)
+  form.append('encoding', '7bit')
+  form.append('mimetype', 'text/markdown')
+  form.append('destination', 'assets/')
+  form.append('filename', 'latestPresentation')
+  form.append('path', 'assets/')
+  form.append('size', size)
+
+  return SlideHelpers.uploadFile()
+}
+
+const addSlideToUser = async (id: string, link: string) => {
+  const linkSegment = link.split('/')[1]
+
+  const slide = await SlideRepository.createSlide({
+    link: linkSegment
+  })
+
+  return SlideRepository.addSlideToUser(slide, id)
+}
+export default {
+  deleteSlide,
+  createSlide,
+  updateSlide,
+  checkSlide,
+  getSlide,
+  uploadSlide,
+  addSlideToUser
+}

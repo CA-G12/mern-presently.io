@@ -1,4 +1,4 @@
-import { SlideInterface } from './SlideInterface'
+import { SlideInterface } from './test'
 
 export interface UserInterface {
   id: string

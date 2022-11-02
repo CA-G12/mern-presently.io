@@ -13,7 +13,7 @@ const createUser = async ({
 
   const hashedPassword = await AuthHelper.hashPassword(password)
 
-  await createUser({
+  return UserRepository.createUser({
     name,
     email,
     password: hashedPassword,

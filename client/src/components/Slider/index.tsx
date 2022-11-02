@@ -41,23 +41,39 @@ const Slider = ({ slides }: ISliderProps) => {
       {/*------------------------ Control slides ------------------------ */}
       <div className="absolute inset-x-0 bottom-0 lg:pr-32 p-4 lg:py-5 lg:pl-32 flex-initial ">
         <div className="justify-self-end flex justify-center">
-          <button onClick={() => navigate('/user')}>
-            <Home strokeWidth={2} />
+          <button
+            onClick={() => navigate('/user')}
+            className="hover:scale-125 focus: outline-none"
+          >
+            <Home strokeWidth={2} height={30} width={40} />
           </button>
           <input
             id="comment"
             className="w-full text-white py-2 px-2 mx-20 my-2 placeholder-grey border-b-2 border-grey-light focus:text-black outline-none"
             placeholder="Add a comment ..."
           />
-          <div className="flex justify-around ">
+          <div className="flex justify-around">
             <button
-              className="mr-10 focus: outline-none"
+              className="mr-10 focus: outline-none hover:scale-125"
               onClick={goToPrevious}
             >
-              <LeftArrow strokeWidth={2} />
+              <LeftArrow
+                strokeWidth={2}
+                height={40}
+                width={40}
+                className="hover:text-primary-default"
+              />
             </button>
-            <button className="focus: outline-none" onClick={goToNext}>
-              <RightArrow strokeWidth={2} />
+            <button
+              className="focus: outline-none hover:scale-125"
+              onClick={goToNext}
+            >
+              <RightArrow
+                strokeWidth={2}
+                height={40}
+                width={40}
+                className="hover:text-primary-default"
+              />
             </button>
           </div>
         </div>

@@ -7,9 +7,9 @@ import config from './config'
 // import { UserInterface } from '../../src/interfaces/UserInterface'
 // import useAuth from './hooks/useAuth'
 
-const { domain } = config
+const { wsBaseUrl } = config
 
-const socket = ws(domain, {
+const socket = ws(wsBaseUrl, {
   autoConnect: false
 })
 

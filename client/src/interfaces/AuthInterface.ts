@@ -1,6 +1,4 @@
-import { Request } from 'express'
-
-export interface LoginRequest extends Request {
+export interface LoginRequest {
   body: { email: string; password: string }
 }
 
@@ -8,7 +6,7 @@ export interface Token {
   token: string
 }
 
-export interface VerifyTokenRequest extends Request {
+export interface VerifyTokenRequest {
   cookies: { token: string }
   body: { token: string }
 }

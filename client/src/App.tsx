@@ -1,17 +1,21 @@
 import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import ws from 'socket.io-client'
+
+import config from './config'
+import axios from './api/axios'
+import { UserInterface } from '../../src/interfaces/UserInterface'
 import useAuth from './hooks/useAuth'
 import Landing from './pages/Landing/Landing'
 import Presentations from './pages/Presentation'
-import axios from './api/axios'
+import Presentation from './pages/Presentation'
+import Login from './components/Login'
 import PublicRoute from './components/PublicRoute'
 import PrivateRoute from './components/PrivateRoute'
-import { UserInterface } from '../../src/interfaces/UserInterface'
-import Login from './components/Login'
-import Presentation from './pages/Presentation'
 
-const socket = ws('http://localhost:4000', {
+const { domain } = config
+
+const socket = ws(domain, {
   autoConnect: false
 })
 

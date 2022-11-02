@@ -5,7 +5,7 @@ import app from './app'
 import dbConnection from './db/connection'
 import environment from './config/environment'
 import ioHandler from './ws'
-import corsConfigs from '../src/config/cors'
+import corsConfigs from './config/cors'
 
 const { port } = environment
 const httpServer = http.createServer(app)

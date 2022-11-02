@@ -1,4 +1,3 @@
-import { JwtPayload } from 'jsonwebtoken'
 import { Request } from 'express'
 
 export interface LoginRequest extends Request {
@@ -6,7 +5,7 @@ export interface LoginRequest extends Request {
 }
 
 export interface Token {
-  token: string | JwtPayload
+  token: string
 }
 
 export interface VerifyTokenRequest extends Request {

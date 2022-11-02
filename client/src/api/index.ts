@@ -1,2 +1,2 @@
 export * as authApi from './auth'
-export * as presentationApi from './presentation'
+export * as slideApi from './slide'

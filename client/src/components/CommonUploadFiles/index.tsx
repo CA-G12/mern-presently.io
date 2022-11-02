@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { presentationApi } from '../../api'
+import { slideApi } from '../../api'
 
 type ICommonUploadFileProps = {
   uploadedFile: any
@@ -19,7 +19,7 @@ const CommonUploadFile = ({
     try {
       const form = new FormData()
       form.append('File', uploadedFile)
-      await presentationApi.uploadSlide(form)
+      await slideApi.uploadSlide(form)
 
       toast('Uploaded')
     } catch (error) {

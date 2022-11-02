@@ -24,6 +24,7 @@ const Landing = () => {
           style={{ bottom: 0 }}
         />
       </section>
+
       <footer className="lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit p-4">
         <Footer />
       </footer>

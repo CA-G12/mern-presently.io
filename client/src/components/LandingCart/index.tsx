@@ -5,6 +5,7 @@ import computerImage from '../../assets/LandingInfoPngs/computer.png'
 
 type ILandingCardProps = {
   type: string
+  className: string
 }
 
 const LandingCard = ({ type }: ILandingCardProps) => {

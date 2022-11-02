@@ -2,6 +2,7 @@ import { NextFunction, Response } from 'express'
 
 import SlideService from '../services/SlideService'
 import GenericError from '../helpers/GenericError'
+import SlideHelpers from '../helpers/SlideHelpers'
 import { validator } from '../validation/validator'
 import { slideSchema } from '../validation/slideValidation'
 import {
@@ -56,18 +57,33 @@ const createSlide = async (
   next: NextFunction
 ) => {
   try {
-    const { title, link, isPrivate, isLive } = req.body
+    const { title, isPrivate, isLive } = req.body
+    const file = req.file
+
+    if (!file) {
+      throw new GenericError('Please Provide a File')
+    }
+
+    if (file.mimetype !== 'text/markdown') {
+      throw new GenericError('Please Provide a Valid File Type')
+    }
+
+    const cloudinaryLink = await SlideService.uploadSlide(file)
+
+    const link = await SlideHelpers.shortenLink(cloudinaryLink)
 
     const validate = await validator({
       schema: slideSchema,
-      data: { title, link, isPrivate, isLive }
+      data: { link, title, isPrivate, isLive }
     })
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }
 
+    const linkSegment = link.split('/')[1]
+
     const slide = await SlideService.createSlide({
-      link,
+      link: linkSegment,
       title,
       isPrivate,
       isLive

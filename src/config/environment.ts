@@ -6,7 +6,17 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const { DATABASE_URL, PORT, NODE_ENV, ORIGIN, SECRET_KEY } = process.env
+const {
+  DATABASE_URL,
+  PORT,
+  NODE_ENV,
+  ORIGIN,
+  SECRET_KEY,
+  CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+  REBRANDLY_API_KEY
+} = process.env
 
 const config = {
   database: {
@@ -19,6 +29,14 @@ const config = {
   },
   jwt: {
     secretKey: SECRET_KEY || ''
+  },
+  cloudinary: {
+    cloudName: CLOUD_NAME,
+    apiKey: CLOUDINARY_API_KEY,
+    apiSecret: CLOUDINARY_API_SECRET
+  },
+  rebrandly: {
+    apiKey: REBRANDLY_API_KEY
   }
 }
 

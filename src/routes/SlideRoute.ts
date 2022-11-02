@@ -24,8 +24,8 @@ router.post(
 )
 
 router.get('/:id', SlideController.getSlide)
-router.delete('/:id', SlideController.deletePresentation)
 router.put('/:id', verifyAccessToken, SlideController.updateSlide)
-router.delete('/:id', verifyAccessToken, SlideController.deletePresentation)
+router.post('/', verifyAccessToken, SlideController.createSlide)
+router.delete('/:id', verifyAccessToken, SlideController.deleteSlide)
 
 export default router

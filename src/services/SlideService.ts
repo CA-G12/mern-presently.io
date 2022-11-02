@@ -56,8 +56,7 @@ const updateSlide = async ({
   return updatedUserDocument
 }
 
-const deletePresentation = async (id: string) =>
-  await SlideRepository.deleteSlide(id)
+const deleteSlide = async (id: string) => await SlideRepository.deleteSlide(id)
 
 const uploadSlide = async (
   file: Express.Multer.File | FileInterface | undefined
@@ -90,11 +89,11 @@ const addSlideToUser = async (id: string, link: string) => {
   return SlideRepository.addSlideToUser(slide, id)
 }
 export default {
-  deletePresentation,
+  deleteSlide,
   createSlide,
   updateSlide,
   checkSlide,
-  getSlide, 
+  getSlide,
   uploadSlide,
   addSlideToUser
 }

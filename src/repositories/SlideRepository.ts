@@ -25,7 +25,19 @@ const checkSlide = (slideId: string) =>
     'slides._id': new mongoose.Types.ObjectId(slideId)
   })
 
-const deleteSlide = (id: string) => Slide.findByIdAndDelete(id)
+const deleteSlide = (id: string) =>
+  User.updateOne(
+    {
+      'slides._id': new mongoose.Types.ObjectId(id)
+    },
+    {
+      $pull: {
+        slides: {
+          _id: new mongoose.Types.ObjectId(id)
+        }
+      }
+    }
+  )
 
 const findSlide = (id: string) => User.findOne({ 'slides._id': id })
 

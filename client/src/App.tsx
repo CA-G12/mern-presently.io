@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import ws from 'socket.io-client'
+import { ToastContainer } from 'react-toastify'
 import routes from './routes/router'
 import config from './config'
 import useAuth from './hooks/useAuth'
 import { authApi } from './api'
+import 'react-toastify/dist/ReactToastify.css'
 
 const { wsBaseUrl } = config
 
@@ -51,7 +53,23 @@ const App = () => {
     })()
   }, [])
 
-  return checkedToken ? routing : <div>Loading</div>
+  return (
+    <>
+      {checkedToken ? routing : <div>Loading</div>}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
+  )
 }
 
 export default App

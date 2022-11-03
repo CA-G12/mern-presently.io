@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useReducer } from 'react'
-import { UserInterface } from '../../src/interfaces/UserInterface'
+import { UserInterface } from './interfaces/UserInterface'
 
 export type Action =
   | { type: 'LOGIN'; payload: { user: UserInterface } }

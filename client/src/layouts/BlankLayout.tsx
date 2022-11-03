@@ -8,7 +8,7 @@ interface BlankLayoutProps {
 const BlankLayout = ({ children }: BlankLayoutProps): JSX.Element => {
   const { loggedIn } = UseAuth()
 
-  return loggedIn ? <Navigate to="/user" /> : children
+  return loggedIn ? <Navigate to="/presentations" /> : children
 }
 
 export default BlankLayout

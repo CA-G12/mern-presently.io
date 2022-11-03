@@ -20,7 +20,11 @@ export interface UserResponseInterface {
   slides: SlideInterface[]
 }
 
-export interface GetUserOptions {
+export interface GetUserFilter {
   id?: string
   email?: string
+}
+
+export interface GetUserOptions {
+  password?: number
 }

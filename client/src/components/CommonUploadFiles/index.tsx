@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { slideApi } from '../../api'
 
@@ -21,9 +21,9 @@ const CommonUploadFile = ({
       form.append('File', uploadedFile)
       await slideApi.uploadSlide(form)
 
-      toast('Uploaded')
+      toast.success('Presentation uploaded successfully.')
     } catch (error) {
-      console.log(error)
+      toast.error('Something went wrong.')
     }
   }
 
@@ -59,7 +59,6 @@ const CommonUploadFile = ({
         type="file"
         style={{ display: 'none' }}
       />
-      <ToastContainer position="bottom-right" />
     </div>
   )
 }

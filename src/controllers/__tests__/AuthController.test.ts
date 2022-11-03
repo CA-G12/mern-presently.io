@@ -28,7 +28,8 @@ describe('Verify token controller tests', () => {
   })
 
   test('Valid token test', done => {
-    AuthHelper.generateAccessToken('test').then(jwt => {
+    AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
+      console.log(jwt)
       request(app)
         .post('/api/v1/auth/token')
         .set('Cookie', `token=${jwt}`)

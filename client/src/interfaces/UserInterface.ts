@@ -5,7 +5,7 @@ export interface UserInterface {
   name: string
   email: string
   password: string
-  slides?: SlideInterface[]
+  slides: SlideInterface[]
 }
 
 export interface UserResponseInterface {

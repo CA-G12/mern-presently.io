@@ -4,18 +4,27 @@ import SlideRepository from '../repositories/SlideRepository'
 import SlideHelpers from '../helpers/SlideHelpers'
 import GenericError from '../helpers/GenericError'
 import {
-  CreateSlideOptions,
+  CreateSlideService,
   SlideInterface,
   FileInterface
 } from '../interfaces/SlideInterface'
 
 const createSlide = async ({
+  userId,
   title,
   link,
   isLive,
   isPrivate
-}: CreateSlideOptions) =>
-  await SlideRepository.createSlide({ title: title, link, isLive, isPrivate })
+}: CreateSlideService) => {
+  const slide = await SlideRepository.createSlide({
+    title: title,
+    link,
+    isLive,
+    isPrivate
+  })
+
+  return SlideRepository.addSlideToUser(slide, userId)
+}
 
 const checkSlide = async (slideId: string) => {
   const isSlide = await SlideRepository.checkSlide(slideId)

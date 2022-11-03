@@ -109,7 +109,7 @@ describe('Add a new presentation', () => {
   })
 
   test('Upload a new presentation without attaching a file', done => {
-    AuthHelper.generateAccessToken('8977f708ed0c57054008e400').then(token => {
+    AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(token => {
       request(app)
         .post('/api/v1/slides/')
         .set('Cookie', [`token=${token}`])

@@ -1,20 +1,45 @@
+import { useState, useRef } from 'react'
+import Modal from 'react-modal'
+import { CommonUploadFile, Login, Signup } from '../../components'
 import logo from '../../assets/Logo/About.png'
 import './styles.css'
+import useAuth from '../../hooks/useAuth'
+import { authApi } from '../../api'
 
-import { CommonUploadFile } from '../../components'
-import { useState, useRef } from 'react'
+const customStyles = {
+  content: {
+    inset: 'auto',
+    background: 'transparent',
+    border: 'none'
+  }
+}
 
 interface INavbarProps {
   isSinged: boolean
 }
 
 const Navbar = ({ isSinged }: INavbarProps) => {
+  const { dispatch } = useAuth()
   const [uploadedFile, setUploadedFile] = useState<File>()
+  const [isOpen, setIsOpen] = useState(false)
+  const [modal, setModal] = useState('login')
   const hiddenFileInput = useRef<HTMLInputElement>(null)
 
+  const ModalContent =
+    modal === 'login' ? (
+      <Login setModal={() => setModal('signup')} />
+    ) : (
+      <Signup setModal={() => setModal('login')} />
+    )
+
   const handleClick = () => {
-    const current = hiddenFileInput?.current as HTMLInputElement
-    current?.click?.()
+    if (isSinged) {
+      const current = hiddenFileInput?.current as HTMLInputElement
+      current?.click?.()
+    } else {
+      setModal('login')
+      setIsOpen(true)
+    }
   }
 
   return (
@@ -36,16 +61,36 @@ const Navbar = ({ isSinged }: INavbarProps) => {
               setUploadedFile={setUploadedFile}
               hiddenFileInput={hiddenFileInput}
             />
-            <a className="lg:mr-10 text-grey-default  font-medium hover:text-blue-dark cursor-pointer">
+            <a
+              onClick={async () => {
+                await authApi.logout()
+                dispatch({ type: 'LOGOUT' })
+              }}
+              className="lg:mr-10 text-grey-default  font-medium hover:text-blue-dark cursor-pointer"
+            >
               Logout
             </a>
           </div>
         ) : (
-          <a className="lg:mr-10 text-grey-default font-medium hover:text-blue-dark cursor-pointer">
+          <a
+            onClick={() => {
+              setIsOpen(true)
+              setModal('login')
+            }}
+            className="lg:mr-10 text-grey-default font-medium hover:text-blue-dark cursor-pointer"
+          >
             Sign in
           </a>
         )}
       </div>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        style={customStyles}
+        className="Modal"
+      >
+        {ModalContent}
+      </Modal>
     </div>
   )
 }

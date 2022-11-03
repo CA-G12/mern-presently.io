@@ -1,11 +1,10 @@
-import { Fragment } from 'react'
 import { Navbar, LandingCard, Footer } from '../../components'
 import './style.css'
 import { ReactComponent as Wave } from '../../assets/waves/wave.svg'
 
 const Landing = () => {
   return (
-    <Fragment>
+    <>
       <header className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit flex flex-col justify-center p-4 background-grid">
         <Navbar isSinged={false} />
         <LandingCard className="self-center" type="first" />
@@ -28,7 +27,7 @@ const Landing = () => {
       <footer className="lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit p-4">
         <Footer />
       </footer>
-    </Fragment>
+    </>
   )
 }
 

@@ -3,9 +3,10 @@ import UserRepository from '../repositories/UserRepository'
 import { UserInterface } from '../interfaces/UserInterface'
 import { Credentials } from '../interfaces/CredentialInterface'
 import GenericError from '../helpers/GenericError'
+import mongoose from 'mongoose'
 
 const login = async ({ email, password }: Credentials) => {
-  const user: UserInterface | null = await UserRepository.getUser({
+  const user = await UserRepository.getUser({
     email
   })
   if (!user) {
@@ -21,13 +22,24 @@ const login = async ({ email, password }: Credentials) => {
   }
 
   const token = await AuthHelper.generateAccessToken(user.id)
+  const loggedInUser = await UserRepository.getUser(
+    {
+      email
+    },
+    { password: 0 }
+  )
 
-  return { user, token }
+  return { user: loggedInUser, token }
 }
 
 const verifyToken = async (token: string) => {
   const { id } = await AuthHelper.verifyToken(token)
-  const user = await UserRepository.getUser({ id })
+  const user = await UserRepository.getUser(
+    {
+      id
+    },
+    { password: 0 }
+  )
 
   return user
 }

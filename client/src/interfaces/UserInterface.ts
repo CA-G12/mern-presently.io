@@ -1,18 +1,18 @@
-// import { SlideInterface } from './SlideInterface'
+import { SlideInterface } from './SlideInterface'
 
 export interface UserInterface {
   id: string
   name: string
   email: string
   password: string
-  // slides?: SlideInterface[]
+  slides?: SlideInterface[]
 }
 
 export interface UserResponseInterface {
   id: string
   name: string
   email: string
-  // slides: SlideInterface[]
+  slides: SlideInterface[]
 }
 
 export interface GetUserOptions {

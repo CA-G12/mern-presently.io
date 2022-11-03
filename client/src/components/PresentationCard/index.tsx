@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { ReactComponent as PresentationIcon } from '../../assets/PresentationIcons/presentationIcon.svg'
@@ -45,7 +45,6 @@ const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
 
   return (
     <div className="relative flex flex-col justify-between bg-grey-background w-72 rounded-1">
-      <ToastContainer />
       <div className="absolute mt-4 right-4">
         <a
           className="hover:bg-blue-default cursor-pointer"

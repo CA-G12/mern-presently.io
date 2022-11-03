@@ -1,11 +1,15 @@
 import { useContext } from 'react'
-import { Context } from '../context'
+import { Context, Action } from '../context'
 
 const useAuth = () => {
   const context = useContext(Context)
+  const dispatch = context.dispatch as React.Dispatch<Action>
+  const auth = context.auth
+
   return {
-    auth: context.auth,
-    dispatch: context.dispatch
+    ...auth,
+    dispatch
   }
 }
+
 export default useAuth

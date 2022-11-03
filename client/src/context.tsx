@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useReducer } from 'react'
-import { UserInterface } from '../../src/interfaces/UserInterface'
+import { UserInterface } from './interfaces/UserInterface'
 
-const INITIAL_STATE = {
-  auth: { loggedIn: false, checkedToken: false, user: null }
-}
 export type Action =
   | { type: 'LOGIN'; payload: { user: UserInterface } }
-  | { type: 'INITALISE'; payload: { user: UserInterface; loggedIn: boolean } }
+  | {
+      type: 'INITIALIZE'
+      payload: { user: UserInterface | null; loggedIn: boolean }
+    }
   | { type: 'LOGOUT' }
 
 type State = {
@@ -19,9 +19,13 @@ type State = {
   dispatch?: React.Dispatch<Action>
 }
 
+const INITIAL_STATE = {
+  auth: { loggedIn: false, checkedToken: false, user: null }
+}
+
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'INITALISE': {
+    case 'INITIALIZE': {
       const { loggedIn, user } = action.payload
 
       return {
@@ -57,6 +61,7 @@ const reducer = (state: State, action: Action) => {
     }
   }
 }
+
 export const Context = createContext<State>(INITIAL_STATE)
 
 const ContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -68,13 +73,5 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     </Context.Provider>
   )
 }
-// export const logout = () => {
-//   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-//   dispatch({ type: 'LOGOUT' })
-// }
-// export const login = (user: UserInterface) => {
-//   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-//   dispatch({ type: 'LOGIN', payload: { user } })
-// }
 
 export default ContextProvider

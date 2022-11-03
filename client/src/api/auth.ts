@@ -1,5 +1,5 @@
 import axios from './axios'
-import { UserInterface } from '../../../src/interfaces/UserInterface'
+import { UserInterface } from '../interfaces/UserInterface'
 import { Credentials } from '../interfaces/CredentialInterface'
 
 export const handleSignup = (data: Omit<UserInterface, 'id'>) =>
@@ -11,4 +11,10 @@ export const authenticate = ({ email, password }: Credentials) => {
     url: '/auth/authenticate',
     data: { email, password }
   })
+}
+
+export const authenticateWithToken = async (): Promise<UserInterface> => {
+  const res = await axios.post('/auth/token')
+
+  return res.data.user
 }

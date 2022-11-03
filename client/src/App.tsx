@@ -1,36 +1,24 @@
 import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import ws from 'socket.io-client'
-
+import { ToastContainer } from 'react-toastify'
+import routes from './routes/router'
 import config from './config'
-import axios from './api/axios'
-import { UserInterface } from '../../src/interfaces/UserInterface'
 import useAuth from './hooks/useAuth'
-import Landing from './pages/Landing/Landing'
-import Presentations from './pages/Presentation'
-import Presentation from './pages/Presentation'
-import Login from './components/Login'
-import PublicRoute from './components/PublicRoute'
-import PrivateRoute from './components/PrivateRoute'
+import { authApi } from './api'
+import 'react-toastify/dist/ReactToastify.css'
 
-const { domain } = config
+const { wsBaseUrl } = config
 
-const socket = ws(domain, {
+const socket = ws(wsBaseUrl, {
   autoConnect: false
 })
 
 const App = () => {
-  const { dispatch } = useAuth()
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const user: UserInterface = await axios.post('/auth/token')
+  const routing = useRoutes(routes)
+  const { dispatch, checkedToken } = useAuth()
 
-        dispatch && dispatch({ type: 'LOGIN', payload: { user } })
-      } catch (err) {
-        dispatch && dispatch({ type: 'LOGOUT' })
-      }
-    })()
+  useEffect(() => {
     socket.open()
 
     socket.emit('login', 'UserId has logged in')
@@ -50,43 +38,38 @@ const App = () => {
     }
   }, [])
 
-  const element = useRoutes([
-    {
-      path: '/',
-      element: (
-        <PublicRoute>
-          <Landing />
-        </PublicRoute>
-      )
-    },
-    {
-      path: '/login',
-      element: (
-        <PublicRoute>
-          <Login />
-        </PublicRoute>
-      )
-    },
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const user = await authApi.authenticateWithToken()
 
-    {
-      path: '/user',
-      element: (
-        <PrivateRoute>
-          <Presentations />
-        </PrivateRoute>
-      )
-    },
-    {
-      path: '/presentation/:id',
-      element: (
-        <PrivateRoute>
-          <Presentation />
-        </PrivateRoute>
-      )
-    }
-  ])
+        dispatch({ type: 'INITIALIZE', payload: { user, loggedIn: true } })
+      } catch (err) {
+        dispatch({
+          type: 'INITIALIZE',
+          payload: { user: null, loggedIn: false }
+        })
+      }
+    })()
+  }, [])
 
-  return element
+  return (
+    <>
+      {checkedToken ? routing : <div>Loading</div>}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
+  )
 }
 
 export default App

@@ -20,6 +20,14 @@ export interface CreateSlideOptions {
   isPrivate?: boolean
 }
 
+export interface CreateSlideService {
+  userId: string
+  title?: string
+  link: string
+  isLive?: boolean
+  isPrivate?: boolean
+}
+
 export interface DeleteSlideRequest extends Request {
   params: { id: string }
 }

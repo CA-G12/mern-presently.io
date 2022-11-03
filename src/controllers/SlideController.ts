@@ -80,6 +80,7 @@ const createSlide = async (
   next: NextFunction
 ) => {
   try {
+    const { id: userId } = res.locals.user
     const { title, isPrivate, isLive } = req.body
     const file = req.file
 
@@ -99,6 +100,7 @@ const createSlide = async (
       schema: slideSchema,
       data: { link, title, isPrivate, isLive }
     })
+
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }
@@ -106,6 +108,7 @@ const createSlide = async (
     const linkSegment = link.split('/')[1]
 
     const slide = await SlideService.createSlide({
+      userId,
       link: linkSegment,
       title,
       isPrivate,

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useReducer } from 'react'
+import { SlideInterface } from './interfaces/SlideInterface'
 import { UserInterface } from './interfaces/UserInterface'
 
 export type Action =
@@ -8,6 +9,7 @@ export type Action =
       type: 'INITIALIZE'
       payload: { user: UserInterface | null; loggedIn: boolean }
     }
+  | { type: 'ADD_SLIDE'; payload: { slide: SlideInterface } }
   | { type: 'LOGOUT' }
 
 type State = {
@@ -56,6 +58,27 @@ const reducer = (state: State, action: Action) => {
           loggedIn: false,
           checkedToken: true,
           user: null
+        }
+      }
+    }
+    case 'ADD_SLIDE': {
+      const { slide } = action.payload
+      const user = state.auth.user
+
+      if (!user) {
+        return state
+      }
+
+      const slides = user.slides
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: {
+            ...user,
+            slides: [...slides, slide]
+          }
         }
       }
     }

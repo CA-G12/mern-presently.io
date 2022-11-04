@@ -22,10 +22,11 @@ const CommonUploadFile = ({
     try {
       const form = new FormData()
       form.append('File', uploadedFile)
+
       //TODO remove password from the returned object
-      const result = await slideApi.uploadSlide(form)
-      const lastSlide =
-        result.data.slide.slides[result.data.slide.slides.length - 1]
+      const uploadedSlide = await slideApi.uploadSlide(form)
+      const slides = uploadedSlide.data.slide.slides
+      const lastSlide = slides[slides.length - 1]
 
       dispatch({ type: 'ADD_SLIDE', payload: { slide: lastSlide } })
       toast.success('Presentation uploaded successfully.')

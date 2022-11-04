@@ -6,6 +6,7 @@ import { ReactComponent as PresentationIcon } from '../../assets/PresentationIco
 import { ReactComponent as LivePresentation } from '../../assets/PresentationIcons/livePresentation.svg'
 import { ReactComponent as DeletePresentation } from '../../assets/PresentationIcons/deletePresentation.svg'
 import { slideApi } from '../../api'
+import useAuth from '../../hooks/useAuth'
 
 interface IPresentationCardOProps {
   newId: string
@@ -32,11 +33,12 @@ const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
   const [isPublic, setIsPublic] = useState(false)
   const [isLive, setIsLive] = useState(false)
 
+  const { dispatch } = useAuth()
+
   const handleDeletingSlide = async () => {
     try {
-      //TODO: test till we get the id for each card
-      //  await presentationApi.deleteSlide('456ea40720dcfa02e0ae42db')
       await slideApi.deleteSlide(newId)
+      dispatch({ type: 'DELETE_SLIDE', payload: { slideID: newId } })
       handleAlert('success', 'Deleted Successfully')
     } catch {
       handleAlert('error', 'Something went wrong')

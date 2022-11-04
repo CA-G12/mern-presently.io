@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useReducer } from 'react'
+import { CLOSING } from 'ws'
 import { SlideInterface } from './interfaces/SlideInterface'
 import { UserInterface } from './interfaces/UserInterface'
 
@@ -10,6 +11,7 @@ export type Action =
       payload: { user: UserInterface | null; loggedIn: boolean }
     }
   | { type: 'ADD_SLIDE'; payload: { slide: SlideInterface } }
+  | { type: 'DELETE_SLIDE'; payload: { slideID: string } }
   | { type: 'LOGOUT' }
 
 type State = {
@@ -79,6 +81,27 @@ const reducer = (state: State, action: Action) => {
             ...user,
             slides: [...slides, slide]
           }
+        }
+      }
+    }
+    case 'DELETE_SLIDE': {
+      const { slideID } = action.payload
+
+      const user = state.auth.user
+
+      if (!user) {
+        return state
+      }
+
+      const { slides } = user
+
+      const newSlides = slides.filter(el => el._id != slideID)
+
+      return {
+        ...state,
+        user: {
+          ...user,
+          slides: [...newSlides]
         }
       }
     }

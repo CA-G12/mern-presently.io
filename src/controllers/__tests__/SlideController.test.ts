@@ -175,7 +175,7 @@ describe('Getting slide by id', () => {
       .end((err, res) => {
         if (err) return done()
         expect(res.status).toBe(200)
-        expect(res.body.slide.title).toBe('OAUTH')
+        expect(res.body.slide.info.title).toBe('OAUTH')
         return done()
       })
   })

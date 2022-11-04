@@ -1,5 +1,5 @@
-import './styles.css'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import './styles.css'
 import axios from '../../api/axios'
@@ -11,14 +11,25 @@ import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
 const Presentation = () => {
   const [slides, setSlides] = useState([])
   const [openComments, setOpenComments] = useState(false)
+  const [text, setText] = useState('')
 
-  // TODO: test, remove it later
+  const copy = async () => {
+    await navigator.clipboard.writeText(text)
+    toast.success('Text copied')
+  }
+
+  // TODO: get the id of the current slide
   useEffect(() => {
     axios({
       method: 'get',
       url: '/test'
     }).then(data => setSlides(data.data.split('<hr>')))
-  })
+
+    axios({
+      method: 'get',
+      url: '/slides/share/1'
+    }).then(data => setText(data.data.link))
+  }, [])
 
   return (
     <div className="h-screen flex flex-col">
@@ -33,7 +44,7 @@ const Presentation = () => {
           </button>
           {openComments && <Comments />}
         </div>
-        <button className="focus:outline-none hover:scale-125">
+        <button className="focus:outline-none hover:scale-125" onClick={copy}>
           <Share strokeWidth={2} />
         </button>
       </div>

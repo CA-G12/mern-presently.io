@@ -23,6 +23,7 @@ router.post(
   SlideController.createSlide
 )
 
+router.get('/share/:slideId', SlideController.createSharingLink)
 router.get('/:id', SlideController.getSlide)
 router.put('/:id', verifyAccessToken, SlideController.updateSlide)
 router.post('/', verifyAccessToken, SlideController.createSlide)

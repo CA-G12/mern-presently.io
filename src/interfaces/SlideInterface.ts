@@ -58,6 +58,10 @@ export interface DeleteSlideRequest extends Request {
   params: { id: string }
 }
 
+export interface createSharingLink extends Request {
+  params: { slideId: string }
+}
+
 export interface GetSlideRequest extends Request {
   params: { id: string }
 }

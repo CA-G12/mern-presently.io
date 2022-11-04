@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 import { authApi } from '../../api'
 import { UserInterface } from '../../interfaces/UserInterface'
 
-const SignUp = () => {
+const SignUp = ({ setModal }: { setModal: () => void }) => {
   const [isSubmitting, setSubmitting] = useState(false)
   const [signupError, setSignupError] = useState('')
 
@@ -35,10 +35,10 @@ const SignUp = () => {
   }) as SubmitHandler<FieldValues>
 
   return (
-    <body className="min-h-screen flex items-center justify-center ">
+    <body className="min-h-screen flex items-center justify-center">
       <form
         className="w-6/12 h-screen flex flex-col items-center justify-around shadow-[0_0_15px_0_rgba(0,0,0,0.2)] pt-15	
-     pr-30 pb-15  pl-30 rounded-[10px] max-w-[598px] max-h-[705px] "
+     pr-30 pb-15  pl-30 rounded-[10px] max-w-[598px] max-h-[705px] bg-white"
         onSubmit={handleSubmit(onSubmit)}
       >
         <span className="text-3xl font-bold text-gray-900">Sign Up</span>
@@ -145,7 +145,7 @@ const SignUp = () => {
         </div>
         <span className="text-xs text-black">
           Already Have an Account?{' '}
-          <a className="no-underline text-blue-400 " href="\login">
+          <a className="no-underline text-blue-400 " onClick={setModal}>
             Login
           </a>
         </span>

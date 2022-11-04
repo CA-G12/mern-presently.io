@@ -2,12 +2,16 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
 import { authenticate } from '../../api/auth'
+import useAuth from '../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 type FormData = {
   email: string
   password: string
 }
-export default function Login() {
+export default function Login({ setModal }: { setModal: () => void }) {
+  const { dispatch } = useAuth()
+  const navigate = useNavigate()
   const [loginError, setLoginError] = useState('')
   const {
     register,
@@ -17,26 +21,28 @@ export default function Login() {
 
   const onSubmit = handleSubmit(async data => {
     try {
-      await authenticate(data)
-      // TODO: navigate to the main page
+      const res = await authenticate(data)
+      const user = res.data.user
+      dispatch({ type: 'LOGIN', payload: { user } })
+      navigate('/presentations')
     } catch (error) {
       const exception = error as AxiosError
 
-      if (exception.request) {
-        setLoginError('Something went wrong.')
-      } else {
-        if (exception.response?.status === 400) {
+      if (exception.response) {
+        if (exception.response.status === 400) {
           setLoginError('Please double check your password and email.')
         } else {
           setLoginError('Something went wrong.')
         }
+      } else {
+        setLoginError('Something went wrong.')
       }
     }
   })
 
   return (
-    <div className="min-h-screen flex justify-center items-center	">
-      <div className="flex flex-col items-center justify-center min-h-full py-7 px-10 shadow-lg w-max h-max rounded-1">
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="flex flex-col items-center justify-center min-h-full py-7 px-10 shadow-lg w-max h-max rounded-1 bg-white">
         <div>
           <h1 className="font-bold text-small">Sign in</h1>
         </div>
@@ -96,7 +102,12 @@ export default function Login() {
           )}
           <p className="cursor-pointer my-3">
             Don&apos;t have an account ?
-            <span className="text-blue-bright underline ml-1"> Sign up</span>
+            <span
+              className="text-blue-bright underline ml-1"
+              onClick={setModal}
+            >
+              Sign up
+            </span>
           </p>
         </form>
       </div>

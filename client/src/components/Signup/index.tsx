@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 
 import { authApi } from '../../api'
 import { UserInterface } from '../../interfaces/UserInterface'
-import useAuth from '../../hooks/useAuth'
+// import useAuth from '../../hooks/useAuth'
 import { ReactComponent as EyeVisible } from '../../assets/FormIcons/eyeVisible.svg'
 import { ReactComponent as EyeInvisible } from '../../assets/FormIcons/eyeInvisible.svg'
 import '../Login/styles.css'
@@ -19,8 +19,8 @@ type FormData = {
 const SignUp = ({ setModal }: { setModal: () => void }) => {
   const [isSubmitting, setSubmitting] = useState(false)
   const [signupError, setSignupError] = useState('')
-  const { dispatch } = useAuth()
-  const navigate = useNavigate()
+  // const { dispatch } = useAuth()
+  // const navigate = useNavigate()
   const [eyeOpen, setEyeOpen] = useState(false)
   const {
     register,
@@ -35,7 +35,8 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
   const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
     try {
       setSubmitting(true)
-      const res = await authApi.handleSignup(data)
+      await authApi.handleSignup(data)
+      // const res = await authApi.handleSignup(data)
       setSubmitting(false)
       // TODO: what comes after signup?
       // const user = res.data.user

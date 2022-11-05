@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
 
 import { ReactComponent as PresentationIcon } from '../../assets/PresentationIcons/presentationIcon.svg'
 import { ReactComponent as LivePresentation } from '../../assets/PresentationIcons/livePresentation.svg'
 import { ReactComponent as DeletePresentation } from '../../assets/PresentationIcons/deletePresentation.svg'
 import { slideApi } from '../../api'
 import useAuth from '../../hooks/useAuth'
+import { SlideInterface } from '../../interfaces/SlideInterface'
+
 
 interface IPresentationCardOProps {
-  newId: string
+  slide: SlideInterface
   type: string
 }
 
@@ -29,15 +32,17 @@ const handleAlert = (status: string, message: string) => {
   }
 }
 
-const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
-  const [isPublic, setIsPublic] = useState(false)
-  const [isLive, setIsLive] = useState(false)
+const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
+  const navigate = useNavigate()
+  const [isPublic, setIsPublic] = useState(!slide.isPrivate)
+  const [isLive, setIsLive] = useState(slide.isLive)
 
   const { dispatch } = useAuth()
 
   const handleDeletingSlide = async () => {
     try {
       await slideApi.deleteSlide(newId)
+      
       dispatch({ type: 'DELETE_SLIDE', payload: { slideID: newId } })
       handleAlert('success', 'Deleted Successfully')
     } catch {
@@ -60,9 +65,14 @@ const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
           />
         </a>
       </div>
-      <div className="flex mt-4 ml-4 mb-8">
-        <PresentationIcon className="mr-4" />
-        <p>Application</p>
+      <div
+        className="flex mt-4 ml-4 mb-8 cursor-pointer"
+        onClick={() => navigate(`/presentations/${slide._id}`)}
+      >
+        <PresentationIcon className="mr-4 cursor-pointer" />
+        <p onClick={() => navigate(`/presentations/${slide._id}`)}>
+          {slide.title}
+        </p>
       </div>
       {type === 'uploaded' ? (
         <div className="flex border border-b-0 border-l-0 border-r-0 border-white p-4">
@@ -85,12 +95,12 @@ const PresentationCard = ({ newId, type }: IPresentationCardOProps) => {
           </div>
           <div className="flex justify-between">
             <label
-              htmlFor={'default-toggle' + newId}
+              htmlFor={'default-toggle' + slide._id}
               className="inline-flex relative items-center cursor-pointer"
             >
               <input
                 type="checkbox"
-                id={'default-toggle' + newId}
+                id={'default-toggle' + slide._id}
                 className="sr-only peer"
                 checked={isPublic}
                 onChange={() => setIsPublic(!isPublic)}

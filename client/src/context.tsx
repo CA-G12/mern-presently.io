@@ -10,6 +10,7 @@ export type Action =
       payload: { user: UserInterface | null; loggedIn: boolean }
     }
   | { type: 'ADD_SLIDE'; payload: { slide: SlideInterface } }
+  | { type: 'DELETE_SLIDE'; payload: { slideID: string } }
   | { type: 'LOGOUT' }
 
 type State = {
@@ -41,7 +42,7 @@ const reducer = (state: State, action: Action) => {
     }
     case 'LOGIN': {
       const { user } = action.payload
-      console.log('YES: ', user)
+
       return {
         ...state,
         auth: {
@@ -78,6 +79,30 @@ const reducer = (state: State, action: Action) => {
           user: {
             ...user,
             slides: [...slides, slide]
+          }
+        }
+      }
+    }
+    case 'DELETE_SLIDE': {
+      const { slideID } = action.payload
+
+      const user = state.auth.user
+
+      if (!user) {
+        return state
+      }
+
+      const { slides } = user
+
+      const newSlides = slides.filter(el => el._id != slideID)
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: {
+            ...user,
+            slides: [...newSlides]
           }
         }
       }

@@ -7,3 +7,5 @@ export const uploadSlide = (file: FormData) => {
 }
 
 export const shareLink = (id: string) => axios.get(`/slides/share/${id}`)
+
+export const getSlide = (id: string) => axios.get(`/slides/${id}`)

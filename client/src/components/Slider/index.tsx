@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import SyncLoader from 'react-spinners/SyncLoader'
+import { Link } from 'react-router-dom'
 
 import './styles.css'
 import { useKeyPress } from '../../hooks/useKeyPress'
@@ -9,11 +10,11 @@ import { ReactComponent as Home } from '../../assets/SlidesIcons/home.svg'
 
 interface ISliderProps {
   slides: string[]
+  isLoading: boolean
 }
 
-const Slider = ({ slides }: ISliderProps) => {
+const Slider = ({ slides, isLoading }: ISliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const navigate = useNavigate()
 
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0
@@ -33,6 +34,13 @@ const Slider = ({ slides }: ISliderProps) => {
   return (
     <>
       <div className="mb-20 text-center">
+        <SyncLoader
+          color="#4982F3"
+          loading={isLoading}
+          size={15}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
         <div
           dangerouslySetInnerHTML={{ __html: slides[currentIndex] }}
           className="html"
@@ -41,12 +49,12 @@ const Slider = ({ slides }: ISliderProps) => {
       {/*------------------------ Control slides ------------------------ */}
       <div className="absolute inset-x-0 bottom-0 lg:pr-32 p-4 lg:py-5 lg:pl-32 flex-initial ">
         <div className="justify-self-end flex justify-center">
-          <button
-            onClick={() => navigate('/user')}
+          <Link
+            to="/presentations"
             className="hover:scale-125 focus: outline-none"
           >
             <Home strokeWidth={2} height={30} width={40} />
-          </button>
+          </Link>
           <input
             id="comment"
             className="w-full text-white py-2 px-2 mx-20 my-2 placeholder-grey border-b-2 border-grey-light focus:text-black outline-none"

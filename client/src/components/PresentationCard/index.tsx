@@ -10,7 +10,6 @@ import { slideApi } from '../../api'
 import useAuth from '../../hooks/useAuth'
 import { SlideInterface } from '../../interfaces/SlideInterface'
 
-
 interface IPresentationCardOProps {
   slide: SlideInterface
   type: string
@@ -41,9 +40,9 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
 
   const handleDeletingSlide = async () => {
     try {
-      await slideApi.deleteSlide(newId)
-      
-      dispatch({ type: 'DELETE_SLIDE', payload: { slideID: newId } })
+      await slideApi.deleteSlide(slide._id)
+
+      dispatch({ type: 'DELETE_SLIDE', payload: { slideID: slide._id } })
       handleAlert('success', 'Deleted Successfully')
     } catch {
       handleAlert('error', 'Something went wrong')

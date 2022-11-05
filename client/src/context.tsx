@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useReducer } from 'react'
-import { CLOSING } from 'ws'
 import { SlideInterface } from './interfaces/SlideInterface'
 import { UserInterface } from './interfaces/UserInterface'
 
@@ -99,9 +98,12 @@ const reducer = (state: State, action: Action) => {
 
       return {
         ...state,
-        user: {
-          ...user,
-          slides: [...newSlides]
+        auth: {
+          ...state.auth,
+          user: {
+            ...user,
+            slides: [...newSlides]
+          }
         }
       }
     }

@@ -1,112 +1,167 @@
 import { useState } from 'react'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
+
 import { authApi } from '../../api'
 import { UserInterface } from '../../interfaces/UserInterface'
+import useAuth from '../../hooks/useAuth'
+import { ReactComponent as EyeVisible } from '../../assets/FormIcons/eyeVisible.svg'
+import { ReactComponent as EyeInvisible } from '../../assets/FormIcons/eyeInvisible.svg'
+import '../Login/styles.css'
+
+type FormData = {
+  name: string
+  email: string
+  password: string
+}
 
 const SignUp = ({ setModal }: { setModal: () => void }) => {
   const [isSubmitting, setSubmitting] = useState(false)
   const [signupError, setSignupError] = useState('')
-
+  const { dispatch } = useAuth()
+  const navigate = useNavigate()
+  const [eyeOpen, setEyeOpen] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm()
+  } = useForm<FormData>()
+
+  const togglePassword = () => {
+    setEyeOpen(!eyeOpen)
+  }
 
   const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
     try {
       setSubmitting(true)
-      await authApi.handleSignup(data)
+      const res = await authApi.handleSignup(data)
       setSubmitting(false)
       // TODO: what comes after signup?
+      // const user = res.data.user
+      // dispatch({ type: 'INITIALIZE', payload: { user, loggedIn: true } })
+      // navigate('/presentations')
     } catch (error) {
       const exception = error as AxiosError
-      if (exception.request) {
-        setSignupError('Something went wrong.')
-      } else {
-        if (exception.response?.status === 400) {
+
+      if (exception.response) {
+        if (exception.response.status === 400) {
           setSignupError('An account with this email already exists.')
         } else {
           setSignupError('Something went wrong.')
         }
+      } else {
+        setSignupError('Something went wrong.')
       }
     }
   }) as SubmitHandler<FieldValues>
 
   return (
-    <body className="min-h-screen flex items-center justify-center">
-      <form
-        className="w-6/12 h-screen flex flex-col items-center justify-around shadow-[0_0_15px_0_rgba(0,0,0,0.2)] pt-15	
-     pr-30 pb-15  pl-30 rounded-[10px] max-w-[598px] max-h-[705px] bg-white"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <span className="text-3xl font-bold text-gray-900">Sign Up</span>
-        <input
-          type="text"
-          className="rounded-[10px]  w-[85%] max-w-[440px] h-[44px] border-[##2b2e30] border outline"
-          placeholder=" YourUsername"
-          {...register('name', {
-            required: true
-          })}
-        />
-        <p className="text-danger mx-1 text-footer">
-          {`${errors.password?.message}`}
-        </p>
-        <input
-          type="text"
-          className="rounded-[10px]  w-[85%] max-w-[440px] h-[44px] border-[##2b2e30] border outline"
-          placeholder=" YourEmail"
-          {...register('email', {
-            required: {
-              value: true,
-              message: 'Please input your email'
-            },
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: 'invalid email'
-            }
-          })}
-        />
-        <p className="text-danger mx-1 text-footer">{`${errors.email?.message}`}</p>
-        <input
-          type="text"
-          className="rounded-[10px]  w-[85%] max-w-[440px] h-[44px] border-[#CDCDCD] border outline"
-          placeholder=" yourPassword"
-          {...register('password', {
-            required: {
-              value: true,
-              message: 'Please input your password'
-            },
-            maxLength: {
-              value: 128,
-              message: 'the maximum length is 26'
-            },
-            minLength: {
-              value: 8,
-              message: 'the minimum length is 6'
-            },
-            pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message: 'invalid password'
-            }
-          })}
-        />
-        <p className="text-danger mx-1 text-footer">
-          {`${errors.password?.message}`}
-        </p>
-        <span className="text-gray-900 font-normal text-sm">
-          By clicking below, you agree to our terms of service.
-        </span>
-        <button
-          className="w-4/5 h-12 bg-blue-500 text-white text-base font-normal max-w-[400px] rounded-[10px] border-none outline-none "
-          type="submit"
-          disabled={isSubmitting}
+    <body className="min-h-screen flex justify-center items-center">
+      <div className="box relative bg-white overflow-hidden rounded-1 shadow-lg">
+        <form
+          className="flex flex-col items-center justify-center absolute rounded-1 bg-white inset-1 z-10 p-8"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          autoComplete="off"
         >
-          Sign Up
-        </button>
-        <div className="w-4/5 h-3 flex items-center justify-between max-w-[400px]">
+          <div>
+            <h1 className="mb-8 font-bold text-small">Sign up</h1>
+          </div>
+          {/*---------------------------------------------- Name --------------------------------------------------- */}
+          <div>
+            <label className="relative cursor-pointer">
+              <input
+                className="input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
+                placeholder="Name"
+                {...register('name', {
+                  required: 'Name is required'
+                })}
+              />
+              <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
+                Name
+              </span>
+            </label>
+            <p className="text-danger mb-5 mx-1 text-footer">
+              {errors.name?.message}
+            </p>
+          </div>
+          {/*---------------------------------------------- Email --------------------------------------------------- */}
+          <div>
+            <label className="relative cursor-pointer">
+              <input
+                className="input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
+                placeholder="Email"
+                {...register('email', {
+                  pattern: {
+                    value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                    message: 'Not a valid email'
+                  },
+                  required: 'Email Address is required'
+                })}
+              />
+              <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
+                Email
+              </span>
+            </label>
+            <p className="text-danger mb-5 mx-1 text-footer">
+              {errors.email?.message}
+            </p>
+          </div>
+          {/*---------------------------------------------- Password --------------------------------------------------- */}
+          <div className="w-96">
+            <label className="relative cursor-pointer">
+              <input
+                type={eyeOpen === false ? 'password' : 'text'}
+                className=" input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light border-opacity-50 placeholder-grey-light placeholder-opacity-0 outline-none focus:border-primary-default transition duration-200"
+                placeholder="Password"
+                {...register('password', {
+                  required: 'Password is required',
+                  pattern: {
+                    value:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    message:
+                      'Password length is 8-128 characters, including a lowercase, an uppercase, characters and numbers.'
+                  }
+                })}
+              />
+              <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
+                Password
+              </span>
+              <div className="absolute top-0 right-5">
+                {eyeOpen === false ? (
+                  <div onClick={togglePassword}>
+                    <EyeVisible />
+                  </div>
+                ) : (
+                  <div onClick={togglePassword}>
+                    <EyeInvisible />
+                  </div>
+                )}
+              </div>
+            </label>
+            <p className="text-danger text-footer">
+              {errors.password?.message}
+            </p>
+          </div>
+          {/*---------------------------------------------- Agreement --------------------------------------------------- */}
+          <span className="my-3 text-grey-hover text-footer">
+            By clicking below, you agree to our terms of service.
+          </span>
+          {/*---------------------------------------------- Sign up button --------------------------------------------------- */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-96 bg-primary-default text-center py-2 text-white rounded-1 cursor-pointer"
+          >
+            Sign up
+          </button>
+          {/*---------------------------------------------- Sign up errors --------------------------------------------------- */}
+          {signupError && (
+            <p className="text-danger my-3 self-start ml-7">{signupError}</p>
+          )}
+          {/*---------------------------------------------- OAUTH --------------------------------------------------- */}
+          {/* <div className="w-4/5 h-3 flex items-center justify-between max-w-[400px]">
           <div className="w-2/5 h-px bg-black" />
           <span className="or">or</span>
           <div className="w-2/5 h-px bg-black" />
@@ -142,15 +197,16 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
             />
           </svg>
           <span>sign up with github</span>
-        </div>
-        <span className="text-xs text-black">
-          Already Have an Account?{' '}
-          <a className="no-underline text-blue-400 " onClick={setModal}>
-            Login
-          </a>
-        </span>
-        <p className="text-gray-900 font-normal text-sm">{signupError}</p>
-      </form>
+        </div> */}
+          {/*---------------------------------------------- Navigation --------------------------------------------------- */}
+          <p className="cursor-pointer my-3 text-footer">
+            Already Have an Account?{' '}
+            <a className="text-blue-bright underline ml-1" onClick={setModal}>
+              Sign in
+            </a>
+          </p>
+        </form>
+      </div>
     </body>
   )
 }

@@ -1,7 +1,6 @@
 import Landing from '../pages/Landing/Landing'
 import Presentations from '../pages/Presentations'
 import Presentation from '../pages/Presentation'
-import Login from '../components/Login'
 import BlankLayout from '../layouts/BlankLayout'
 import PrivateRoute from './PrivateRoute'
 
@@ -14,15 +13,6 @@ const routes = [
       </BlankLayout>
     )
   },
-  {
-    path: '/login',
-    element: (
-      <BlankLayout>
-        <Login />
-      </BlankLayout>
-    )
-  },
-
   {
     path: '/presentations',
     element: (

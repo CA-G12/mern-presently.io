@@ -42,7 +42,7 @@ const reducer = (state: State, action: Action) => {
     }
     case 'LOGIN': {
       const { user } = action.payload
-
+      console.log('YES: ', user)
       return {
         ...state,
         auth: {

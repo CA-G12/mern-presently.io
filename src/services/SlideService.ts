@@ -10,6 +10,7 @@ import {
   SlideInterface,
   FileInterface
 } from '../interfaces/SlideInterface'
+import mdOptions from '../config/md'
 
 const createSlide = async ({
   userId,
@@ -48,15 +49,7 @@ const getSlide = async (id: string) => {
 const getSlideHtmlContent = async (link: string) => {
   const mdContent = await axios.get(`https://rebrand.ly/${link}`)
 
-  const md = new MarkdownIt({
-    html: false,
-    xhtmlOut: false,
-    breaks: false,
-    langPrefix: 'language-',
-    linkify: true,
-    typographer: false,
-    quotes: '“”‘’'
-  })
+  const md = new MarkdownIt(mdOptions)
 
   const htmlContent = md.render(mdContent.data)
 

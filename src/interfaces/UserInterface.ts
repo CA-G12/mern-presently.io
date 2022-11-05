@@ -21,7 +21,7 @@ export interface UserResponseInterface {
 }
 
 export interface GetUserFilter {
-  id?: string
+  _id?: string
   email?: string
 }
 

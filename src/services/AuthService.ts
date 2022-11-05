@@ -1,14 +1,13 @@
 import AuthHelper from '../helpers/AuthHelper'
 import UserRepository from '../repositories/UserRepository'
-import { UserInterface } from '../interfaces/UserInterface'
 import { Credentials } from '../interfaces/CredentialInterface'
 import GenericError from '../helpers/GenericError'
-import mongoose from 'mongoose'
 
 const login = async ({ email, password }: Credentials) => {
   const user = await UserRepository.getUser({
     email
   })
+
   if (!user) {
     throw new GenericError('Please double check your email or password')
   }
@@ -17,11 +16,12 @@ const login = async ({ email, password }: Credentials) => {
     password,
     user.password
   )
+
   if (!isCorrectPassword) {
     throw new GenericError('Please double check your email or password')
   }
-
   const token = await AuthHelper.generateAccessToken(user.id)
+
   const loggedInUser = await UserRepository.getUser(
     {
       email
@@ -34,9 +34,10 @@ const login = async ({ email, password }: Credentials) => {
 
 const verifyToken = async (token: string) => {
   const { id } = await AuthHelper.verifyToken(token)
+
   const user = await UserRepository.getUser(
     {
-      id
+      _id: id
     },
     { password: 0 }
   )

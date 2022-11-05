@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { slideApi } from '../../api'
+import useAuth from '../../hooks/useAuth'
 
 type ICommonUploadFileProps = {
   uploadedFile: any
@@ -15,12 +16,19 @@ const CommonUploadFile = ({
   setUploadedFile,
   hiddenFileInput
 }: ICommonUploadFileProps) => {
+  const { dispatch } = useAuth()
+
   const handleUpload = async (uploadedFile: File) => {
     try {
       const form = new FormData()
       form.append('File', uploadedFile)
-      await slideApi.uploadSlide(form)
 
+      //TODO remove password from the returned object
+      const uploadedSlide = await slideApi.uploadSlide(form)
+      const slides = uploadedSlide.data.slide.slides
+      const lastSlide = slides[slides.length - 1]
+
+      dispatch({ type: 'ADD_SLIDE', payload: { slide: lastSlide } })
       toast.success('Presentation uploaded successfully.')
     } catch (error) {
       toast.error('Something went wrong.')

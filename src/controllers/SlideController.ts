@@ -25,7 +25,14 @@ const getSlide = async (
       throw new GenericError('Slide not found')
     }
 
-    res.status(200).json({ message: 'success', slide: slide[0] })
+    const htmlContent = await SlideService.getSlideHtmlContent(slide[0].link)
+    if (!htmlContent) {
+      throw new GenericError('No content')
+    }
+
+    res
+      .status(200)
+      .json({ message: 'success', slide: { info: slide[0], htmlContent } })
   } catch (error: unknown) {
     const exception = error as Error
 

@@ -1,24 +1,26 @@
-import './styles.css'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import './styles.css'
-import axios from '../../api/axios'
+import { slideApi } from '../../api'
 import Slider from '../../components/Slider'
 import Comments from '../../components/Comments'
 import { ReactComponent as Bell } from '../../assets/SlidesIcons/bell.svg'
 import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
 
 const Presentation = () => {
+  const { id } = useParams() as { id: string }
   const [slides, setSlides] = useState([])
   const [openComments, setOpenComments] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // TODO: test, remove it later
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: '/test'
-    }).then(data => setSlides(data.data.split('<hr>')))
-  })
+    setIsLoading(true)
+    slideApi
+      .getSlide(id)
+      .then(data => setSlides(data.data.slide.htmlContent.split('<hr>')))
+      .then(() => setIsLoading(false))
+  }, [])
 
   return (
     <div className="h-screen flex flex-col">
@@ -40,7 +42,14 @@ const Presentation = () => {
       {/* ------------------------Slides------------------------ */}
       <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
         <div>
-          <Slider slides={slides[length - 1] ? slides : slides.slice(0, -1)} />
+          <Slider
+            slides={
+              slides[slides.length - 1] === '' || '\n'
+                ? slides.slice(0, -1)
+                : slides
+            }
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </div>

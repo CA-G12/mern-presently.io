@@ -95,7 +95,7 @@ const createSlide = async (
       throw new GenericError('Please Provide a File')
     }
 
-    if (file.mimetype !== 'text/markdown') {
+    if (file.originalname.split('.')[1] !== 'md') {
       throw new GenericError('Please Provide a Valid File Type')
     }
 

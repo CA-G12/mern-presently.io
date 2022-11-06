@@ -13,12 +13,16 @@ const createUser = async ({
 
   const hashedPassword = await AuthHelper.hashPassword(password)
 
-  return UserRepository.createUser({
+  const user = await UserRepository.createUser({
     name,
     email,
     password: hashedPassword,
     slides: []
   })
+
+  const token = await AuthHelper.generateAccessToken(user.id)
+
+  return { user, token }
 }
 
 export default { createUser }

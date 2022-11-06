@@ -18,7 +18,7 @@ const Presentation = () => {
 
   const copy = async () => {
     await navigator.clipboard.writeText(link)
-    toast.success('Text copied')
+    toast.success('link copied')
   }
 
   useEffect(() => {

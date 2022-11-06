@@ -2,11 +2,13 @@ import { useEffect } from 'react'
 import { useRoutes } from 'react-router-dom'
 import ws from 'socket.io-client'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import SyncLoader from 'react-spinners/SyncLoader'
+
 import routes from './routes/router'
 import config from './config'
 import useAuth from './hooks/useAuth'
 import { authApi } from './api'
-import 'react-toastify/dist/ReactToastify.css'
 
 const { wsBaseUrl } = config
 
@@ -55,7 +57,19 @@ const App = () => {
 
   return (
     <>
-      {checkedToken ? routing : <div>Loading</div>}
+      {checkedToken ? (
+        routing
+      ) : (
+        <div className="min-h-screen text-center flex align-middle justify-center items-center">
+          <SyncLoader
+            color="#4982F3"
+            loading={true}
+            size={15}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

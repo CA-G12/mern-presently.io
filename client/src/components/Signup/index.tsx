@@ -17,7 +17,6 @@ type FormData = {
 }
 
 const SignUp = ({ setModal }: { setModal: () => void }) => {
-  const [isSubmitting, setSubmitting] = useState(false)
   const [signupError, setSignupError] = useState('')
   const { dispatch } = useAuth()
   const navigate = useNavigate()
@@ -32,11 +31,13 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
     setEyeOpen(!eyeOpen)
   }
 
+  const removeSignupError = () => {
+    setSignupError('')
+  }
+
   const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
     try {
-      setSubmitting(true)
       const res = await authApi.handleSignup(data)
-      setSubmitting(false)
       const user = res.data.user
       dispatch({ type: 'INITIALIZE', payload: { user, loggedIn: true } })
       navigate('/presentations')
@@ -76,6 +77,7 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
                 {...register('name', {
                   required: 'Name is required'
                 })}
+                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Name
@@ -98,6 +100,7 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
                   },
                   required: 'Email Address is required'
                 })}
+                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Email
@@ -123,6 +126,7 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
                       'Password length is 8-128 characters, including a lowercase, an uppercase, characters and numbers.'
                   }
                 })}
+                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Password
@@ -150,7 +154,6 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
           {/*---------------------------------------------- Sign up button --------------------------------------------------- */}
           <button
             type="submit"
-            disabled={isSubmitting}
             className="w-96 bg-primary-default text-center py-2 text-white rounded-1 cursor-pointer"
           >
             Sign up

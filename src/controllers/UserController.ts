@@ -20,8 +20,13 @@ const createUser = async (
     if (!validationResult.isValid)
       throw new GenericError(validationResult.error)
 
-    await UserService.createUser({ name, email, password })
-    res.status(201).json({ message: 'success' })
+    const { user, token } = await UserService.createUser({
+      name,
+      email,
+      password
+    })
+
+    res.status(201).cookie('token', token).json({ message: 'success', user })
   } catch (error: unknown) {
     const exception = error as Error
 

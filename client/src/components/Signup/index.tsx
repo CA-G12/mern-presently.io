@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 
 import { authApi } from '../../api'
 import { UserInterface } from '../../interfaces/UserInterface'
-// import useAuth from '../../hooks/useAuth'
+import useAuth from '../../hooks/useAuth'
 import { ReactComponent as EyeVisible } from '../../assets/FormIcons/eyeVisible.svg'
 import { ReactComponent as EyeInvisible } from '../../assets/FormIcons/eyeInvisible.svg'
 import '../Login/styles.css'
@@ -17,10 +17,9 @@ type FormData = {
 }
 
 const SignUp = ({ setModal }: { setModal: () => void }) => {
-  const [isSubmitting, setSubmitting] = useState(false)
   const [signupError, setSignupError] = useState('')
-  // const { dispatch } = useAuth()
-  // const navigate = useNavigate()
+  const { dispatch } = useAuth()
+  const navigate = useNavigate()
   const [eyeOpen, setEyeOpen] = useState(false)
   const {
     register,
@@ -32,16 +31,16 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
     setEyeOpen(!eyeOpen)
   }
 
+  const removeSignupError = () => {
+    setSignupError('')
+  }
+
   const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
     try {
-      setSubmitting(true)
-      await authApi.handleSignup(data)
-      // const res = await authApi.handleSignup(data)
-      setSubmitting(false)
-      // TODO: what comes after signup?
-      // const user = res.data.user
-      // dispatch({ type: 'INITIALIZE', payload: { user, loggedIn: true } })
-      // navigate('/presentations')
+      const res = await authApi.handleSignup(data)
+      const user = res.data.user
+      dispatch({ type: 'INITIALIZE', payload: { user, loggedIn: true } })
+      navigate('/presentations')
     } catch (error) {
       const exception = error as AxiosError
 
@@ -78,6 +77,7 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
                 {...register('name', {
                   required: 'Name is required'
                 })}
+                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Name
@@ -100,6 +100,7 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
                   },
                   required: 'Email Address is required'
                 })}
+                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Email
@@ -125,6 +126,7 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
                       'Password length is 8-128 characters, including a lowercase, an uppercase, characters and numbers.'
                   }
                 })}
+                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Password
@@ -152,7 +154,6 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
           {/*---------------------------------------------- Sign up button --------------------------------------------------- */}
           <button
             type="submit"
-            disabled={isSubmitting}
             className="w-96 bg-primary-default text-center py-2 text-white rounded-1 cursor-pointer"
           >
             Sign up

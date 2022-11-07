@@ -13,6 +13,7 @@
     background: linear-gradient(0deg, transparent, #4CBFFF, #4982F3);
     transform-origin: bottom right;
     animation: animate 6s linear infinite;
+    
 }
 
 .box::after{

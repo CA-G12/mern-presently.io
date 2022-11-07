@@ -127,6 +127,7 @@ export default function Login({ setModal }: { setModal: () => void }) {
           >
             Sign In
           </button>
+
           {loginError && (
             <p className="text-danger my-3 self-start text-footer">
               {loginError}

@@ -10,7 +10,7 @@ export interface SlideInterface {
 
 export interface UpdateSlideRequest extends Request {
   body: Omit<SlideInterface, 'id'>
-  params: { id: string }
+  params: { slideId: string }
 }
 
 export interface CreateSlideOptions {

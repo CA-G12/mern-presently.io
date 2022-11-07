@@ -5,3 +5,11 @@ export interface SlideInterface {
   isPrivate: boolean
   isLive: boolean
 }
+
+export interface UpdateSlideInterface {
+  id: string
+  link?: string
+  isLive?: boolean
+  title?: string
+  isPrivate?: boolean
+}

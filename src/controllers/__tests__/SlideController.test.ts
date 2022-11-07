@@ -114,7 +114,7 @@ describe('Add a new presentation', () => {
         .post('/api/v1/slides/')
         .set('Cookie', [`token=${token}`])
         .attach(
-          'file',
+          'File',
           join(__dirname, '..', '..', '..', 'assets', 'TestMDFile.md')
         )
         .end((error, res) => {

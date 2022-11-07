@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
@@ -16,11 +16,19 @@ type FormData = {
   password: string
 }
 
-const SignUp = ({ setModal }: { setModal: () => void }) => {
+interface ISignUpProps {
+  setModal: () => void
+  setIsOpen: (arg: boolean) => void
+  isOpen: boolean
+}
+
+const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
   const [signupError, setSignupError] = useState('')
   const { dispatch } = useAuth()
   const navigate = useNavigate()
   const [eyeOpen, setEyeOpen] = useState(false)
+  const modalRef = useRef<HTMLDivElement>(null)
+
   const {
     register,
     handleSubmit,
@@ -33,6 +41,24 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
 
   const removeSignupError = () => {
     setSignupError('')
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', onClickOutSide)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutSide)
+    }
+  }, [])
+
+  const onClickOutSide = (e: any) => {
+    console.log(modalRef.current)
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      console.log('')
+      setIsOpen(false)
+    }
   }
 
   const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
@@ -58,7 +84,10 @@ const SignUp = ({ setModal }: { setModal: () => void }) => {
 
   return (
     <body className="min-h-screen flex justify-center items-center">
-      <div className="m-4 lg:w-96 w-96">
+      <div
+        ref={modalRef}
+        className="box relative bg-white overflow-hidden rounded-1 shadow-lg"
+      >
         <form
           className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 p-8"
           onSubmit={handleSubmit(onSubmit)}

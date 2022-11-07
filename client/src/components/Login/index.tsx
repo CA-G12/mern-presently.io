@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
@@ -14,11 +14,19 @@ type FormData = {
   password: string
 }
 
-export default function Login({ setModal }: { setModal: () => void }) {
+interface ILoginProps {
+  setModal: () => void
+  setIsOpen: (arg: boolean) => void
+  isOpen: boolean
+}
+
+export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
   const { dispatch } = useAuth()
   const navigate = useNavigate()
   const [loginError, setLoginError] = useState('')
   const [eyeOpen, setEyeOpen] = useState(false)
+  const modalRef = useRef<HTMLDivElement>(null)
+
   const {
     register,
     handleSubmit,
@@ -27,6 +35,23 @@ export default function Login({ setModal }: { setModal: () => void }) {
 
   const togglePassword = () => {
     setEyeOpen(!eyeOpen)
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', onClickOutSide)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutSide)
+    }
+  }, [])
+
+  function onClickOutSide(e: any) {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      console.log('')
+      setIsOpen(false)
+    }
   }
 
   const removeloginError = () => {
@@ -55,8 +80,11 @@ export default function Login({ setModal }: { setModal: () => void }) {
   })
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
-      <div className="box overflow-hidden relative m-4 lg:w-96 w-80">
+    <div className="min-h-screen flex justify-center items-center	">
+      <div
+        ref={modalRef}
+        className="box relative bg-white overflow-hidden rounded-1 shadow-lg"
+      >
         <form
           className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 p-8"
           onSubmit={onSubmit}

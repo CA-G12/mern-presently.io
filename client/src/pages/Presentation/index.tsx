@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { useParams } from 'react-router-dom'
 
 import './styles.css'
@@ -12,13 +13,22 @@ const Presentation = () => {
   const { id } = useParams() as { id: string }
   const [slides, setSlides] = useState([])
   const [openComments, setOpenComments] = useState(false)
+  const [link, setLink] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const copy = async () => {
+    await navigator.clipboard.writeText(link)
+    toast.success('link copied')
+  }
 
   useEffect(() => {
     setIsLoading(true)
     slideApi
       .getSlide(id)
-      .then(data => setSlides(data.data.slide.htmlContent.split('<hr>')))
+      .then(data => {
+        setSlides(data.data.slide.htmlContent.split('<hr>'))
+        setLink(data.data.slide.shortenLink)
+      })
       .then(() => setIsLoading(false))
   }, [])
 
@@ -35,7 +45,7 @@ const Presentation = () => {
           </button>
           {openComments && <Comments />}
         </div>
-        <button className="focus:outline-none hover:scale-125">
+        <button className="focus:outline-none hover:scale-125" onClick={copy}>
           <Share strokeWidth={2} />
         </button>
       </div>

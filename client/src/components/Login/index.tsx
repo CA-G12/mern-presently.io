@@ -48,11 +48,14 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
   }, [])
 
   function onClickOutSide(e: any) {
-    console.log(modalRef.current)
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       console.log('')
       setIsOpen(false)
     }
+  }
+
+  const removeloginError = () => {
+    setLoginError('')
   }
 
   const onSubmit = handleSubmit(async data => {
@@ -66,7 +69,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
 
       if (exception.response) {
         if (exception.response.status === 400) {
-          setLoginError('Please double check your password and email.')
+          setLoginError('Please double check your credentials.')
         } else {
           setLoginError('Something went wrong.')
         }
@@ -83,7 +86,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
         className="box relative bg-white overflow-hidden rounded-1 shadow-lg"
       >
         <form
-          className="flex flex-col items-center justify-center absolute rounded-1 bg-white inset-1 z-10 p-8"
+          className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 p-8"
           onSubmit={onSubmit}
           noValidate
           autoComplete="off"
@@ -91,12 +94,13 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
           <div>
             <h1 className="mb-8 font-bold text-small">Sign in</h1>
           </div>
-          <div>
-            <label className="relative cursor-pointer">
+          <div className="w-full  relative">
+            <label className="relative cursor-pointer ">
               <input
-                className="input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
+                className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Email"
                 {...register('email', {
+                  onChange: () => removeloginError(),
                   pattern: {
                     value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                     message: 'Not a valid email'
@@ -112,13 +116,14 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
               {errors.email?.message}
             </p>
           </div>
-          <div className="w-96">
+          <div className="w-full relative">
             <label className="relative cursor-pointer">
               <input
                 type={eyeOpen === false ? 'password' : 'text'}
-                className=" input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light border-opacity-50 placeholder-grey-light placeholder-opacity-0 outline-none focus:border-primary-default transition duration-200"
+                className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Password"
                 {...register('password', {
+                  onChange: () => removeloginError(),
                   required: 'Password is required'
                 })}
               />
@@ -141,17 +146,20 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
               {errors.password?.message}
             </p>
           </div>
-          <p className="underline text-blue-bright self-end cursor-pointer my-3 mx-5">
+          <p className="underline text-blue-bright self-end cursor-pointer my-3 text-footer">
             Forget password?
           </p>
           <button
             type="submit"
-            className="w-96 bg-primary-default text-center py-2 text-white rounded-1"
+            className="w-full bg-primary-default text-center py-2 text-white rounded-1"
           >
             Sign In
           </button>
+
           {loginError && (
-            <p className="text-danger my-3 self-start ml-7">{loginError}</p>
+            <p className="text-danger my-3 self-start text-footer">
+              {loginError}
+            </p>
           )}
           <p className="cursor-pointer my-3 text-footer">
             Don&apos;t have an account ?

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
@@ -32,11 +32,49 @@ const handleAlert = (status: string, message: string) => {
 }
 
 const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [inputVisible, setInputVisible] = useState(false)
   const navigate = useNavigate()
-  const [isPublic, setIsPublic] = useState(!slide.isPrivate)
-  const [isLive, setIsLive] = useState(slide.isLive)
-
   const { dispatch } = useAuth()
+  const [title, setTitle] = useState(slide.title)
+  const [flag, setFlag] = useState(false)
+
+  const [slideState, setSlideState] = useState({
+    id: slide._id,
+    title: slide.title,
+    isLive: slide.isLive,
+    isPrivate: slide.isPrivate,
+    link: slide.link
+  })
+
+  const updateSlide = async () => {
+    try {
+      await slideApi.updateSlide(slideState)
+    } catch (error) {
+      toast.error("Name Can't be less than one character")
+      setTitle(slide.title)
+    }
+  }
+
+  useEffect(() => {
+    if (inputVisible) {
+      document.addEventListener('mousedown', onClickOutSide)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutSide)
+    }
+  }, [slideState])
+
+  useEffect(() => {
+    setSlideState(prevState => {
+      return { ...prevState, title: title }
+    })
+  }, [title])
+
+  useEffect(() => {
+    updateSlide()
+  }, [flag])
 
   const handleDeletingSlide = async () => {
     try {
@@ -46,6 +84,13 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
       handleAlert('success', 'Deleted Successfully')
     } catch {
       handleAlert('error', 'Something went wrong')
+    }
+  }
+
+  function onClickOutSide(e: any) {
+    if (inputRef.current && !inputRef.current.contains(e.target)) {
+      setInputVisible(false)
+      updateSlide()
     }
   }
 
@@ -64,32 +109,49 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
           />
         </a>
       </div>
-      <div
-        className="flex mt-4 ml-4 mb-8 cursor-pointer"
-        onClick={() => navigate(`/presentations/${slide._id}`)}
-      >
-        <PresentationIcon className="mr-4 cursor-pointer" />
-        <p onClick={() => navigate(`/presentations/${slide._id}`)}>
-          {slide.title}
-        </p>
+      <div className="flex mt-4 ml-4 mb-8 cursor-pointer">
+        <PresentationIcon
+          className="mr-4 cursor-pointer"
+          onClick={() => navigate(`/presentations/${slide._id}`)}
+        />
+        {inputVisible ? (
+          <input
+            className="bg-grey-background focus:outline-none"
+            ref={inputRef}
+            value={title}
+            onChange={e => {
+              setTitle(e.target.value)
+            }}
+          />
+        ) : (
+          <span onClick={() => setInputVisible(true)}>{title}</span>
+        )}
       </div>
       {type === 'uploaded' ? (
         <div className="flex border border-b-0 border-l-0 border-r-0 border-white p-4">
           <div className="flex-1 flex pr-10">
-            <button className="mr-1" onClick={() => setIsLive(!isLive)}>
+            <button
+              className="mr-1"
+              onClick={() => {
+                setSlideState(prevState => {
+                  return { ...prevState, isLive: !slideState.isLive }
+                })
+                setFlag(!flag)
+              }}
+            >
               <LivePresentation
                 strokeWidth={2}
                 height={25}
                 width={25}
                 className={
-                  isLive
+                  slideState.isLive
                     ? 'text-primary-default ml-1 scale-125'
                     : 'text-black  ml-1 hover:scale-125'
                 }
               />
             </button>
             <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-default">
-              {isLive ? 'Live' : 'not live'}
+              {slideState.isLive ? 'Live' : 'not live'}
             </span>
           </div>
           <div className="flex justify-between">
@@ -101,12 +163,17 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                 type="checkbox"
                 id={'default-toggle' + slide._id}
                 className="sr-only peer"
-                checked={isPublic}
-                onChange={() => setIsPublic(!isPublic)}
+                checked={slideState.isPrivate}
+                onClick={() => {
+                  setSlideState(prevState => {
+                    return { ...prevState, isPrivate: !slideState.isPrivate }
+                  })
+                  setFlag(!flag)
+                }}
               />
               <div className="w-11 h-6 bg-grey-default rounded-2 peer-focus:outline-none dark:peer-focus:ring-primary-default peer dark:bg-primary-default peer-checked:after:translate-x-full peer-checked:after:border-grey-default after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-default after:rounded-2 after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-default"></div>
               <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-default">
-                {isPublic ? 'Public' : 'Private'}
+                {slideState.isPrivate ? 'Public' : 'Private'}
               </span>
             </label>
           </div>

@@ -31,9 +31,16 @@ const getSlide = async (
       throw new GenericError('No content')
     }
 
-    res
-      .status(200)
-      .json({ message: 'success', slide: { info: slide[0], htmlContent } })
+    const baseURL = 'https://presentlyio.netlify.app'
+
+    const shortenLink = await SlideHelpers.shortenLink(
+      `${baseURL}/presentations/${id}`
+    )
+
+    res.status(200).json({
+      message: 'success',
+      slide: { info: slide[0], shortenLink, htmlContent }
+    })
   } catch (error: unknown) {
     const exception = error as Error
 
@@ -154,32 +161,9 @@ const deleteSlide = async (
   }
 }
 
-const createSharingLink = async (
-  req: createSharingLink,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { slideId } = req.params
-    const baseURL = 'https://presentlyio.netlify.app'
-
-    const shortenLink = await SlideHelpers.shortenLink(
-      `${baseURL}/presentations/${slideId}`
-    )
-
-    res.status(200).json({ link: shortenLink })
-  } catch (error: unknown) {
-    const exception = error as Error
-
-    if (exception.name !== 'GenericError') return next(exception)
-    res.status(400).json({ message: exception.message })
-  }
-}
-
 export default {
   createSlide,
   deleteSlide,
   updateSlide,
-  getSlide,
-  createSharingLink
+  getSlide
 }

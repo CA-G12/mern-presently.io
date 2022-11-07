@@ -20,9 +20,16 @@ const createUser = async ({
     slides: []
   })
 
+  const registeredUser = await UserRepository.getUser(
+    {
+      email
+    },
+    { password: 0 }
+  )
+
   const token = await AuthHelper.generateAccessToken(user.id)
 
-  return { user, token }
+  return { user: registeredUser, token }
 }
 
 export default { createUser }

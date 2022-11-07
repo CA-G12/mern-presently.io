@@ -49,11 +49,14 @@ const CommonUploadFile = ({
 
   const handleChange = (event: { target: unknown }) => {
     const uploadEvent = event?.target as { files: File[] }
+
     const fileUploaded = uploadEvent.files[0]
-    if (fileUploaded.type !== 'text/markdown') {
+
+    if (fileUploaded.name.split('.')[1] !== 'md') {
       toast.error('Invalid File Type')
       return
     }
+
     if (fileUploaded) {
       setUploadedFile(fileUploaded)
     }

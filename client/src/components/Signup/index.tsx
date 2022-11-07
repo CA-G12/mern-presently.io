@@ -72,7 +72,7 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
 
       if (exception.response) {
         if (exception.response.status === 400) {
-          setSignupError('An account with this email already exists.')
+          setSignupError('This email already exists.')
         } else {
           setSignupError('Something went wrong.')
         }
@@ -89,7 +89,7 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
         className="box relative bg-white overflow-hidden rounded-1 shadow-lg"
       >
         <form
-          className="flex flex-col items-center justify-center absolute rounded-1 bg-white inset-1 z-10 p-8"
+          className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 p-8"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
           autoComplete="off"
@@ -98,15 +98,15 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
             <h1 className="mb-8 font-bold text-small">Sign up</h1>
           </div>
           {/*---------------------------------------------- Name --------------------------------------------------- */}
-          <div>
+          <div className="w-full relative">
             <label className="relative cursor-pointer">
               <input
-                className="input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
+                className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Name"
                 {...register('name', {
+                  onChange: () => removeSignupError(),
                   required: 'Name is required'
                 })}
-                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Name
@@ -117,19 +117,19 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
             </p>
           </div>
           {/*---------------------------------------------- Email --------------------------------------------------- */}
-          <div>
+          <div className="w-full relative">
             <label className="relative cursor-pointer">
               <input
-                className="input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
+                className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Email"
                 {...register('email', {
+                  onChange: () => removeSignupError(),
                   pattern: {
                     value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                     message: 'Not a valid email'
                   },
                   required: 'Email Address is required'
                 })}
-                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Email
@@ -140,13 +140,14 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
             </p>
           </div>
           {/*---------------------------------------------- Password --------------------------------------------------- */}
-          <div className="w-96">
+          <div className="w-full relative">
             <label className="relative cursor-pointer">
               <input
                 type={eyeOpen === false ? 'password' : 'text'}
-                className=" input-border py-2 px-6 rounded-1 w-96 border-2 border-grey-light border-opacity-50 placeholder-grey-light placeholder-opacity-0 outline-none focus:border-primary-default transition duration-200"
+                className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Password"
                 {...register('password', {
+                  onChange: () => removeSignupError(),
                   required: 'Password is required',
                   pattern: {
                     value:
@@ -155,7 +156,6 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
                       'Password length is 8-128 characters, including a lowercase, an uppercase, characters and numbers.'
                   }
                 })}
-                onChange={removeSignupError}
               />
               <span className="placeholder-text px-1 bg-white text-grey-light absolute left-0 top-0 mx-6 transition duration-200">
                 Password
@@ -177,19 +177,21 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
             </p>
           </div>
           {/*---------------------------------------------- Agreement --------------------------------------------------- */}
-          <span className="my-3 text-grey-hover text-footer">
+          <span className="my-3 text-grey-hover text-xsmall text-center">
             By clicking below, you agree to our terms of service.
           </span>
           {/*---------------------------------------------- Sign up button --------------------------------------------------- */}
           <button
             type="submit"
-            className="w-96 bg-primary-default text-center py-2 text-white rounded-1 cursor-pointer"
+            className="w-full bg-primary-default text-center py-2 text-white rounded-1"
           >
             Sign up
           </button>
           {/*---------------------------------------------- Sign up errors --------------------------------------------------- */}
           {signupError && (
-            <p className="text-danger my-3 self-start ml-7">{signupError}</p>
+            <p className="text-danger my-3 self-start text-footer">
+              {signupError}
+            </p>
           )}
           {/*---------------------------------------------- OAUTH --------------------------------------------------- */}
           {/* <div className="w-4/5 h-3 flex items-center justify-between max-w-[400px]">

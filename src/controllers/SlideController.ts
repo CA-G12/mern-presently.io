@@ -30,9 +30,16 @@ const getSlide = async (
       throw new GenericError('No content')
     }
 
-    res
-      .status(200)
-      .json({ message: 'success', slide: { info: slide[0], htmlContent } })
+    const baseURL = 'https://presentlyio.netlify.app'
+
+    const shortenLink = await SlideHelpers.shortenLink(
+      `${baseURL}/presentations/${id}`
+    )
+
+    res.status(200).json({
+      message: 'success',
+      slide: { info: slide[0], shortenLink, htmlContent }
+    })
   } catch (error: unknown) {
     const exception = error as Error
 
@@ -47,7 +54,7 @@ const updateSlide = async (
   next: NextFunction
 ) => {
   const { title, link, isPrivate, isLive } = req.body
-  const { id: slideId } = req.params
+  const { slideId } = req.params
   const { id: userId } = res.locals.user
 
   try {
@@ -60,6 +67,7 @@ const updateSlide = async (
       schema: slideSchema,
       data: { title, link, isPrivate, isLive }
     })
+
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }
@@ -95,7 +103,7 @@ const createSlide = async (
       throw new GenericError('Please Provide a File')
     }
 
-    if (file.mimetype !== 'text/markdown') {
+    if (file.originalname.split('.')[1] !== 'md') {
       throw new GenericError('Please Provide a Valid File Type')
     }
 
@@ -153,4 +161,9 @@ const deleteSlide = async (
   }
 }
 
-export default { createSlide, deleteSlide, updateSlide, getSlide }
+export default {
+  createSlide,
+  deleteSlide,
+  updateSlide,
+  getSlide
+}

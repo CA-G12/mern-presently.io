@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import SyncLoader from 'react-spinners/SyncLoader'
 import { Link } from 'react-router-dom'
 
 import './styles.css'
@@ -13,7 +12,7 @@ interface ISliderProps {
   isLoading: boolean
 }
 
-const Slider = ({ slides, isLoading }: ISliderProps) => {
+const Slider = ({ slides }: ISliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const goToPrevious = () => {
@@ -34,13 +33,6 @@ const Slider = ({ slides, isLoading }: ISliderProps) => {
   return (
     <>
       <div className="mb-20 text-center">
-        <SyncLoader
-          color="#4982F3"
-          loading={isLoading}
-          size={15}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
         <div
           dangerouslySetInnerHTML={{ __html: slides[currentIndex] }}
           className="html"

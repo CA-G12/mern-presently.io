@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router-dom'
+import SyncLoader from 'react-spinners/SyncLoader'
 
 import './styles.css'
 import { slideApi } from '../../api'
@@ -31,6 +32,23 @@ const Presentation = () => {
       })
       .then(() => setIsLoading(false))
   }, [])
+
+  if (isLoading) {
+    return (
+      <SyncLoader
+        color="#4982F3"
+        size={15}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+        cssOverride={{
+          minHeight: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      />
+    )
+  }
 
   return (
     <div className="h-screen flex flex-col">

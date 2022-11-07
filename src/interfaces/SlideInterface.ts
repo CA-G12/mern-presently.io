@@ -10,7 +10,7 @@ export interface SlideInterface {
 
 export interface UpdateSlideRequest extends Request {
   body: Omit<SlideInterface, 'id'>
-  params: { id: string }
+  params: { slideId: string }
 }
 
 export interface CreateSlideOptions {
@@ -56,10 +56,6 @@ export interface CreateSlideRequest extends Request {
 
 export interface DeleteSlideRequest extends Request {
   params: { id: string }
-}
-
-export interface createSharingLink extends Request {
-  params: { slideId: string }
 }
 
 export interface GetSlideRequest extends Request {

@@ -43,7 +43,8 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
     id: slide._id,
     title: slide.title,
     isLive: slide.isLive,
-    isPrivate: slide.isPrivate
+    isPrivate: slide.isPrivate,
+    link: slide.link
   })
 
   const updateSlide = async () => {
@@ -131,11 +132,12 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
           <div className="flex-1 flex pr-10">
             <button
               className="mr-1"
-              onClick={() =>
+              onClick={() => {
                 setSlideState(prevState => {
                   return { ...prevState, isLive: !slideState.isLive }
                 })
-              }
+                setFlag(!flag)
+              }}
             >
               <LivePresentation
                 strokeWidth={2}

@@ -25,9 +25,11 @@ const Presentation = () => {
     setIsLoading(true)
     slideApi
       .getSlide(id)
-      .then(data => setSlides(data.data.slide.htmlContent.split('<hr>')))
+      .then(data => {
+        setSlides(data.data.slide.htmlContent.split('<hr>'))
+        setLink(data.data.slide.shortenLink)
+      })
       .then(() => setIsLoading(false))
-    slideApi.shareLink(id).then(data => setLink(data.data.link))
   }, [])
 
   return (

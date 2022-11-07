@@ -9,8 +9,7 @@ import {
   CreateSlideRequest,
   GetSlideRequest,
   DeleteSlideRequest,
-  UpdateSlideRequest,
-  createSharingLink
+  UpdateSlideRequest
 } from '../interfaces/SlideInterface'
 
 const getSlide = async (
@@ -55,7 +54,7 @@ const updateSlide = async (
   next: NextFunction
 ) => {
   const { title, link, isPrivate, isLive } = req.body
-  const { id: slideId } = req.params
+  const { slideId } = req.params
   const { id: userId } = res.locals.user
 
   try {
@@ -68,6 +67,7 @@ const updateSlide = async (
       schema: slideSchema,
       data: { title, link, isPrivate, isLive }
     })
+
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }

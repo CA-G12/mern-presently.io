@@ -21,15 +21,25 @@ interface INavbarProps {
 const Navbar = ({ isSinged }: INavbarProps) => {
   const { dispatch } = useAuth()
   const [uploadedFile, setUploadedFile] = useState<File>()
+
   const [isOpen, setIsOpen] = useState(false)
   const [modal, setModal] = useState('login')
+
   const hiddenFileInput = useRef<HTMLInputElement>(null)
 
   const ModalContent =
     modal === 'login' ? (
-      <Login setModal={() => setModal('signup')} />
+      <Login
+        setModal={() => setModal('signup')}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+      />
     ) : (
-      <Signup setModal={() => setModal('login')} />
+      <Signup
+        setModal={() => setModal('login')}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+      />
     )
 
   const handleClick = () => {
@@ -84,9 +94,12 @@ const Navbar = ({ isSinged }: INavbarProps) => {
         )}
       </div>
       <Modal
+        shouldCloseOnOverlayClick={true}
+        ariaHideApp={false}
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
         style={customStyles}
+        shouldCloseOnEsc={true}
         className="Modal"
       >
         {ModalContent}

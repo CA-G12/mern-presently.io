@@ -39,11 +39,7 @@ const checkSlide = async (slideId: string) => {
 const getSlide = async (id: string) => {
   const userDocument = await SlideRepository.findSlide(id)
 
-  const slide: SlideInterface[] | undefined = userDocument?.slides?.filter(
-    e => e.id === id
-  )
-
-  return slide
+  return userDocument
 }
 
 const getSlideHtmlContent = async (link: string) => {

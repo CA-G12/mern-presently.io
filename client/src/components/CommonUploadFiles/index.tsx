@@ -23,7 +23,6 @@ const CommonUploadFile = ({
       const form = new FormData()
       form.append('File', uploadedFile)
 
-      //TODO remove password from the returned object
       const uploadedSlide = await slideApi.uploadSlide(form)
       const slides = uploadedSlide.data.slide.slides
       const lastSlide = slides[slides.length - 1]

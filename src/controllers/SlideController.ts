@@ -9,7 +9,8 @@ import {
   CreateSlideRequest,
   GetSlideRequest,
   DeleteSlideRequest,
-  UpdateSlideRequest
+  UpdateSlideRequest,
+  SlideInterface
 } from '../interfaces/SlideInterface'
 
 const getSlide = async (
@@ -20,12 +21,22 @@ const getSlide = async (
   const { id } = req.params
 
   try {
-    const slide = await SlideService.getSlide(id)
-    if (!slide) {
+    const userDocument = await SlideService.getSlide(id)
+    if (!userDocument) {
       throw new GenericError('Slide not found')
     }
 
-    const htmlContent = await SlideService.getSlideHtmlContent(slide[0].link)
+    const slide: SlideInterface[] | undefined = userDocument?.slides?.filter(
+      (e: SlideInterface) => e.id === id
+    )
+
+    if (!slide) {
+      throw new GenericError('No slides')
+    }
+
+    const htmlContent: string = await SlideService.getSlideHtmlContent(
+      slide[0].link
+    )
     if (!htmlContent) {
       throw new GenericError('No content')
     }
@@ -38,7 +49,13 @@ const getSlide = async (
 
     res.status(200).json({
       message: 'success',
-      slide: { info: slide[0], shortenLink, htmlContent }
+      slide: {
+        ownerId: userDocument.id,
+        ownerName: userDocument.name,
+        info: slide[0],
+        shortenLink,
+        htmlContent
+      }
     })
   } catch (error: unknown) {
     const exception = error as Error

@@ -46,6 +46,13 @@ const Slider = ({ slides }: ISliderProps) => {
       socket.emit('comments', comment)
     }
 
+    if (owner) {
+      socket.on('owner', data => {
+        console.log('ger')
+        console.log(data)
+      })
+    }
+
     return () => {
       socket.close()
     }
@@ -59,7 +66,7 @@ const Slider = ({ slides }: ISliderProps) => {
 
   useKeyPress(goToNext, ['ArrowRight'])
   useKeyPress(goToPrevious, ['ArrowLeft'])
-
+  console.log(owner)
   return (
     <>
       <div className="mb-20 text-center">

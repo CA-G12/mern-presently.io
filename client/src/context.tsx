@@ -121,10 +121,20 @@ const reducer = (state: State, action: Action) => {
 
       const user = state.auth.user
 
-      const foundSlide = user?.slides.filter(el => el._id === slideID)
+      if (!user) return state
 
-      if (!foundSlide) {
-        return state
+      const foundSlide = user?.slides.filter(el => {
+        return el._id === slideID
+      })
+
+      if (foundSlide.length === 0) {
+        return {
+          ...state,
+          auth: {
+            ...state.auth,
+            owner: false
+          }
+        }
       }
 
       return {

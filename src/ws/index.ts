@@ -13,8 +13,8 @@ const ioHandler =
     socket.on('logout', signOutHandler(ws))
     socket.on('disconnect', disconnectHandler(socket))
 
-    socket.on('comments', (data: any) => {
-      console.log(data)
+    socket.on('comments', (data: string) => {
+      ws.emit('owner', data)
     })
   }
 

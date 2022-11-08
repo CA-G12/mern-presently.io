@@ -24,14 +24,14 @@ const collections = [
           {
             _id: new mongoose.Types.ObjectId('123ea40720dcfa02e0ae42db'),
             title: 'Eslint',
-            link: 'https://eslint.org/',
+            link: '6v5rmmw',
             isPrivate: true,
             isLive: false
           },
           {
             _id: new mongoose.Types.ObjectId('456ea40720dcfa02e0ae42db'),
-            title: 'OAUTH',
-            link: 'https://oauth.net/',
+            title: 'Test',
+            link: 'ot2skat',
             isPrivate: true,
             isLive: false
           }
@@ -46,8 +46,8 @@ const collections = [
         slides: [
           {
             _id: new mongoose.Types.ObjectId('789ea40720dcfa02e0ae42db'),
-            title: 'Aligrandpa',
-            link: 'https://hackmd.io/j3FxonEgS5GmAukS5gZ1eA',
+            title: 'Ecommerce web app',
+            link: 'h7ixptk',
             isPrivate: true,
             isLive: false
           }
@@ -62,8 +62,8 @@ const collections = [
         slides: [
           {
             _id: new mongoose.Types.ObjectId('147ea40720dcfa02e0ae42db'),
-            title: 'Typescript',
-            link: 'https://www.typescriptlang.org/docs/',
+            title: 'Test',
+            link: 'ot2skat',
             isPrivate: true,
             isLive: false
           }

@@ -125,7 +125,7 @@ const createSlide = async (
     const slide = await SlideService.createSlide({
       userId,
       link: linkSegment,
-      title,
+      title: file.originalname.split('.')[0],
       isPrivate,
       isLive
     })

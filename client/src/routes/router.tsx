@@ -2,6 +2,7 @@ import Landing from '../pages/Landing/Landing'
 import Presentations from '../pages/Presentations'
 import Presentation from '../pages/Presentation'
 import BlankLayout from '../layouts/BlankLayout'
+import NotFound from '../pages/404/404'
 import PrivateRoute from './PrivateRoute'
 
 const routes = [
@@ -28,6 +29,10 @@ const routes = [
         <Presentation />
       </PrivateRoute>
     )
+  },
+  {
+    path: '*',
+    element: <NotFound />
   }
 ]
 

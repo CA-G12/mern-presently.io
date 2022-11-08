@@ -9,6 +9,7 @@ import Slider from '../../components/Slider'
 import Comments from '../../components/Comments'
 import { ReactComponent as Bell } from '../../assets/SlidesIcons/bell.svg'
 import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
+import useAuth from '../../hooks/useAuth'
 
 const Presentation = () => {
   const { id } = useParams() as { id: string }
@@ -16,6 +17,7 @@ const Presentation = () => {
   const [openComments, setOpenComments] = useState(false)
   const [link, setLink] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const { dispatch, owner } = useAuth()
 
   const copy = async () => {
     await navigator.clipboard.writeText(link)
@@ -29,6 +31,10 @@ const Presentation = () => {
       .then(data => {
         setSlides(data.data.slide.htmlContent.split('<hr>'))
         setLink(data.data.slide.shortenLink)
+        dispatch({
+          type: 'OWNER',
+          payload: { slideID: data.data.slide.ownerId }
+        })
       })
       .then(() => setIsLoading(false))
   }, [])
@@ -55,13 +61,15 @@ const Presentation = () => {
       {/* ------------------------Header------------------------*/}
       <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 w-screen flex justify-between items-start">
         <div>
-          <button
-            className="focus:outline-none hover:scale-125"
-            onClick={() => setOpenComments(!openComments)}
-          >
-            <Bell strokeWidth={2} />
-          </button>
-          {openComments && <Comments />}
+          {owner && (
+            <button
+              className="focus:outline-none hover:scale-125"
+              onClick={() => setOpenComments(!openComments)}
+            >
+              <Bell strokeWidth={2} />
+            </button>
+          )}
+          {owner && openComments && <Comments />}
         </div>
         <button className="focus:outline-none hover:scale-125" onClick={copy}>
           <Share strokeWidth={2} />

@@ -12,18 +12,20 @@ export type Action =
   | { type: 'ADD_SLIDE'; payload: { slide: SlideInterface } }
   | { type: 'DELETE_SLIDE'; payload: { slideID: string } }
   | { type: 'LOGOUT' }
+  | { type: 'OWNER'; payload: { slideID: string } }
 
 type State = {
   auth: {
     loggedIn: boolean
     checkedToken: boolean
     user: UserInterface | null
+    owner: boolean
   }
   dispatch?: React.Dispatch<Action>
 }
 
 const INITIAL_STATE = {
-  auth: { loggedIn: false, checkedToken: false, user: null }
+  auth: { loggedIn: false, checkedToken: false, user: null, owner: false }
 }
 
 const reducer = (state: State, action: Action) => {
@@ -34,34 +36,40 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         auth: {
+          ...state.auth,
           loggedIn,
           checkedToken: true,
           user
         }
       }
     }
+
     case 'LOGIN': {
       const { user } = action.payload
 
       return {
         ...state,
         auth: {
+          ...state.auth,
           loggedIn: true,
           checkedToken: true,
           user
         }
       }
     }
+
     case 'LOGOUT': {
       return {
         ...state,
         auth: {
+          ...state.auth,
           loggedIn: false,
           checkedToken: true,
           user: null
         }
       }
     }
+
     case 'ADD_SLIDE': {
       const { slide } = action.payload
       const user = state.auth.user
@@ -83,6 +91,7 @@ const reducer = (state: State, action: Action) => {
         }
       }
     }
+
     case 'DELETE_SLIDE': {
       const { slideID } = action.payload
 
@@ -104,6 +113,25 @@ const reducer = (state: State, action: Action) => {
             ...user,
             slides: [...newSlides]
           }
+        }
+      }
+    }
+    case 'OWNER': {
+      const { slideID } = action.payload
+
+      const user = state.auth.user
+
+      const foundSlide = user?.slides.filter(el => el._id === slideID)
+
+      if (!foundSlide) {
+        return state
+      }
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          owner: true
         }
       }
     }

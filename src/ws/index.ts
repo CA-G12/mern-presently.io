@@ -12,6 +12,10 @@ const ioHandler =
     socket.on('login', loginHandler(ws))
     socket.on('logout', signOutHandler(ws))
     socket.on('disconnect', disconnectHandler(socket))
+
+    socket.on('comments', (data: any) => {
+      console.log(data)
+    })
   }
 
 export default ioHandler

@@ -13,19 +13,34 @@ export type Action =
   | { type: 'DELETE_SLIDE'; payload: { slideID: string } }
   | { type: 'LOGOUT' }
   | { type: 'OWNER'; payload: { slideID: string } }
-
+  | {
+      type: 'ADD_COMMENT'
+      payload: { comment: { text: string; slideId: string } }
+    }
+type comments = {
+  [key: string]: string[]
+}
 type State = {
   auth: {
     loggedIn: boolean
     checkedToken: boolean
     user: UserInterface | null
     owner: boolean
+    comments: comments
   }
   dispatch?: React.Dispatch<Action>
 }
 
 const INITIAL_STATE = {
-  auth: { loggedIn: false, checkedToken: false, user: null, owner: false }
+  auth: {
+    loggedIn: false,
+    checkedToken: false,
+    user: null,
+    owner: false,
+    comments: {
+      '123ea40720dcfa02e0ae42db': ['first comment', 'second comment']
+    }
+  }
 }
 
 const reducer = (state: State, action: Action) => {
@@ -142,6 +157,27 @@ const reducer = (state: State, action: Action) => {
         auth: {
           ...state.auth,
           owner: true
+        }
+      }
+    }
+    case 'ADD_COMMENT': {
+      const { comment } = action.payload
+
+      const { text, slideId } = comment
+
+      const { comments } = state.auth
+
+      const newComments = comments[slideId].push(text)
+
+      const clonedNewComments = JSON.parse(JSON.stringify(newComments))
+
+      console.log(clonedNewComments)
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          comments: clonedNewComments
         }
       }
     }

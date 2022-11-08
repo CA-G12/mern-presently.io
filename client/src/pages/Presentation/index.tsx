@@ -31,7 +31,7 @@ const Presentation = () => {
       .then(data => {
         setSlides(data.data.slide.htmlContent.split('<hr>'))
         setLink(data.data.slide.shortenLink)
-        console.log(data)
+
         dispatch({
           type: 'OWNER',
           payload: { slideID: data.data.slide.info._id }

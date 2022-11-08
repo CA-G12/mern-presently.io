@@ -25,7 +25,8 @@ const socket = ws(wsBaseUrl, {
 const Slider = ({ slides }: ISliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [comment, setComment] = useState('')
-  const { owner } = useAuth()
+
+  const { dispatch, owner } = useAuth()
 
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0
@@ -42,19 +43,26 @@ const Slider = ({ slides }: ISliderProps) => {
   useEffect(() => {
     socket.open()
 
+    const slideID = window.location.href.split('/')[4]
+
+    socket.emit('join', slideID)
+
     if (comment) {
-      socket.emit('comments', comment)
+      socket.emit('comments', comment, slideID)
     }
 
     if (owner) {
-      socket.on('owner', data => {
-        console.log('ger')
-        console.log(data)
+      socket.on('owner', comment => {
+        dispatch({
+          type: 'ADD_COMMENT',
+          payload: { comment: { text: comment, slideId: slideID } }
+        })
       })
     }
 
     return () => {
-      socket.close()
+      socket.emit('leaveRoom', slideID)
+      socket.offAny()
     }
   }, [comment])
 
@@ -66,7 +74,7 @@ const Slider = ({ slides }: ISliderProps) => {
 
   useKeyPress(goToNext, ['ArrowRight'])
   useKeyPress(goToPrevious, ['ArrowLeft'])
-  console.log(owner)
+
   return (
     <>
       <div className="mb-20 text-center">

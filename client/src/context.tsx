@@ -17,6 +17,7 @@ export type Action =
       type: 'ADD_COMMENT'
       payload: { comment: { text: string; slideId: string } }
     }
+
 type comments = {
   [key: string]: string[]
 }
@@ -38,7 +39,7 @@ const INITIAL_STATE = {
     user: null,
     owner: false,
     comments: {
-      '123ea40720dcfa02e0ae42db': ['first comment', 'second comment']
+      '123ea40720dcfa02e0ae42db': []
     }
   }
 }
@@ -167,11 +168,17 @@ const reducer = (state: State, action: Action) => {
 
       const { comments } = state.auth
 
-      const newComments = comments[slideId].push(text)
+      if (comments[slideId]) {
+        comments[slideId].push(text)
+      } else {
+        comments[slideId] = []
+        comments[slideId].push(text)
+      }
 
-      const clonedNewComments = JSON.parse(JSON.stringify(newComments))
+      const newSet = new Set(comments[slideId])
+      comments[slideId] = Array.from(newSet).reverse()
 
-      console.log(clonedNewComments)
+      const clonedNewComments = JSON.parse(JSON.stringify(comments))
 
       return {
         ...state,

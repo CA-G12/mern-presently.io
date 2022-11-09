@@ -45,24 +45,22 @@ const Slider = ({ slides }: ISliderProps) => {
 
     const slideID = window.location.href.split('/')[4]
 
-    socket.emit('join', slideID)
-
     if (comment) {
       socket.emit('comments', comment, slideID)
     }
 
     if (owner) {
-      socket.on('owner', comment => {
+      socket.on('owner', (comment, slideId) => {
         dispatch({
           type: 'ADD_COMMENT',
-          payload: { comment: { text: comment, slideId: slideID } }
+          payload: { comment: { text: comment, slideId } }
         })
       })
     }
 
     return () => {
-      socket.emit('leaveRoom', slideID)
-      socket.offAny()
+      socket.removeAllListeners()
+      socket.close()
     }
   }, [comment])
 

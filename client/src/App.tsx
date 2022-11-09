@@ -36,7 +36,8 @@ const App = () => {
     })
 
     return () => {
-      socket.offAny()
+      socket.removeAllListeners()
+      socket.close()
     }
   }, [])
 

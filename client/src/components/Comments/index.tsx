@@ -12,6 +12,10 @@ const Comments = () => {
     const id = window.location.href.split('/')[4]
 
     setSlideId(id)
+
+    return () => {
+      setSlideId('')
+    }
   }, [])
 
   return (

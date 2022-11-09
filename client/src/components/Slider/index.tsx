@@ -8,19 +8,18 @@ import { ReactComponent as LeftArrow } from '../../assets/SlidesIcons/leftArrow.
 import { ReactComponent as RightArrow } from '../../assets/SlidesIcons/rightArrow.svg'
 import { ReactComponent as Home } from '../../assets/SlidesIcons/home.svg'
 import useAuth from '../../hooks/useAuth'
-
 import config from '../../config'
 
 const { wsBaseUrl } = config
+
+const socket = ws(wsBaseUrl, {
+  autoConnect: false
+})
 
 interface ISliderProps {
   slides: string[]
   isLoading: boolean
 }
-
-const socket = ws(wsBaseUrl, {
-  autoConnect: false
-})
 
 const Slider = ({ slides }: ISliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -38,6 +37,17 @@ const Slider = ({ slides }: ISliderProps) => {
     const isLastSlide = currentIndex === slides.length - 1
     const newIndex = isLastSlide ? 0 : currentIndex + 1
     setCurrentIndex(newIndex)
+  }
+
+  const handleKeyDown = (event: { code: unknown; target: unknown }) => {
+    const updatedValue = event?.target as {
+      value: string
+    }
+    const updatedKey = event?.code as string
+    if (updatedKey === 'Enter') {
+      setComment(updatedValue.value)
+      updatedValue.value = ''
+    }
   }
 
   useEffect(() => {
@@ -63,12 +73,6 @@ const Slider = ({ slides }: ISliderProps) => {
       socket.close()
     }
   }, [comment])
-
-  const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      setComment(event.target.value)
-    }
-  }
 
   useKeyPress(goToNext, ['ArrowRight'])
   useKeyPress(goToPrevious, ['ArrowLeft'])

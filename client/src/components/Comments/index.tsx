@@ -1,8 +1,7 @@
 import './styles.css'
 import Comment from '../Comment'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useAuth from '../../hooks/useAuth'
-import { useEffect } from 'react'
 
 const Comments = () => {
   const { comments } = useAuth()

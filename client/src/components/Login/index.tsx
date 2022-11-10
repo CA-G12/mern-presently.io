@@ -47,7 +47,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
     }
   }, [])
 
-  function onClickOutSide(e: any) {
+  const onClickOutSide = (e: any) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setIsOpen(false)
     }

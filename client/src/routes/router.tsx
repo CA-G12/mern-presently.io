@@ -24,11 +24,7 @@ const routes = [
   },
   {
     path: '/presentations/:id',
-    element: (
-      <PrivateRoute>
-        <Presentation />
-      </PrivateRoute>
-    )
+    element: <Presentation />
   },
   {
     path: '*',

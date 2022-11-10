@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router-dom'
 import SyncLoader from 'react-spinners/SyncLoader'
@@ -18,6 +18,23 @@ const Presentation = () => {
   const [link, setLink] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { dispatch, owner } = useAuth()
+  const commentsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (commentsRef) {
+      document.addEventListener('mousedown', onClickOutSide)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutSide)
+    }
+  }, [])
+
+  const onClickOutSide = (e: any) => {
+    if (commentsRef.current && !commentsRef.current.contains(e.target)) {
+      setOpenComments(false)
+    }
+  }
 
   const copy = async () => {
     await navigator.clipboard.writeText(link)
@@ -70,7 +87,9 @@ const Presentation = () => {
               <Bell strokeWidth={2} />
             </button>
           )}
-          {owner && openComments && <Comments />}
+          {owner && openComments && (
+            <Comments openCommentsRef={commentsRef} visible={openComments} />
+          )}
         </div>
         <button className="focus:outline-none hover:scale-125" onClick={copy}>
           <Share strokeWidth={2} />

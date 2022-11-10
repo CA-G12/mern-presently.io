@@ -17,7 +17,7 @@ const Presentation = () => {
   const [openComments, setOpenComments] = useState(false)
   const [link, setLink] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { dispatch, owner } = useAuth()
+  const { dispatch, owner, comments } = useAuth()
 
   const copy = async () => {
     await navigator.clipboard.writeText(link)
@@ -60,13 +60,19 @@ const Presentation = () => {
   return (
     <div className="h-screen flex flex-col">
       {/* ------------------------Header------------------------*/}
-      <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 w-screen flex justify-between items-start">
-        <div>
+      <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 px-2 w-screen flex justify-between items-start">
+        <div className="">
           {owner && (
             <button
-              className="focus:outline-none hover:scale-125"
+              className="focus:outline-none relative"
               onClick={() => setOpenComments(!openComments)}
             >
+              {comments[id]?.length && (
+                <div className="absolute w-5 h-5 flex justify-center align-center bg-danger circle text-white">
+                  <h6>{comments[id].length}</h6>
+                </div>
+              )}
+
               <Bell strokeWidth={2} />
             </button>
           )}

@@ -21,13 +21,7 @@ const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
       email,
       password
     })
-    res
-      .status(200)
-      .cookie('token', token, {
-        signed: true,
-        httpOnly: true
-      })
-      .json({ message: 'success', user })
+    res.status(200).cookie('token', token).json({ message: 'success', user })
   } catch (error: unknown) {
     const exception = error as Error
 

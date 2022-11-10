@@ -87,7 +87,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
     }
   }
 
-  function onClickOutSide(e: any) {
+  const onClickOutSide = (e: any) => {
     if (inputRef.current && !inputRef.current.contains(e.target)) {
       setInputVisible(false)
       updateSlide()

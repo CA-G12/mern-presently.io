@@ -25,7 +25,7 @@ const config = {
   port: PORT || 4000,
   nodeEnv: NODE_ENV || 'development',
   client: {
-    origin: ORIGIN || 'http://localhost:3000'
+    origin: ORIGIN || 'https://presentlyio.netlify.app/'
   },
   jwt: {
     secretKey: SECRET_KEY || ''

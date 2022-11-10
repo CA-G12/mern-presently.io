@@ -86,7 +86,7 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
     <body className="min-h-screen flex justify-center items-center">
       <div
         ref={modalRef}
-        className="box relative bg-white overflow-hidden rounded-1 shadow-lg"
+        className="box relative bg-white overflow-hidden rounded-1 shadow-lg w-96"
       >
         <form
           className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 p-8"

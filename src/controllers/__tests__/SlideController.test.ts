@@ -35,7 +35,7 @@ describe('Updating presentation tests', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .put('/api/v1/slides/123ea40720dcfa02e0ae42db')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .send({
           title: 'Linked list',
           isLive: false,
@@ -56,7 +56,7 @@ describe('Updating presentation tests', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .put('/api/v1/slides/456ea40720dcfa02e0ae40db')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .send({
           title: 'Linked list',
           isLive: false,
@@ -75,7 +75,7 @@ describe('Updating presentation tests', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .put('/api/v1/slides/63504041bbc0c96a25b05765')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .send({
           title: 'Title changed',
           isLive: 'string',
@@ -95,7 +95,7 @@ describe('Add a new presentation', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .post('/api/v1/slides/')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .attach(
           'File',
           join(__dirname, '..', '..', '..', 'assets', 'latestSlides.md')
@@ -109,10 +109,10 @@ describe('Add a new presentation', () => {
   })
 
   test('Upload a new presentation without attaching a file', done => {
-    AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(token => {
+    AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .post('/api/v1/slides/')
-        .set('Cookie', [`token=${token}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .attach(
           'File',
           join(__dirname, '..', '..', '..', 'assets', 'TestMDFile.md')
@@ -129,7 +129,7 @@ describe('Add a new presentation', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .post('/api/v1/slides')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .send({ title: 'ts', link: 'https://google.com/' })
         .end((err, res) => {
           if (err) return done()
@@ -143,7 +143,7 @@ describe('Add a new presentation', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .post('/api/v1/slides')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .send({ title: 'ts', link: 'https://google/' })
         .end((err, res) => {
           if (err) return done()
@@ -157,7 +157,7 @@ describe('Add a new presentation', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .post('/api/v1/slides')
-        .set('Cookie', [`token=${jwt}`])
+        .set('x-access-token', `Bearer ${jwt}`)
         .send({ link: 'https://google.com/' })
         .end((err, res) => {
           if (err) return done()

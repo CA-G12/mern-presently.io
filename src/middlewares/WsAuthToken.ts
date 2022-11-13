@@ -9,10 +9,11 @@ const WsAuthToken = async (
     | any,
   next: (err?: ExtendedError) => any
 ) => {
-  const token = socket.request.headers.cookie
-  const newToken = token as string
   try {
-    const decoded = await AuthHelper.verifyToken(newToken)
+    const token = socket.request['x-access-token'].split(' ')[1]
+    const jwtToken = token as string
+
+    const decoded = await AuthHelper.verifyToken(jwtToken)
 
     socket.decoded = decoded
   } catch (error) {

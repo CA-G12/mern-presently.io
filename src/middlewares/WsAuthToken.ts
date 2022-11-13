@@ -1,7 +1,8 @@
-import AuthHelper from '../helpers/AuthHelper'
 import { Socket } from 'socket.io'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
 import { ExtendedError } from 'socket.io/dist/namespace'
+
+import AuthHelper from '../helpers/AuthHelper'
 
 const WsAuthToken = async (
   socket:

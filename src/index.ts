@@ -8,6 +8,7 @@ import ioHandler from './ws'
 import corsConfigs from './config/cors'
 import WsAuthToken from './middlewares/WsAuthToken'
 
+
 const { port } = environment
 const httpServer = http.createServer(app)
 const ws = new WebSocket(httpServer, {

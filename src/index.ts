@@ -6,7 +6,6 @@ import dbConnection from './db/connection'
 import environment from './config/environment'
 import ioHandler from './ws'
 import corsConfigs from './config/cors'
-import WsAuthToken from './middlewares/WsAuthToken'
 
 const { port } = environment
 const httpServer = http.createServer(app)
@@ -15,7 +14,7 @@ const ws = new WebSocket(httpServer, {
 })
 
 dbConnection()
-  .then(() => ws.use(WsAuthToken).on('connection', ioHandler(ws)))
+  .then(() => ws.on('connection', ioHandler(ws)))
   .then(() =>
     httpServer.listen(port, () =>
       console.log(`Server is running at http://localhost:${port}`)

@@ -5,15 +5,18 @@ import JWTHelpers from '../helpers/JWTHelpers'
 const { apiBaseUrl } = config
 const instance = axios.create({ baseURL: apiBaseUrl, withCredentials: true })
 
-instance.defaults.headers.common[
-  'x-access-token'
-] = `Bearer ${JWTHelpers.getToken()}`
-
-// request/response interceptors
-instance.interceptors.request.use(config => {
-  return Promise.resolve(config)
-})
-
+instance.interceptors.request.use(
+  config => {
+    if (!config.headers) {
+      throw new Error()
+    }
+    config.headers['x-access-token'] = `Bearer ${JWTHelpers.getToken()}`
+    return Promise.resolve(config)
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 // instance.interceptors.response.use(
 //   (response) => {},
 //   (error) => {}

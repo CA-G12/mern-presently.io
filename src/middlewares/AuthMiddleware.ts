@@ -8,7 +8,11 @@ const verifyAccessToken = async (
   next: NextFunction
 ) => {
   try {
-    const { token } = req.cookies
+    if (!req.headers['x-access-token']) {
+      throw new Error('unauthenticated')
+    }
+    const token = req.headers['x-access-token'].split(' ')[1]
+
     const user = await AuthHelper.verifyToken(token)
 
     res.locals.user = user

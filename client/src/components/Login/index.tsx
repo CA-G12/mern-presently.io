@@ -60,7 +60,9 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
   const onSubmit = handleSubmit(async data => {
     try {
       const res = await authenticate(data)
-      const user = res.data.user
+      const { user, token } = res.data
+      localStorage.setItem('token', token)
+
       dispatch({ type: 'LOGIN', payload: { user } })
       navigate('/presentations')
     } catch (error) {

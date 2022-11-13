@@ -4,7 +4,7 @@ import { CommonUploadFile, Login, Signup } from '../../components'
 import logo from '../../assets/Logo/About.png'
 import './styles.css'
 import useAuth from '../../hooks/useAuth'
-import { authApi } from '../../api'
+import JWTHelpers from '../../helpers/JWTHelpers'
 
 const customStyles = {
   content: {
@@ -73,7 +73,7 @@ const Navbar = ({ isSinged }: INavbarProps) => {
             />
             <a
               onClick={async () => {
-                await authApi.logout()
+                await JWTHelpers.destroyToken()
                 dispatch({ type: 'LOGOUT' })
               }}
               className="lg:mr-10 text-grey-default  font-medium hover:text-blue-dark cursor-pointer"

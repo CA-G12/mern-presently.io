@@ -18,5 +18,3 @@ export const authenticateWithToken = async (): Promise<UserInterface> => {
 
   return res.data.user
 }
-
-export const logout = async () => axios.get('/auth/logout')

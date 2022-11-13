@@ -21,7 +21,7 @@ const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
       email,
       password
     })
-    res.status(200).cookie('token', token).json({ message: 'success', user })
+    res.status(200).json({ message: 'success', user, token })
   } catch (error: unknown) {
     const exception = error as Error
 
@@ -32,7 +32,11 @@ const login = async (req: LoginRequest, res: Response, next: NextFunction) => {
 
 const verifyToken = async (req: VerifyTokenRequest, res: Response) => {
   try {
-    const { token } = req.cookies
+    if (!req.headers['x-access-token']) {
+      throw new Error('unauthenticated')
+    }
+    const token = req.headers['x-access-token'].split(' ')[1]
+
     const user = await AuthService.verifyToken(token)
 
     res.status(200).send({ message: 'success', user })

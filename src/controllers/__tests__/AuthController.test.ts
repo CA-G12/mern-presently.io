@@ -17,8 +17,8 @@ describe('Verify token controller tests', () => {
     request(app)
       .post('/api/v1/auth/token')
       .set(
-        'Cookie',
-        'token=.eyJpZCI6IjF0ZXN0IiwiaWF0IjoxNjY1OTE5NzgxfQ.8lkF8X1CDuK6btfTB9JZf7L7CDVOhpZUNY1PP0b15aU'
+        'x-access-token',
+        'Bearer .eyJpZCI6IjF0ZXN0IiwiaWF0IjoxNjY1OTE5NzgxfQ.8lkF8X1CDuK6btfTB9JZf7L7CDVOhpZUNY1PP0b15aU'
       )
       .end((err, res) => {
         if (err) return done(err)
@@ -31,7 +31,7 @@ describe('Verify token controller tests', () => {
     AuthHelper.generateAccessToken('6357f708ed0c57054008e300').then(jwt => {
       request(app)
         .post('/api/v1/auth/token')
-        .set('Cookie', `token=${jwt}`)
+        .set('x-access-token', `Bearer ${jwt}`)
         .end((err, res) => {
           if (err) return done(err)
           expect(res.status).toBe(200)

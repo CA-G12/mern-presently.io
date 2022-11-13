@@ -1,5 +1,6 @@
 import { JwtPayload } from 'jsonwebtoken'
 import { Request } from 'express'
+import { IncomingHttpHeaders } from 'http'
 
 export interface LoginRequest extends Request {
   body: { email: string; password: string }
@@ -10,5 +11,5 @@ export interface Token {
 }
 
 export interface VerifyTokenRequest extends Request {
-  cookies: { token: string }
+  headers: IncomingHttpHeaders & { 'x-access-token'?: string }
 }

@@ -29,7 +29,7 @@ const Comments = ({ visible, openCommentsRef }: ICommentsProps) => {
           className="w-96 mx-2 p-3 border-2 border-grey-light rounded-1 bg-white shadow-lg shadow-cyan-500/50 drop-shadow-xl max-h-65 overflow-y-scroll comments"
         >
           <p className="px-3 text-primary-default">Comments</p>
-          {slideId && comments[slideId].length > 0 ? (
+          {slideId && comments[slideId] && comments[slideId].length > 0 ? (
             comments[slideId]
               .slice()
               .reverse()

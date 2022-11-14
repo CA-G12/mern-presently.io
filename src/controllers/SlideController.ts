@@ -41,7 +41,7 @@ const getSlide = async (
       throw new GenericError('No content')
     }
 
-    const baseURL = 'https://presentlyio.netlify.app/'
+    const baseURL = 'https://presentlyio.netlify.app'
 
     const shortenLink = await SlideHelpers.shortenLink(
       `${baseURL}/presentations/${id}`

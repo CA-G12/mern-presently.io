@@ -79,7 +79,7 @@ const Slider = ({ slides }: ISliderProps) => {
 
   return (
     <>
-      <div className="mb-20 text-center">
+      <div className="mb-10 text-center">
         <div
           dangerouslySetInnerHTML={{ __html: slides[currentIndex] }}
           className="html"

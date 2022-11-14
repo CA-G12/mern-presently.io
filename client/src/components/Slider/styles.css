@@ -1,5 +1,5 @@
 .html {
-  max-height: 50vh;
+  object-fit: contain;
 }
 
 .html * {
@@ -26,6 +26,10 @@
 .html ol li {
   list-style-type: decimal;
   text-align: left;
+}
+
+.html img{
+  max-height: 400px;
 }
 
 .progress {

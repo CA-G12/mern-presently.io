@@ -54,9 +54,7 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
   }, [])
 
   const onClickOutSide = (e: any) => {
-    console.log(modalRef.current)
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      console.log('')
       setIsOpen(false)
     }
   }

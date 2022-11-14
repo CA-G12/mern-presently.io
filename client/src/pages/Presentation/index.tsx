@@ -106,7 +106,8 @@ const Presentation = () => {
         <div>
           <Slider
             slides={
-              slides[slides.length - 1] === '' || '\n'
+              slides[slides.length - 1] === '' ||
+              slides[slides.length - 1] === '\n'
                 ? slides.slice(0, -1)
                 : slides
             }

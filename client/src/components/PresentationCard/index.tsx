@@ -81,7 +81,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
       await slideApi.deleteSlide(slide._id)
 
       dispatch({ type: 'DELETE_SLIDE', payload: { slideID: slide._id } })
-      handleAlert('success', 'Deleted Successfully')
+      handleAlert('success', 'Presentation deleted Successfully')
     } catch {
       handleAlert('error', 'Something went wrong')
     }
@@ -164,7 +164,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                 id={'default-toggle' + slide._id}
                 className="sr-only peer"
                 checked={slideState.isPrivate}
-                onClick={() => {
+                onChange={() => {
                   setSlideState(prevState => {
                     return { ...prevState, isPrivate: !slideState.isPrivate }
                   })

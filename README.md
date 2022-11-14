@@ -57,7 +57,7 @@ As a viewer:
 ---
 ## Prototype: 
 
-### Figame:
+### Figma:
 ![Screen Shot 2022-11-14 at 10 01 46 AM](https://user-images.githubusercontent.com/43090330/201606736-eb8c6ecf-40f3-454a-9be5-77fe95c8bbfc.png)
 
 [view full design](https://www.figma.com/file/DjgbaE38Ba84XMJgCtjrfv/Presently.io?node-id=0%3A1&t=JC2FdeDHK9S8YT0t-1)
@@ -89,5 +89,5 @@ As a viewer:
 ## Team Members:
 
 - [Fadi H. Zaqout](https://github.com/fadezak100)
-- [Zayan Al-Aaraishy](https://github.com/Zayan-Alaraishy)
+- [Zayan Al-araishy](https://github.com/Zayan-Alaraishy)
 - [Nada S. Ayesh](https://github.com/nadasuhailAyesh12)

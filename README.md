@@ -1,11 +1,13 @@
 # Presently.io
 
-## [Live Demo](https://presentlyio.netlify.app/)
----
 ## Description:
 
 A web app that helps you quickly make slides for your next presentation and get live comments as you're presenting. 
 It converts ` .md` files into slides instantly! It also supports presenting live with the ability to share the slides you're presenting with your audience. Your audience will be able to share with you their feedback and comments as you're presenting.
+
+---
+
+## [Live Demo](https://presentlyio.netlify.app/)
 
 ---
 

@@ -7,7 +7,7 @@ It converts ` .md` files into slides instantly! It also supports presenting live
 
 ---
 
-## [Live Demo](https://presentlyio.netlify.app/)
+## [Live ✨](https://presentlyio.netlify.app/)
 
 ---
 
@@ -45,7 +45,7 @@ As a viewer:
 - Configure your environment variables by adding: 
   -  `DATABASE_URL`: database link.
   -  `PORT`
-  -  `CLOUD_NAME`: your cloud name on Cloudinary.
+  -  `CLOUD_NAME`: your cloud name on [Cloudinary](https://cloudinary.com/).
   - `CLOUDINARY_API_KEY`
   - `CLOUDINARY_API_SECRET`
   - `REBRANDLY_API_KEY`: Rebrandly is a service for link shortening.
@@ -55,16 +55,30 @@ As a viewer:
 - Start the server by running `npm run dev` and the client by running `cd client && npm run start`.
 
 ---
+## Prototype: 
+
+### Figame:
+![Screen Shot 2022-11-14 at 10 01 46 AM](https://user-images.githubusercontent.com/43090330/201606736-eb8c6ecf-40f3-454a-9be5-77fe95c8bbfc.png)
+
+[view full design](https://www.figma.com/file/DjgbaE38Ba84XMJgCtjrfv/Presently.io?node-id=0%3A1&t=JC2FdeDHK9S8YT0t-1)
+
+---
+
 ##  Used Technologies
 
-- ReactJs
-- Nodejs
-- Express
-- MongoDB
-- Tailwind
-- Cloudinary
-- JWT
-- Rebrandly
+- [ReactJs](https://reactjs.org/)
+- [Nodejs](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Typescript](typescriptlang.org)
+- [Tailwind](https://tailwindcss.com/)
+- [Cloudinary](https://cloudinary.com/)
+- [JWT](https://jwt.io/)
+- [Rebrandly](https://www.rebrandly.com/)
+- [Husky](https://typicode.github.io/husky/#/)
+- [MarkDown-It](https://www.npmjs.com/package/markdown-it)
+- [React Hook Form](https://react-hook-form.com/)
+- [Socket.io](https://socket.io/)
 
 ---
 ## Team Lead:

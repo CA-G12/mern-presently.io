@@ -164,7 +164,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                 id={'default-toggle' + slide._id}
                 className="sr-only peer"
                 checked={slideState.isPrivate}
-                onClick={() => {
+                onChange={() => {
                   setSlideState(prevState => {
                     return { ...prevState, isPrivate: !slideState.isPrivate }
                   })

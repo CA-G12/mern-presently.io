@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react'
+import { Flip, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+
 import { slideApi } from '../../api'
 import useAuth from '../../hooks/useAuth'
 
@@ -17,18 +18,34 @@ const CommonUploadFile = ({
   hiddenFileInput
 }: ICommonUploadFileProps) => {
   const { dispatch } = useAuth()
+  const [uploadLoading, setUploadLoading] = useState(false)
 
   const handleUpload = async (uploadedFile: File) => {
     try {
       const form = new FormData()
       form.append('File', uploadedFile)
 
+      setUploadLoading(true)
+
+      const uploadToastId = toast.loading('Upload in progress, please wait ...')
+
       const uploadedSlide = await slideApi.uploadSlide(form)
+
+      setUploadLoading(false)
+
       const slides = uploadedSlide.data.slide.slides
       const lastSlide = slides[slides.length - 1]
 
       dispatch({ type: 'ADD_SLIDE', payload: { slide: lastSlide } })
-      toast.success('Presentation uploaded successfully.')
+
+      toast.update(uploadToastId, {
+        render: 'Presentation uploaded successfully',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000,
+        closeButton: true,
+        transition: Flip
+      })
     } catch (error) {
       toast.error('Something went wrong.')
     }

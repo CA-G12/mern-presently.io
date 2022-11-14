@@ -81,7 +81,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
       await slideApi.deleteSlide(slide._id)
 
       dispatch({ type: 'DELETE_SLIDE', payload: { slideID: slide._id } })
-      handleAlert('success', 'Deleted Successfully')
+      handleAlert('success', 'Presentation deleted Successfully')
     } catch {
       handleAlert('error', 'Something went wrong')
     }

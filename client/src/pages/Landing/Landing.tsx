@@ -16,7 +16,7 @@ const Landing = () => {
       <section className="lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit p-4">
         <LandingCard className="mt-8 bg-white" type="second" />
       </section>
-      <section className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 lg:mb-10 min-w-fit p-4 bg-primary-default text-white">
+      <section className="relative lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 lg:mb-10 min-w-fit p-4 bg-blue-light">
         <LandingCard className="pb-20" type="third" />
         <Wave
           className="absolute py-0 pl-0 pr-0 min-w-max left-0"

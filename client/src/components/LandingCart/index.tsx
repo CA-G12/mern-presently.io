@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import './styles.css'
 import mainImage from '../../assets/LandingInfoPngs/main.png'
 import frameImage from '../../assets/LandingInfoPngs/frame.png'
@@ -10,45 +12,43 @@ type ILandingCardProps = {
 
 const LandingCard = ({ type }: ILandingCardProps) => {
   let data = null
+  const navigate = useNavigate()
 
   switch (type) {
     case 'first':
       data = {
-        subHead: 'We are better than hackmd?',
-        head: 'Presently is the best',
-        boldHeader: 'Soulations for your ',
-        brushedHeader: 'Busniess',
+        subHead: 'Better than hackmd',
+        head: 'Presently is the best choice to make',
+        boldHeader: ' your ',
+        brushedHeader: 'live presentation',
         img: mainImage,
         styles:
           'relative self-start flex lg:flex-row flex-col justify-around lg:pt-20 pt-12 gap-16 text-blue-dark',
-        descipton:
-          'An enim nullam tempor sapien gravida donec enim ipsum porta congue magna at pretium purus pretium'
+        description:
+          'Upload your md presentation and we will convert it into slides.\n Go live and get your audience comments and feedback. \n \n \n'
       }
       break
     case 'second':
       data = {
-        subHead: 'Get to know Saasmix',
-        head: 'Saasmix is easy payment',
-        boldHeader: 'processing ',
-        brushedHeader: 'for everyone',
+        subHead: 'Making slides',
+        boldHeader: 'Prepare your ',
+        brushedHeader: 'md file',
         img: frameImage,
         styles:
           'relative self-start flex lg:flex-row lg:flex-row-reverse  flex-col justify-around lg:pt-20 pt-12 gap-24 text-blue-dark pb-20 bt-20',
-        descipton:
-          'Fully layered dolor sit amet, nobis id expedita dolores layered dolor sit amet laboriosam.'
+        description: `-   Prepare the content of your slides in .md file. \n -   Separate your slides in the file by ---. \n -   Leave one space after each slide`
       }
       break
     case 'third':
       data = {
-        subHead: 'Important For Transactions',
-        head: 'Useful for facilitating transactions ',
-        boldHeader: 'Useful for facilitating transactions ',
-        brushedHeader: 'sellers',
+        subHead: 'Live presentation',
+        boldHeader: 'Get your audience ',
+        brushedHeader: 'comments',
         img: computerImage,
         styles:
-          'relative self-start lg:flex-row flex-col flex justify-around lg:pt-20 pt-12 gap-16 pb-20 bt-20 text-white',
-        descipton:
-          'An enim nullam tempor sapien gravida donec enim ipsum porta congue magna at pretium purus pretium'
+          'relative self-start lg:flex-row flex-col flex justify-around lg:pt-20 pt-12 gap-16 pb-20 bt-20 text-blue-dark',
+        description:
+          'Invite your audience to check your slides and add their comments and feedback while presenting.'
       }
       break
   }
@@ -57,7 +57,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
     <div className="flex flex-col relative">
       {data && (
         <div className={data.styles}>
-          <div className="lg:flex lg:justify-start flex flex-col justify-center align-middle lg:mt-10 mt-2 mr-4 lg:ml-0 ml-4 lg:text-left text-center">
+          <div className="lg:flex flex flex-col justify-center align-middle lg:mt-10 mt-2 mr-4 lg:ml-0 ml-4 lg:text-left text-center">
             <p className="text-green text-regular font-bold lg:self-start self-center">
               {data && data.subHead}
             </p>
@@ -71,12 +71,35 @@ const LandingCard = ({ type }: ILandingCardProps) => {
                 {data && data.brushedHeader}
               </span>
             </p>
-            <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center">
-              {data && data.descipton}
-            </p>
+            {data && type !== 'second' ? (
+              <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center whitespace-pre-line">
+                {data.description}
+              </p>
+            ) : (
+              <ol className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center">
+                <li className="py-2">
+                  Prepare the content of your slides in{' '}
+                  <span className="bg-grey-light px-2">.md</span> file.
+                </li>
+                <li className="py-2">
+                  Separate your slides in the file by{' '}
+                  <span className="bg-grey-light px-1">---</span>.
+                </li>
+                <li className="py-2">
+                  Leave <span className="bg-grey-light px-1">one space</span>{' '}
+                  after each slide.{' '}
+                </li>
+              </ol>
+            )}
+            <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center whitespace-pre-line"></p>
             {type === 'second' && (
-              <button className="border lg:w-48 rounded-2 bg-primary-default text-white mt-4 p-3 hover:bg-primary-hover text-regular font-bold self-middle">
-                Discover me
+              <button
+                className="border lg:w-48 rounded-2 bg-primary-default text-white mt-4 p-3 hover:bg-primary-hover text-regular font-bold self-middle"
+                onClick={() => {
+                  navigate('/presentations')
+                }}
+              >
+                Upload
               </button>
             )}
           </div>

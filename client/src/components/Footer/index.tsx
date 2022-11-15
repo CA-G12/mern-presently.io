@@ -25,6 +25,9 @@ const Footer = () => {
             </p>
             <ul className="text-grey text-footer leading-6 font-light cursor-pointer hover:text-blue-dark">
               <li className="mb-2">
+                <a href="https://github.com/AhmedSafi97">Ahmed Safi</a>
+              </li>
+              <li className="mb-2">
                 <a href="https://github.com/fadezak100">Fadi Zaqout</a>
               </li>
               <li className="mb-2">

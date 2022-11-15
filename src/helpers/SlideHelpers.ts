@@ -26,7 +26,7 @@ const uploadFile = async (): Promise<string> =>
     )
   })
 
-const shortenLink = async (link: string | null): Promise<string> => {
+const shortenLink = async (link: string): Promise<string> => {
   const headers = rebrandlyConfig
   const endpoint = 'https://api.rebrandly.com/v1/links'
   const linkRequest = {
@@ -39,8 +39,12 @@ const shortenLink = async (link: string | null): Promise<string> => {
     data: linkRequest,
     headers: headers
   }
-  const apiResponse = await axios(apiCall)
-  return apiResponse.data.shortUrl
+  try {
+    const apiResponse = await axios(apiCall)
+    return apiResponse.data.shortUrl
+  } catch (error) {
+    return link
+  }
 }
 
 export default { uploadFile, shortenLink }

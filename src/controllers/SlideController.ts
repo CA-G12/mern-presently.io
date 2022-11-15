@@ -130,18 +130,16 @@ const createSlide = async (
 
     const validate = await validator({
       schema: slideSchema,
-      data: { link, title, isPrivate, isLive }
+      data: { title, isPrivate, isLive }
     })
 
     if (!validate.isValid) {
       throw new GenericError(validate.error)
     }
 
-    const linkSegment = link.split('/')[1]
-
     const slide = await SlideService.createSlide({
       userId,
-      link: linkSegment,
+      link,
       title: file.originalname.split('.')[0],
       isPrivate,
       isLive

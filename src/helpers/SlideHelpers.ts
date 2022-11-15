@@ -41,7 +41,6 @@ const shortenLink = async (link: string): Promise<string> => {
   }
   try {
     const apiResponse = await axios(apiCall)
-    console.log(apiResponse.data.shortUrl)
     return apiResponse.data.shortUrl
   } catch (error) {
     return link

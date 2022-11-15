@@ -19,12 +19,20 @@ const createSlide = async ({
   isLive,
   isPrivate
 }: CreateSlideService) => {
+  let linkSlug = link
+
+  if (link.includes('rebrand.ly')) {
+    linkSlug = link.split('/')[1]
+  }
+
   const slide = await SlideRepository.createSlide({
     title: title,
-    link,
+    link: linkSlug,
     isLive,
     isPrivate
   })
+
+  console.log(slide)
 
   return SlideRepository.addSlideToUser(slide, userId)
 }
@@ -43,7 +51,13 @@ const getSlide = async (id: string) => {
 }
 
 const getSlideHtmlContent = async (link: string) => {
-  const mdContent = await axios.get(`https://rebrand.ly/${link}`)
+  let slideLink = link
+
+  if (!link.includes('cloudinary')) {
+    slideLink = `https://rebrand.ly/${link}`
+  }
+
+  const mdContent = await axios.get(slideLink)
 
   const md = new MarkdownIt(mdOptions)
 

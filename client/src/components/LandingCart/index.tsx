@@ -17,15 +17,15 @@ const LandingCard = ({ type }: ILandingCardProps) => {
   switch (type) {
     case 'first':
       data = {
-        subHead: 'Better than hackmd',
-        head: 'Presently is the best choice to make',
-        boldHeader: ' your ',
-        brushedHeader: 'live presentation',
+        subHead: 'Present Like a Chad!',
+        head: 'Best Choice for your',
+        boldHeader: '',
+        brushedHeader: 'live presentations',
         img: mainImage,
         styles:
-          'relative self-start flex lg:flex-row flex-col justify-around lg:pt-20 pt-12 gap-16 text-blue-dark',
+          'relative self-start flex lg:flex-row flex-col justify-around lg:pt-20 lg:pb-2 pt-12 gap-16 text-blue-dark',
         description:
-          'Upload your md presentation and we will convert it into slides.\n Go live and get your audience comments and feedback. \n \n \n'
+          '1. Upload your md presentation.\n2. Convert it into slides.\n3.Go live\n4. Get Live Feedback. \n \n \n'
       }
       break
     case 'second':
@@ -35,7 +35,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
         brushedHeader: 'md file',
         img: frameImage,
         styles:
-          'relative self-start flex lg:flex-row lg:flex-row-reverse  flex-col justify-around lg:pt-20 pt-12 gap-24 text-blue-dark pb-20 bt-20',
+          'relative self-start flex lg:flex-row lg:flex-row-reverse  flex-col justify-around lg:pt-10 pt-12 gap-24 text-blue-dark pb-20 bt-20',
         description: `-   Prepare the content of your slides in .md file. \n -   Separate your slides in the file by ---. \n -   Leave one space after each slide`
       }
       break
@@ -46,7 +46,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
         brushedHeader: 'comments',
         img: computerImage,
         styles:
-          'relative self-start lg:flex-row flex-col flex justify-around lg:pt-20 pt-12 gap-16 pb-20 bt-20 text-blue-dark',
+          'relative self-start lg:flex-row flex-col flex justify-around lg:pt-10 pt-12 gap-16 pb-20 bt-20 text-blue-dark',
         description:
           'Invite your audience to check your slides and add their comments and feedback while presenting.'
       }
@@ -57,7 +57,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
     <div className="flex flex-col relative">
       {data && (
         <div className={data.styles}>
-          <div className="lg:flex flex flex-col justify-center align-middle lg:mt-10 mt-2 mr-4 lg:ml-0 ml-4 lg:text-left text-center">
+          <div className="lg:flex flex flex-col justify-center align-middle mt-2 mr-4 lg:ml-0 ml-4 lg:text-left text-center">
             <p className="text-green text-regular font-bold lg:self-start self-center">
               {data && data.subHead}
             </p>
@@ -72,9 +72,17 @@ const LandingCard = ({ type }: ILandingCardProps) => {
               </span>
             </p>
             {data && type !== 'second' ? (
-              <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center whitespace-pre-line">
-                {data.description}
-              </p>
+              type === 'first' ? (
+                <div className="lg:block hidden">
+                  <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center whitespace-pre-line">
+                    {data.description}
+                  </p>
+                </div>
+              ) : (
+                <p className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center whitespace-pre-line">
+                  {data.description}
+                </p>
+              )
             ) : (
               <ol className="lg:text-regular text-xsmall mt-8 font-semiBold lg:self-start self-center">
                 <li className="py-2">

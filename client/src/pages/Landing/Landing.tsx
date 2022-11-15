@@ -20,11 +20,11 @@ const Landing = () => {
         <LandingCard className="pb-20" type="third" />
         <Wave
           className="absolute py-0 pl-0 pr-0 min-w-max left-0"
-          style={{ bottom: 0 }}
+          style={{ bottom: -10 }}
         />
       </section>
 
-      <footer className="lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 min-w-fit p-4">
+      <footer className="lg:min-h-80 lg:pr-32 lg:pb-5 lg:pl-32 lg:min-w-fit p-4">
         <Footer />
       </footer>
     </>

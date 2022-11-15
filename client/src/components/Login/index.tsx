@@ -53,7 +53,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
     }
   }
 
-  const removeloginError = () => {
+  const removeLoginError = () => {
     setLoginError('')
   }
 
@@ -81,13 +81,13 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
   })
 
   return (
-    <div className="min-h-screen flex justify-center items-center	">
+    <div className="min-h-screen flex justify-center items-center">
       <div
         ref={modalRef}
-        className="box relative bg-white overflow-hidden rounded-1 shadow-lg"
+        className="box relative lg:w-96 w-80 overflow-hidden rounded-1 shadow-lg"
       >
         <form
-          className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 p-8"
+          className="flex flex-col items-center justify-center shadow-lg rounded-1 bg-white inset-1 lg:p-8 p-12"
           onSubmit={onSubmit}
           noValidate
           autoComplete="off"
@@ -101,7 +101,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
                 className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Email"
                 {...register('email', {
-                  onChange: () => removeloginError(),
+                  onChange: () => removeLoginError(),
                   pattern: {
                     value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                     message: 'Not a valid email'
@@ -124,7 +124,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
                 className="input-border w-full py-2 px-6 rounded-1 border-2 border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none focus:border-primary-default transition duration-200"
                 placeholder="Password"
                 {...register('password', {
-                  onChange: () => removeloginError(),
+                  onChange: () => removeLoginError(),
                   required: 'Password is required'
                 })}
               />

@@ -32,8 +32,6 @@ const createSlide = async ({
     isPrivate
   })
 
-  console.log(slide)
-
   return SlideRepository.addSlideToUser(slide, userId)
 }
 

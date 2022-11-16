@@ -26,7 +26,10 @@ const createUser = async (
       password
     })
 
-    res.status(201).cookie('token', token).json({ message: 'success', user })
+    res
+      .status(201)
+      .cookie('token', token)
+      .json({ message: 'success', user, token })
   } catch (error: unknown) {
     const exception = error as Error
 

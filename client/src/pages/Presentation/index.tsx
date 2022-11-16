@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router-dom'
 import SyncLoader from 'react-spinners/SyncLoader'
+import { AxiosError } from 'axios'
 
 import './styles.css'
 import { slideApi } from '../../api'
@@ -10,15 +11,17 @@ import Comments from '../../components/Comments'
 import { ReactComponent as Bell } from '../../assets/SlidesIcons/bell.svg'
 import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
 import useAuth from '../../hooks/useAuth'
+import NotFound from '../404'
 
 const Presentation = () => {
   const { id } = useParams() as { id: string }
   const [slides, setSlides] = useState([])
   const [openComments, setOpenComments] = useState(false)
   const [link, setLink] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const { dispatch, owner, comments } = useAuth()
   const commentsRef = useRef<HTMLDivElement>(null)
+  const [responseError, setResponseError] = useState(false)
 
   useEffect(() => {
     if (commentsRef) {
@@ -42,19 +45,33 @@ const Presentation = () => {
   }
 
   useEffect(() => {
-    setIsLoading(true)
-    slideApi
-      .getSlide(id)
-      .then(data => {
-        setSlides(data.data.slide.htmlContent.split('<hr>'))
-        setLink(data.data.slide.shortenLink)
+    const getSlide = async () => {
+      try {
+        setIsLoading(true)
+
+        const res = await slideApi.getSlide(id)
+
+        setSlides(res.data.slide.htmlContent.split('<hr>'))
+
+        setLink(res.data.slide.shortenLink)
 
         dispatch({
           type: 'OWNER',
-          payload: { slideID: data.data.slide.info._id }
+          payload: { slideID: res.data.slide.info._id }
         })
-      })
-      .then(() => setIsLoading(false))
+
+        setIsLoading(false)
+      } catch (error) {
+        const exception = error as AxiosError
+
+        if (exception.response) {
+          setResponseError(true)
+        }
+        setIsLoading(false)
+      }
+    }
+
+    getSlide()
   }, [])
 
   if (isLoading) {
@@ -72,6 +89,10 @@ const Presentation = () => {
         }}
       />
     )
+  }
+
+  if (responseError) {
+    return <NotFound />
   }
 
   return (

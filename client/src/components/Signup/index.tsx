@@ -62,7 +62,9 @@ const SignUp = ({ setModal, setIsOpen, isOpen }: ISignUpProps) => {
   const onSubmit = (async (data: Omit<UserInterface, 'id'>) => {
     try {
       const res = await authApi.handleSignup(data)
-      const user = res.data.user
+      const { user, token } = res.data
+      localStorage.setItem('token', token)
+
       dispatch({ type: 'INITIALIZE', payload: { user, loggedIn: true } })
       navigate('/presentations')
     } catch (error) {

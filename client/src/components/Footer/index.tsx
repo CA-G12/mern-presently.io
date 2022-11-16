@@ -4,9 +4,9 @@ import { ReactComponent as Github } from '../../assets/LandingInfoPngs/github.sv
 const Footer = () => {
   return (
     <div className="flex flex-col">
-      <div className="flex lg:flex-row flex-col flex-wraps justify-between lg:mb-20 lg:mt-10 lg:mr-0 lg:ml-0 mr-4 ml-4">
-        <div className="lg:flex-1 flex justify-around flex-wrap lg:mr-4 lg:ml-4 mt-12 lg:mb-0 mb-12 gap-1">
-          <div className="lg:pl-2 pr-2 max-w-xs mr-2 flex-start">
+      <div className="flex lg:mb-20 lg:mt-5 lg:mr-0 lg:ml-0 justify-center align-middle">
+        <div className="flex lg:flex-row lg:flex-1 lg:justify-around lg:items-start flex-col justify-center items-center lg:mr-4 lg:ml-4 mt-12 lg:mb-0 mb-12 gap-1">
+          <div className="lg:pl-2 lg:max-w-xs lg:mr-2 flex-start text-center">
             <p className="text-regular text-dark mb-4 text-blue-dark font-semibold">
               Services
             </p>
@@ -19,9 +19,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="min-w-fit lg:pr-2 pl-2 max-w-xs ml-10 lg:m-0">
+          <div className="min-w-fit lg:pr-2 lg:max-w-xs lg:ml-10 lg:m-0 text-center">
             <p className="text-regular text-dark mb-4 text-blue-dark font-semibold">
-              App development team
+              Team
             </p>
             <ul className="text-grey text-footer leading-6 font-light cursor-pointer hover:text-blue-dark">
               <li className="mb-2">
@@ -38,7 +38,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col max-w-xs">
+          <div className="flex flex-col lg:max-w-xs justify-center items-center">
             <p className="text-regular text-dark mb-4 text-blue-dark font-semibold">
               Follow us
             </p>

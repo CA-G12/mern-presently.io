@@ -12,7 +12,6 @@ import { ReactComponent as Bell } from '../../assets/SlidesIcons/bell.svg'
 import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
 import useAuth from '../../hooks/useAuth'
 import NotFound from '../404'
-import { isValidEntityCode } from 'markdown-it/lib/common/utils'
 
 const Presentation = () => {
   const { id } = useParams() as { id: string }

@@ -50,6 +50,11 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
   const updateSlide = async () => {
     try {
       await slideApi.updateSlide(slideState)
+
+      dispatch({
+        type: 'CHANGE_TITLE',
+        payload: { slideId: slideState.id, newTitle: title }
+      })
     } catch (error) {
       toast.error("Name Can't be less than one character")
       setTitle(slide.title)
@@ -140,6 +145,14 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                 setSlideState(prevState => {
                   return { ...prevState, isLive: !slideState.isLive }
                 })
+
+                dispatch({
+                  type: 'LIVE',
+                  payload: {
+                    slideId: slideState.id,
+                    status: !slideState.isLive
+                  }
+                })
                 setFlag(!flag)
               }}
             >
@@ -171,6 +184,14 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                 onChange={() => {
                   setSlideState(prevState => {
                     return { ...prevState, isPrivate: !slideState.isPrivate }
+                  })
+
+                  dispatch({
+                    type: 'PRIVATE',
+                    payload: {
+                      slideId: slideState.id,
+                      status: !slideState.isPrivate
+                    }
                   })
                   setFlag(!flag)
                 }}

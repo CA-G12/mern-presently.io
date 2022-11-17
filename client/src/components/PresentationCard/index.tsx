@@ -110,10 +110,14 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
         </a>
       </div>
       <div className="flex mt-4 ml-4 mb-8 cursor-pointer">
-        <PresentationIcon
-          className="mr-4 cursor-pointer"
-          onClick={() => navigate(`/presentations/${slide._id}`)}
-        />
+        {slideState.isPrivate ? (
+          <PresentationIcon className="mr-4 cursor-pointer" />
+        ) : (
+          <PresentationIcon
+            className="mr-4 cursor-pointer"
+            onClick={() => navigate(`/presentations/${slide._id}`)}
+          />
+        )}
         {inputVisible ? (
           <input
             className="bg-grey-background focus:outline-none"
@@ -173,7 +177,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
               />
               <div className="w-11 h-6 bg-grey-default rounded-2 peer-focus:outline-none dark:peer-focus:ring-primary-default peer dark:bg-primary-default peer-checked:after:translate-x-full peer-checked:after:border-grey-default after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-default after:rounded-2 after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-default"></div>
               <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-default">
-                {slideState.isPrivate ? 'Public' : 'Private'}
+                Private
               </span>
             </label>
           </div>

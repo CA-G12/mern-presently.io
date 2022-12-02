@@ -53,7 +53,7 @@ const Navbar = ({ isSinged }: INavbarProps) => {
   }
 
   return (
-    <div className="flex lg:flex-row justify-between gap-2 font-sans font-regular flex-col-reverse">
+    <div className="self-center w-full flex lg:flex-row justify-between gap-2 font-sans font-regular flex-col-reverse max-w-screen-xl">
       <div className="self-center flex lg:mt-0 mt-2">
         <img src={logo} />
       </div>

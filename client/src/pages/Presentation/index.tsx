@@ -20,6 +20,8 @@ const Presentation = () => {
   const [link, setLink] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [isLive, setIsLive] = useState(false)
+  const [isPrivate, setIsPrivate] = useState(false)
+
   const { dispatch, owner, comments } = useAuth()
   const commentsRef = useRef<HTMLDivElement>(null)
   const [responseError, setResponseError] = useState(false)
@@ -53,12 +55,12 @@ const Presentation = () => {
 
         const res = await slideApi.getSlide(id)
 
-        if (res.data.slide.info.isPrivate) {
-          navigate('/404')
-        }
-
         if (res.data.slide.info.isLive) {
           setIsLive(true)
+        }
+
+        if (res.data.slide.info.isPrivate) {
+          setIsPrivate(true)
         }
 
         setSlides(res.data.slide.htmlContent.split('<hr>'))
@@ -69,6 +71,10 @@ const Presentation = () => {
           type: 'OWNER',
           payload: { slideID: res.data.slide.info._id }
         })
+
+        if (res.data.slide.info.isPrivate && !owner) {
+          navigate('/404')
+        }
 
         setIsLoading(false)
       } catch (error) {
@@ -110,7 +116,7 @@ const Presentation = () => {
       {/* ------------------------Header------------------------*/}
       <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
         <div className="">
-          {owner && isLive && (
+          {!isPrivate && isLive && owner && (
             <button
               className="focus:outline-none relative"
               onClick={() => setOpenComments(!openComments)}
@@ -120,7 +126,6 @@ const Presentation = () => {
                   <h6>{comments[id].length}</h6>
                 </div>
               )}
-
               <Bell strokeWidth={2} />
             </button>
           )}
@@ -128,7 +133,7 @@ const Presentation = () => {
             <Comments openCommentsRef={commentsRef} visible={openComments} />
           )}
         </div>
-        {isLive && (
+        {isLive && !isPrivate && (
           <button className="focus:outline-none hover:scale-125" onClick={copy}>
             <Share strokeWidth={2} />
           </button>

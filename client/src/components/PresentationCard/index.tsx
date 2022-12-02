@@ -115,14 +115,10 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
         </a>
       </div>
       <div className="flex mt-4 ml-4 mb-8 cursor-pointer">
-        {slideState.isPrivate ? (
-          <PresentationIcon className="mr-4 cursor-pointer" />
-        ) : (
-          <PresentationIcon
-            className="mr-4 cursor-pointer"
-            onClick={() => navigate(`/presentations/${slide._id}`)}
-          />
-        )}
+        <PresentationIcon
+          className="mr-4 cursor-pointer"
+          onClick={() => navigate(`/presentations/${slide._id}`)}
+        />
         {inputVisible ? (
           <input
             className="bg-grey-background focus:outline-none"
@@ -196,7 +192,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                   setFlag(!flag)
                 }}
               />
-              <div className="w-11 h-6 bg-grey-default rounded-2 peer-focus:outline-none dark:peer-focus:ring-primary-default peer dark:bg-primary-default peer-checked:after:translate-x-full peer-checked:after:border-grey-default after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-default after:rounded-2 after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-default"></div>
+              <div className="w-11 h-6 bg-grey-default rounded-2 peer-focus:outline-none dark:peer-focus:ring-primary-default peer dark:bg-grey-light peer-checked:after:translate-x-full peer-checked:after:border-grey-default after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-default after:rounded-2 after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-default"></div>
               <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-default">
                 Private
               </span>
@@ -205,12 +201,9 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
         </div>
       ) : (
         <div className="relative pt-12 bg-white">
-          <div className="absolute top-2">
+          <div className="absolute top-2 ">
             <div className="w-72 bg-gray-default h-1.5 mb-4 bg-grey-background rounded-1">
-              <div
-                className="bg-blue-default h-1.5 rounded-1 dark:bg-blue-default"
-                style={{ width: '50%' }}
-              ></div>
+              <div className="h-1.5 rounded-1" style={{ width: '50%' }}></div>
             </div>
           </div>
         </div>

@@ -81,7 +81,7 @@ export default function Login({ setModal, setIsOpen, isOpen }: ILoginProps) {
   })
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen flex justify-center items-center border-0">
       <div
         ref={modalRef}
         className="box relative lg:w-96 w-80 overflow-hidden rounded-1 shadow-lg"

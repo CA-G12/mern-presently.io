@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { toast } from 'react-toastify'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SyncLoader from 'react-spinners/SyncLoader'
 import { AxiosError } from 'axios'
 
@@ -19,9 +19,13 @@ const Presentation = () => {
   const [openComments, setOpenComments] = useState(false)
   const [link, setLink] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [isLive, setIsLive] = useState(false)
+  const [isPrivate, setIsPrivate] = useState(false)
+
   const { dispatch, owner, comments } = useAuth()
   const commentsRef = useRef<HTMLDivElement>(null)
   const [responseError, setResponseError] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (commentsRef) {
@@ -51,6 +55,14 @@ const Presentation = () => {
 
         const res = await slideApi.getSlide(id)
 
+        if (res.data.slide.info.isLive) {
+          setIsLive(true)
+        }
+
+        if (res.data.slide.info.isPrivate) {
+          setIsPrivate(true)
+        }
+
         setSlides(res.data.slide.htmlContent.split('<hr>'))
 
         setLink(res.data.slide.shortenLink)
@@ -59,6 +71,10 @@ const Presentation = () => {
           type: 'OWNER',
           payload: { slideID: res.data.slide.info._id }
         })
+
+        if (res.data.slide.info.isPrivate && !owner) {
+          navigate('/404')
+        }
 
         setIsLoading(false)
       } catch (error) {
@@ -98,9 +114,9 @@ const Presentation = () => {
   return (
     <div className="h-screen flex flex-col">
       {/* ------------------------Header------------------------*/}
-      <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 px-2 w-screen flex justify-between items-start">
+      <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
         <div className="">
-          {owner && (
+          {!isPrivate && isLive && owner && (
             <button
               className="focus:outline-none relative"
               onClick={() => setOpenComments(!openComments)}
@@ -110,7 +126,6 @@ const Presentation = () => {
                   <h6>{comments[id].length}</h6>
                 </div>
               )}
-
               <Bell strokeWidth={2} />
             </button>
           )}
@@ -118,9 +133,11 @@ const Presentation = () => {
             <Comments openCommentsRef={commentsRef} visible={openComments} />
           )}
         </div>
-        <button className="focus:outline-none hover:scale-125" onClick={copy}>
-          <Share strokeWidth={2} />
-        </button>
+        {isLive && !isPrivate && (
+          <button className="focus:outline-none hover:scale-125" onClick={copy}>
+            <Share strokeWidth={2} />
+          </button>
+        )}
       </div>
       {/* ------------------------Slides------------------------ */}
       <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
@@ -132,6 +149,7 @@ const Presentation = () => {
                 ? slides.slice(0, -1)
                 : slides
             }
+            isLive={isLive}
             isLoading={isLoading}
           />
         </div>

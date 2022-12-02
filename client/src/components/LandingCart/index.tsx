@@ -23,7 +23,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
         brushedHeader: 'live presentations',
         img: mainImage,
         styles:
-          'relative self-start flex lg:flex-row flex-col justify-around lg:pt-20 lg:pb-2 pt-12 gap-16 text-blue-dark',
+          'relative w-full self-center flex lg:flex-row flex-col justify-between lg:pt-20 lg:pb-2 pt-12 gap-16 text-blue-dark max-w-screen-xl',
         description:
           '1. Upload your md presentation.\n2. Convert it into slides.\n3.Go live\n4. Get Live Feedback. \n \n \n'
       }
@@ -35,7 +35,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
         brushedHeader: 'md file',
         img: frameImage,
         styles:
-          'relative self-start flex lg:flex-row lg:flex-row-reverse  flex-col justify-around lg:pt-10 pt-12 gap-24 text-blue-dark pb-20 bt-20',
+          'relative w-full self-center flex lg:flex-row lg:flex-row-reverse  flex-col justify-between lg:pt-10 pt-12 gap-24 text-blue-dark pb-20 bt-20 max-w-screen-xl',
         description: `-   Prepare the content of your slides in .md file. \n -   Separate your slides in the file by ---. \n -   Leave one space after each slide`
       }
       break
@@ -46,7 +46,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
         brushedHeader: 'comments',
         img: computerImage,
         styles:
-          'relative self-start lg:flex-row flex-col flex justify-around lg:pt-10 pt-12 gap-16 pb-20 bt-20 text-blue-dark',
+          'relative w-full self-center lg:flex-row flex-col flex justify-between lg:pt-10 pt-12 gap-16 pb-20 bt-20 text-blue-dark max-w-screen-xl',
         description:
           'Invite your audience to check your slides and add their comments and feedback while presenting.'
       }
@@ -54,7 +54,7 @@ const LandingCard = ({ type }: ILandingCardProps) => {
   }
 
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative justify-center">
       {data && (
         <div className={data.styles}>
           <div className="lg:flex flex flex-col justify-center align-middle mt-2 mr-4 lg:ml-0 ml-4 lg:text-left text-center">

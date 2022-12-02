@@ -17,6 +17,9 @@ export type Action =
       type: 'ADD_COMMENT'
       payload: { comment: { text: string; slideId: string } }
     }
+  | { type: 'LIVE'; payload: { slideId: string; status: boolean } }
+  | { type: 'PRIVATE'; payload: { slideId: string; status: boolean } }
+  | { type: 'CHANGE_TITLE'; payload: { slideId: string; newTitle: string } }
 
 type comments = {
   [key: string]: string[]
@@ -185,6 +188,79 @@ const reducer = (state: State, action: Action) => {
         auth: {
           ...state.auth,
           comments: clonedNewComments
+        }
+      }
+    }
+    case 'LIVE': {
+      const { slideId, status } = action.payload
+
+      const user = state.auth.user
+
+      if (!user) return state
+
+      user?.slides.map(el => {
+        if (el._id === slideId) {
+          el.isLive = status
+        }
+      })
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: {
+            ...user,
+            slides: [...user.slides]
+          }
+        }
+      }
+    }
+
+    case 'PRIVATE': {
+      const { slideId, status } = action.payload
+
+      const user = state.auth.user
+
+      if (!user) return state
+
+      user?.slides.map(el => {
+        if (el._id === slideId) {
+          el.isPrivate = status
+        }
+      })
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: {
+            ...user,
+            slides: [...user.slides]
+          }
+        }
+      }
+    }
+
+    case 'CHANGE_TITLE': {
+      const { slideId, newTitle } = action.payload
+      const user = state.auth.user
+
+      if (!user) return state
+
+      user?.slides.map(el => {
+        if (el._id === slideId) {
+          el.title = newTitle
+        }
+      })
+
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: {
+            ...user,
+            slides: [...user.slides]
+          }
         }
       }
     }

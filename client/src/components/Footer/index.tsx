@@ -3,7 +3,7 @@ import { ReactComponent as Github } from '../../assets/LandingInfoPngs/github.sv
 
 const Footer = () => {
   return (
-    <div className="flex flex-col">
+    <div className="w-full flex flex-col max-w-screen-xl">
       <div className="flex lg:mb-20 lg:mt-5 lg:mr-0 lg:ml-0 justify-center align-middle">
         <div className="flex lg:flex-row lg:flex-1 lg:justify-around lg:items-start flex-col justify-center items-center lg:mr-4 lg:ml-4 mt-12 lg:mb-0 mb-12 gap-1">
           <div className="lg:pl-2 lg:max-w-xs lg:mr-2 flex-start text-center">

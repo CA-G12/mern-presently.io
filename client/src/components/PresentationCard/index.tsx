@@ -50,6 +50,11 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
   const updateSlide = async () => {
     try {
       await slideApi.updateSlide(slideState)
+
+      dispatch({
+        type: 'CHANGE_TITLE',
+        payload: { slideId: slideState.id, newTitle: title }
+      })
     } catch (error) {
       toast.error("Name Can't be less than one character")
       setTitle(slide.title)
@@ -136,6 +141,14 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                 setSlideState(prevState => {
                   return { ...prevState, isLive: !slideState.isLive }
                 })
+
+                dispatch({
+                  type: 'LIVE',
+                  payload: {
+                    slideId: slideState.id,
+                    status: !slideState.isLive
+                  }
+                })
                 setFlag(!flag)
               }}
             >
@@ -168,24 +181,29 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
                   setSlideState(prevState => {
                     return { ...prevState, isPrivate: !slideState.isPrivate }
                   })
+
+                  dispatch({
+                    type: 'PRIVATE',
+                    payload: {
+                      slideId: slideState.id,
+                      status: !slideState.isPrivate
+                    }
+                  })
                   setFlag(!flag)
                 }}
               />
-              <div className="w-11 h-6 bg-grey-default rounded-2 peer-focus:outline-none dark:peer-focus:ring-primary-default peer dark:bg-primary-default peer-checked:after:translate-x-full peer-checked:after:border-grey-default after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-default after:rounded-2 after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-default"></div>
+              <div className="w-11 h-6 bg-grey-default rounded-2 peer-focus:outline-none dark:peer-focus:ring-primary-default peer dark:bg-grey-light peer-checked:after:translate-x-full peer-checked:after:border-grey-default after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-default after:rounded-2 after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-default"></div>
               <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-default">
-                {slideState.isPrivate ? 'Public' : 'Private'}
+                Private
               </span>
             </label>
           </div>
         </div>
       ) : (
         <div className="relative pt-12 bg-white">
-          <div className="absolute top-2">
+          <div className="absolute top-2 ">
             <div className="w-72 bg-gray-default h-1.5 mb-4 bg-grey-background rounded-1">
-              <div
-                className="bg-blue-default h-1.5 rounded-1 dark:bg-blue-default"
-                style={{ width: '50%' }}
-              ></div>
+              <div className="h-1.5 rounded-1" style={{ width: '50%' }}></div>
             </div>
           </div>
         </div>

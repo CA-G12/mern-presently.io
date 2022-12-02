@@ -17,7 +17,7 @@ const Presentations = () => {
           </p>
         </div>
 
-        <div className="flex gap-7 gap-y-4 flex-wrap p-2 pl-0 pr-0 lg:justify-start lg:items-start justify-center items-center">
+        <div className="flex gap-7 gap-y-4 flex-wrap p-2 pl-0 pr-0 mb-10 lg:justify-start lg:items-start justify-center items-center">
           {user?.slides?.map(slide => (
             <PresentationCard key={slide._id} slide={slide} type="uploaded" />
           ))}

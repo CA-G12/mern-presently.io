@@ -9,6 +9,7 @@ import { ReactComponent as RightArrow } from '../../assets/SlidesIcons/rightArro
 import { ReactComponent as Home } from '../../assets/SlidesIcons/home.svg'
 import useAuth from '../../hooks/useAuth'
 import config from '../../config'
+import { bool } from 'yup'
 
 const { wsBaseUrl } = config
 
@@ -19,9 +20,10 @@ const socket = ws(wsBaseUrl, {
 interface ISliderProps {
   slides: string[]
   isLoading: boolean
+  isLive: boolean
 }
 
-const Slider = ({ slides }: ISliderProps) => {
+const Slider = ({ slides, isLive }: ISliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [comment, setComment] = useState('')
 
@@ -86,20 +88,20 @@ const Slider = ({ slides }: ISliderProps) => {
         ></div>
       </div>
       {/*------------------------ Control slides ------------------------ */}
-      <div className="absolute inset-x-0 bottom-0 lg:pr-32 p-4 lg:py-5 lg:pl-32 flex-initial ">
-        <div className="justify-self-end flex justify-between">
+      <div className="absolute inset-x-0 bottom-0 lg:pr-32 pr-10 pl-10 lg:py-5 lg:pl-32 flex-initial">
+        <div className="relative justify-self-end flex justify-between items-center mb-4">
           <Link
             to="/presentations"
-            className="hover:scale-125 focus: outline-none"
+            className="flex items-center hover:scale-125 focus: outline-none"
           >
-            <Home strokeWidth={2} height={30} width={40} />
+            <Home className="hover:text-primary-default lg:w-8 lg:h-8 w-6 h-6 stroke-2" />
           </Link>
-          {!owner && (
+          {!owner && isLive && (
             <input
               id="comment"
               onKeyDown={handleKeyDown}
-              className="w-full text-white py-2 px-2 mx-20 my-2 placeholder-grey border-b-2 border-grey-light focus:text-black outline-none"
-              placeholder="Add a comment ..."
+              className="w-full flex-1 text-white py-2 px-2 lg:mx-20 my-2 mx-4 lg:placeholder:placeholder-grey border-b-2 border-grey-light focus:text-black outline-none"
+              placeholder="Add a comment"
             />
           )}
 
@@ -108,29 +110,19 @@ const Slider = ({ slides }: ISliderProps) => {
               className="mr-10 focus: outline-none hover:scale-125"
               onClick={goToPrevious}
             >
-              <LeftArrow
-                strokeWidth={2}
-                height={40}
-                width={40}
-                className="hover:text-primary-default"
-              />
+              <LeftArrow className="hover:text-primary-default lg:w-8 lg:h-8 stroke-2 w-5 h-5 " />
             </button>
             <button
               className="focus: outline-none hover:scale-125"
               onClick={goToNext}
             >
-              <RightArrow
-                strokeWidth={2}
-                height={40}
-                width={40}
-                className="hover:text-primary-default"
-              />
+              <RightArrow className="hover:text-primary-default lg:w-8 lg:h-8 stroke-2  w-5 h-5 " />
             </button>
           </div>
         </div>
-        <div className="w-full bg-grey-border h-1.5 mb-4 rounded-1">
+        <div className="w-full bg-grey-border lg:h-1.5 h-1 mb-4 rounded-1">
           <div
-            className="bg-blue-default h-1.5 rounded-1 progress"
+            className="bg-blue-default lg:h-1.5 h-1rounded-1 progress"
             style={{
               width: `${
                 currentIndex !== slides.length - 1

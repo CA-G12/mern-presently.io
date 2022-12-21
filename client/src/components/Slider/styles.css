@@ -1,34 +1,47 @@
-.html {
-  object-fit: contain;
+@media (max-width: 600px) {
+  .html {
+    padding-top: 3rem;
+  }
 }
 
 .html * {
-  margin: 8px;
+  margin: 0.5rem;
 }
 
 .html h1 {
   font-weight: 800;
   margin: 8px;
-  font-size: 33px;
+  font-size: 2rem;
 }
 
 .html h2 {
   font-weight: 700;
   margin: 8px;
-  font-size: 24px;
+  font-size: 1.5rem;
+}
+
+.html p {
+  font-size: 1rem;
+}
+
+.html a {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .html ul li {
   list-style-type: circle;
   text-align: left;
+  font-size: 1rem;
 }
 
 .html ol li {
   list-style-type: decimal;
   text-align: left;
+  font-size: 1rem;
 }
 
-.html img{
+.html img {
   max-height: 400px;
 }
 

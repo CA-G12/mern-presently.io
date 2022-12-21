@@ -121,7 +121,7 @@ const PresentationCard = ({ slide, type }: IPresentationCardOProps) => {
         />
         {inputVisible ? (
           <input
-            className="bg-grey-background focus:outline-none"
+            className="bg-grey-background focus:outline-none focus:border-b-2"
             ref={inputRef}
             value={title}
             onChange={e => {

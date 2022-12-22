@@ -25,15 +25,7 @@ const App = () => {
 
     socket.emit('login', 'UserId has logged in')
 
-    socket.on('loggedOutUser', msg => {
-      console.log(msg)
-    })
-
     socket.emit('logout', 'user has logged out')
-
-    socket.on('newLoggedUser', msg => {
-      console.log(msg)
-    })
 
     return () => {
       socket.removeAllListeners()

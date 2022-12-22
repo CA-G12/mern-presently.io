@@ -88,7 +88,6 @@ const Presentation = () => {
 
   useEffect(() => {
     if (isPrivate && !owner) {
-      console.log(isPrivate, owner)
       navigate('/404')
     }
   }, [owner])

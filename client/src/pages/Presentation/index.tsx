@@ -72,10 +72,6 @@ const Presentation = () => {
           payload: { slideID: res.data.slide.info._id }
         })
 
-        if (res.data.slide.info.isPrivate && !owner) {
-          navigate('/404')
-        }
-
         setIsLoading(false)
       } catch (error) {
         const exception = error as AxiosError
@@ -89,6 +85,13 @@ const Presentation = () => {
 
     getSlide()
   }, [])
+
+  useEffect(() => {
+    if (isPrivate && !owner) {
+      console.log(isPrivate, owner)
+      navigate('/404')
+    }
+  }, [owner])
 
   if (isLoading) {
     return (

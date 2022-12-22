@@ -90,7 +90,7 @@ const Presentation = () => {
     if (isPrivate && !owner) {
       navigate('/404')
     }
-  }, [owner])
+  }, [isPrivate])
 
   if (isLoading) {
     return (

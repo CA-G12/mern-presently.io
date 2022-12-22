@@ -26,6 +26,7 @@ interface ISliderProps {
 const Slider = ({ slides, isLive }: ISliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [comment, setComment] = useState('')
+  const [tempComment, setTempComment] = useState('')
 
   const { dispatch, owner } = useAuth()
 
@@ -41,14 +42,18 @@ const Slider = ({ slides, isLive }: ISliderProps) => {
     setCurrentIndex(newIndex)
   }
 
-  const handleKeyDown = (event: { code: unknown; target: unknown }) => {
-    const updatedValue = event?.target as {
-      value: string
-    }
+  const handleKeyDown = (event: { code: unknown }) => {
     const updatedKey = event?.code as string
     if (updatedKey === 'Enter') {
-      setComment(updatedValue.value)
-      updatedValue.value = ''
+      setComment(tempComment)
+      setTempComment('')
+    }
+  }
+
+  const sendComment = () => {
+    if (tempComment !== '') {
+      setComment(tempComment)
+      setTempComment('')
     }
   }
 
@@ -90,19 +95,38 @@ const Slider = ({ slides, isLive }: ISliderProps) => {
       {/*------------------------ Control slides ------------------------ */}
       <div className="absolute inset-x-0 bottom-0 lg:pr-32 pr-10 pl-10 lg:py-5 lg:pl-32 flex-initial">
         <div className="relative justify-self-end flex justify-between items-center mb-4">
-          <Link
-            to="/presentations"
-            className="flex items-center hover:scale-125 focus:outline-none"
-          >
-            <Home className="hover:text-primary-default lg:w-8 lg:h-8 w-6 h-6 stroke-2" />
-          </Link>
+          {!owner ? (
+            <Link
+              to="/presentations"
+              className="lg:block hidden flex items-center hover:scale-125 focus:outline-none"
+            >
+              <Home className="hover:text-primary-default lg:w-8 lg:h-8 w-6 h-6 stroke-2" />
+            </Link>
+          ) : (
+            <Link
+              to="/presentations"
+              className="flex items-center hover:scale-125 focus:outline-none"
+            >
+              <Home className="hover:text-primary-default lg:w-8 lg:h-8 w-6 h-6 stroke-2" />
+            </Link>
+          )}
           {!owner && isLive && (
-            <input
-              id="comment"
-              onKeyDown={handleKeyDown}
-              className="w-full flex-1 py-2 px-2 lg:mx-20 my-2 mx-4 lg:placeholder:placeholder-grey border-b-2 border-grey-light focus:text-black outline-none focus:border-blue-bright"
-              placeholder="Add a comment"
-            />
+            <div className="w-full relative flex justify-center items-center mr-2">
+              <input
+                id="comment"
+                onKeyDown={handleKeyDown}
+                value={tempComment}
+                onChange={e => setTempComment(e.target.value)}
+                className="w-full justify-center items-center flex-1 lg:mx-20 my-2 mx-4 lg:placeholder:placeholder-grey border-b-2 border-grey-light focus:text-black outline-none focus:border-primary-default"
+                placeholder="Add a comment"
+              />
+              <a
+                className="lg:hidden text-primary-default hover:text-grey-hover"
+                onClick={sendComment}
+              >
+                Send
+              </a>
+            </div>
           )}
 
           <div className="flex justify-around">

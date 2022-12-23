@@ -25,7 +25,7 @@ const Presentation = () => {
   const [isPrivate, setIsPrivate] = useState(false)
   const [fullscreen, setFullScreen] = useState(false)
 
-  const handle = useFullScreenHandle()
+  const fullScreenHandler = useFullScreenHandle()
 
   const { dispatch, owner, comments } = useAuth()
   const commentsRef = useRef<HTMLDivElement>(null)
@@ -44,9 +44,9 @@ const Presentation = () => {
 
   const toggleFullScreen = () => {
     if (fullscreen) {
-      handle.exit()
+      fullScreenHandler.exit()
     } else {
-      handle.enter()
+      fullScreenHandler.enter()
     }
     setFullScreen(!fullscreen)
   }
@@ -129,7 +129,10 @@ const Presentation = () => {
 
   return (
     <div>
-      <FullScreen className="h-screen flex flex-col bg-white" handle={handle}>
+      <FullScreen
+        className="h-screen flex flex-col bg-white"
+        handle={fullScreenHandler}
+      >
         {/* ------------------------Header------------------------*/}
         <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
           <div className="flex items-center">

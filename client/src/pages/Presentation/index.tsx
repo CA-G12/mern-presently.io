@@ -128,9 +128,9 @@ const Presentation = () => {
   }
 
   return (
-    <div>
+    <div className="relative h-screen bg-danger">
       <FullScreen
-        className="h-screen flex flex-col bg-white"
+        className="flex h-full flex-col bg-white"
         handle={fullScreenHandler}
       >
         {/* ------------------------Header------------------------*/}
@@ -185,7 +185,7 @@ const Presentation = () => {
           </div>
         </div>
         {/* ------------------------Slides------------------------ */}
-        <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
+        <div className="h-full flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
           <div>
             <Slider
               slides={

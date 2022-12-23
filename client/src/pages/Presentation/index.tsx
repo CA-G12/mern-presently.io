@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import SyncLoader from 'react-spinners/SyncLoader'
 import { AxiosError } from 'axios'
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
 import './styles.css'
 import { slideApi } from '../../api'
@@ -10,6 +11,7 @@ import Slider from '../../components/Slider'
 import Comments from '../../components/Comments'
 import { ReactComponent as Bell } from '../../assets/SlidesIcons/bell.svg'
 import { ReactComponent as Share } from '../../assets/SlidesIcons/share.svg'
+import { ReactComponent as FullScreenIcon } from '../../assets/SlidesIcons/fullscreen.svg'
 import useAuth from '../../hooks/useAuth'
 import NotFound from '../404'
 
@@ -21,6 +23,9 @@ const Presentation = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isLive, setIsLive] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
+  const [fullscreen, setFullScreen] = useState(false)
+
+  const fullScreenHandler = useFullScreenHandle()
 
   const { dispatch, owner, comments } = useAuth()
   const commentsRef = useRef<HTMLDivElement>(null)
@@ -36,6 +41,15 @@ const Presentation = () => {
       document.removeEventListener('mousedown', onClickOutSide)
     }
   }, [])
+
+  const toggleFullScreen = () => {
+    if (fullscreen) {
+      fullScreenHandler.exit()
+    } else {
+      fullScreenHandler.enter()
+    }
+    setFullScreen(!fullscreen)
+  }
 
   const onClickOutSide = (e: any) => {
     if (commentsRef.current && !commentsRef.current.contains(e.target)) {
@@ -114,48 +128,78 @@ const Presentation = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col">
-      {/* ------------------------Header------------------------*/}
-      <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
-        <div className="">
-          {!isPrivate && isLive && owner && (
-            <button
-              className="focus:outline-none relative"
-              onClick={() => setOpenComments(!openComments)}
-            >
-              {comments[id] && comments[id].length > 0 && (
-                <div className="absolute w-5 h-5 flex justify-center align-center bg-danger circle text-white">
-                  <h6>{comments[id].length}</h6>
-                </div>
+    <div>
+      <FullScreen
+        className="h-screen flex flex-col bg-white"
+        handle={fullScreenHandler}
+      >
+        {/* ------------------------Header------------------------*/}
+        <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
+          {/* Full Screen Button */}
+          <div className="flex">
+            <div>
+              {fullscreen ? (
+                <button className="self-start" onClick={toggleFullScreen}>
+                  <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />
+                </button>
+              ) : (
+                <button className="self-start" onClick={toggleFullScreen}>
+                  <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />
+                </button>
               )}
-              <Bell strokeWidth={2} />
-            </button>
-          )}
-          {owner && openComments && (
-            <Comments openCommentsRef={commentsRef} visible={openComments} />
-          )}
+            </div>
+            {/* Comments Section */}
+            <div>
+              {!isPrivate && isLive && owner && (
+                <button
+                  className="focus:outline-none relative self-start"
+                  onClick={() => setOpenComments(!openComments)}
+                >
+                  {comments[id] && comments[id].length > 0 && (
+                    <div className="absolute w-5 h-5 flex justify-center align-center bg-danger circle text-white">
+                      <h6>{comments[id].length}</h6>
+                    </div>
+                  )}
+                  <Bell strokeWidth={2} />
+                </button>
+              )}
+              {owner && openComments && (
+                <Comments
+                  openCommentsRef={commentsRef}
+                  visible={openComments}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Share button */}
+          <div>
+            {isLive && !isPrivate && (
+              <button
+                className="focus:outline-none hover:scale-125"
+                onClick={copy}
+              >
+                <Share strokeWidth={2} />
+              </button>
+            )}
+          </div>
         </div>
-        {isLive && !isPrivate && (
-          <button className="focus:outline-none hover:scale-125" onClick={copy}>
-            <Share strokeWidth={2} />
-          </button>
-        )}
-      </div>
-      {/* ------------------------Slides------------------------ */}
-      <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
-        <div>
-          <Slider
-            slides={
-              slides[slides.length - 1] === '' ||
-              slides[slides.length - 1] === '\n'
-                ? slides.slice(0, -1)
-                : slides
-            }
-            isLive={isLive}
-            isLoading={isLoading}
-          />
+        {/* ------------------------Slides------------------------ */}
+        <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
+          <div>
+            <Slider
+              slides={
+                slides[slides.length - 1] === '' ||
+                slides[slides.length - 1] === '\n'
+                  ? slides.slice(0, -1)
+                  : slides
+              }
+              isLive={isLive}
+              isLoading={isLoading}
+            />
+          </div>
         </div>
-      </div>
+      </FullScreen>
     </div>
   )
 }

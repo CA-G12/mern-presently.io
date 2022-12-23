@@ -128,13 +128,13 @@ const Presentation = () => {
   }
 
   return (
-    <div className="relative h-screen bg-danger">
+    <div className="relative h-screen">
       <FullScreen
-        className="flex h-full flex-col bg-white relative"
+        className="flex h-full flex-col relative"
         handle={fullScreenHandler}
       >
         {/* ------------------------Header------------------------*/}
-        <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
+        <div className="lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
           {/* Full Screen Button */}
           <div className="flex">
             <div className="lg:block hidden">
@@ -185,8 +185,8 @@ const Presentation = () => {
           </div>
         </div>
         {/* ------------------------Slides------------------------ */}
-        <div className="h-full flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">
-          <div>
+        <div className="h-full w-full flex justify-center items-center lg:pr-32 lg:py-5 lg:pl-32">
+          <div className="flex flex-col justify-center items-center h-full">
             <Slider
               slides={
                 slides[slides.length - 1] === '' ||

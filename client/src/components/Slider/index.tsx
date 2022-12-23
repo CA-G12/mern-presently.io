@@ -85,16 +85,17 @@ const Slider = ({ slides, isLive }: ISliderProps) => {
   useKeyPress(goToPrevious, ['ArrowLeft'])
 
   return (
-    <>
-      <div className="px-2 text-center">
+    <div className="h-full w-screen lg:p-0 p-4 flex flex-col justify-between items-stretch">
+      <div></div>
+      <div className="px-2 text-center flex justify-center lg:pr-32 pr-4 pl-4 lg:py-5 lg:pl-32">
         <div
           dangerouslySetInnerHTML={{ __html: slides[currentIndex] }}
           className="m-2 html"
         ></div>
       </div>
       {/*------------------------ Control slides ------------------------ */}
-      <div className="absolute inset-x-0 bottom-0 lg:pr-32 pr-4 pl-4 lg:py-5 lg:pl-32 flex-initial">
-        <div className="relative justify-self-end flex justify-between items-center mb-4">
+      <div className="w-full lg:pr-32 pr-4 pl-4 lg:py-5 lg:pl-32">
+        <div className="relative flex justify-between items-center mb-4">
           {!owner ? (
             <Link
               to="/presentations"
@@ -157,7 +158,7 @@ const Slider = ({ slides, isLive }: ISliderProps) => {
           ></div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

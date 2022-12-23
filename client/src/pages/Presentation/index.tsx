@@ -25,7 +25,7 @@ const Presentation = () => {
   const [isPrivate, setIsPrivate] = useState(false)
   const [fullscreen, setFullScreen] = useState(false)
 
-  const handle = useFullScreenHandle()
+  const fullScreenHandler = useFullScreenHandle()
 
   const { dispatch, owner, comments } = useAuth()
   const commentsRef = useRef<HTMLDivElement>(null)
@@ -44,9 +44,9 @@ const Presentation = () => {
 
   const toggleFullScreen = () => {
     if (fullscreen) {
-      handle.exit()
+      fullScreenHandler.exit()
     } else {
-      handle.enter()
+      fullScreenHandler.enter()
     }
     setFullScreen(!fullscreen)
   }
@@ -129,44 +129,60 @@ const Presentation = () => {
 
   return (
     <div>
-      <FullScreen className="h-screen flex flex-col bg-white" handle={handle}>
+      <FullScreen
+        className="h-screen flex flex-col bg-white"
+        handle={fullScreenHandler}
+      >
         {/* ------------------------Header------------------------*/}
         <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
-          <div className="flex items-center">
-            {fullscreen ? (
-              <button className="stroke-2" onClick={toggleFullScreen}>
-                <FullScreenIcon className="w-4 h-4 stroke-2 mr-2" />
-              </button>
-            ) : (
-              <button className="stroke-2" onClick={toggleFullScreen}>
-                <FullScreenIcon className="w-4 h-4 stroke-2 mr-2" />
-              </button>
-            )}
-            {!isPrivate && isLive && owner && (
+          {/* Full Screen Button */}
+          <div className="flex">
+            <div>
+              {fullscreen ? (
+                <button className="self-start" onClick={toggleFullScreen}>
+                  <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />
+                </button>
+              ) : (
+                <button className="self-start" onClick={toggleFullScreen}>
+                  <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />
+                </button>
+              )}
+            </div>
+            {/* Comments Section */}
+            <div>
+              {!isPrivate && isLive && owner && (
+                <button
+                  className="focus:outline-none relative self-start"
+                  onClick={() => setOpenComments(!openComments)}
+                >
+                  {comments[id] && comments[id].length > 0 && (
+                    <div className="absolute w-5 h-5 flex justify-center align-center bg-danger circle text-white">
+                      <h6>{comments[id].length}</h6>
+                    </div>
+                  )}
+                  <Bell strokeWidth={2} />
+                </button>
+              )}
+              {owner && openComments && (
+                <Comments
+                  openCommentsRef={commentsRef}
+                  visible={openComments}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Share button */}
+          <div>
+            {isLive && !isPrivate && (
               <button
-                className="focus:outline-none relative"
-                onClick={() => setOpenComments(!openComments)}
+                className="focus:outline-none hover:scale-125"
+                onClick={copy}
               >
-                {comments[id] && comments[id].length > 0 && (
-                  <div className="absolute w-5 h-5 flex justify-center align-center bg-danger circle text-white">
-                    <h6>{comments[id].length}</h6>
-                  </div>
-                )}
-                <Bell strokeWidth={2} />
+                <Share strokeWidth={2} />
               </button>
-            )}
-            {owner && openComments && (
-              <Comments openCommentsRef={commentsRef} visible={openComments} />
             )}
           </div>
-          {isLive && !isPrivate && (
-            <button
-              className="focus:outline-none hover:scale-125"
-              onClick={copy}
-            >
-              <Share strokeWidth={2} />
-            </button>
-          )}
         </div>
         {/* ------------------------Slides------------------------ */}
         <div className="flex justify-center items-center flex-1 lg:pr-32 lg:py-5 lg:pl-32">

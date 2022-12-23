@@ -137,17 +137,17 @@ const Presentation = () => {
         <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
           <div className="flex items-center">
             {fullscreen ? (
-              <button className="stroke-2" onClick={toggleFullScreen}>
-                <FullScreenIcon className="w-4 h-4 stroke-2 mr-2" />
+              <button className="self-start" onClick={toggleFullScreen}>
+                <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />
               </button>
             ) : (
-              <button className="stroke-2" onClick={toggleFullScreen}>
-                <FullScreenIcon className="w-4 h-4 stroke-2 mr-2" />
+              <button className="self-start" onClick={toggleFullScreen}>
+                <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />
               </button>
             )}
             {!isPrivate && isLive && owner && (
               <button
-                className="focus:outline-none relative"
+                className="focus:outline-none relative self-start"
                 onClick={() => setOpenComments(!openComments)}
               >
                 {comments[id] && comments[id].length > 0 && (

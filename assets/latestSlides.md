@@ -1,41 +1,35 @@
-# HTML
-  ![mobile-design](https://c6c8j7x5.rocketcdn.me/wp-content/uploads/2022/07/CSS-list-style-and-counter-style.png)
+# Presently.io
 
-  ---
-  
-  ## Slide 2
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  Aligrandpa is an ecommerce website that allows you to buy tech products.
-  **Aligrandpa is an ecommerce website that allows you to buy tech products.**
-  ***Aligrandpa is an ecommerce website that allows you to buy tech products.***
+Convert md files into slides and get live comments.
+ 
+---
 
-  ---
-  
-  ## Slide 3
-  -  HTML5.
-  -  CSS3.
-  -  JS.
-  -  React JS.
-  -  NPM.
-  -  Node JS
-  -  Express
-  -  Postgresql
-   
-  ---
-  
-  ## Slide 4
-  * Unordered lists, and:
-  1. One
-  1. Two
-  1. Three
-   
-  ---
-  
+# Why we created this app?
+
+---
+
+# How to form your md files:
+
+![Screen Shot 2022-11-14 at 10 01 46 AM](https://user-images.githubusercontent.com/43090330/209210662-ae6e9c98-d304-48f4-bc9a-aef4fb087ea2.png)
+
+---
+
+# Used Technologies
+
+---
+
+# Project Backstage
+
+- Started as a four, then three, and ended up as a pair :D
+
+---
+
+# Future Updates
+
+---
+
+# Demo
+
+---
+
+# Thanks for listening

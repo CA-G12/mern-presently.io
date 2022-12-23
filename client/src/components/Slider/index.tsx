@@ -86,14 +86,14 @@ const Slider = ({ slides, isLive }: ISliderProps) => {
 
   return (
     <>
-      <div className="px-10 text-center">
+      <div className="px-2 text-center">
         <div
           dangerouslySetInnerHTML={{ __html: slides[currentIndex] }}
           className="m-2 html"
         ></div>
       </div>
       {/*------------------------ Control slides ------------------------ */}
-      <div className="absolute inset-x-0 bottom-0 lg:pr-32 pr-10 pl-10 lg:py-5 lg:pl-32 flex-initial">
+      <div className="absolute inset-x-0 bottom-0 lg:pr-32 pr-4 pl-4 lg:py-5 lg:pl-32 flex-initial">
         <div className="relative justify-self-end flex justify-between items-center mb-4">
           {!owner ? (
             <Link

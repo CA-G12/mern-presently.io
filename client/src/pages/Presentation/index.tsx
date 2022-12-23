@@ -137,7 +137,7 @@ const Presentation = () => {
         <div className="absolute lg:min-h-80 lg:pr-32 lg:py-5 lg:pl-32 p-6 w-screen flex justify-between items-start">
           {/* Full Screen Button */}
           <div className="flex">
-            <div>
+            <div className="lg:block hidden">
               {fullscreen ? (
                 <button className="self-start" onClick={toggleFullScreen}>
                   <FullScreenIcon className="w-4 h-4 stroke-2 mr-2 mt-1" />

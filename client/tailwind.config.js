@@ -58,7 +58,7 @@ module.exports = {
     },
     extend: {
       height: {
-        mobile: '95vh'
+        mobile: '85vh'
       }
     }
   }

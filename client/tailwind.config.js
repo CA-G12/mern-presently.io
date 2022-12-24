@@ -56,6 +56,10 @@ module.exports = {
     maxHeight: {
       65: '65vh'
     },
-    extend: {}
+    extend: {
+      height: {
+        mobile: '95vh'
+      }
+    }
   }
 }

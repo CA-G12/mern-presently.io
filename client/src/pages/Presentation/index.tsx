@@ -128,9 +128,9 @@ const Presentation = () => {
   }
 
   return (
-    <div className="relative h-screen">
+    <div className="h-screen">
       <FullScreen
-        className="flex h-full flex-col relative"
+        className="flex h-full flex-col relative bg-white"
         handle={fullScreenHandler}
       >
         {/* ------------------------Header------------------------*/}
